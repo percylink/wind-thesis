@@ -47,8 +47,59 @@ State how this study is different from Avissar-esque work: focus on response of 
 
 State how this study is different from wind energy forecasting literature: (careful here - don't want to be too hard on a body of work with which I am not very familiar) - focus on physical mechanism; not trying to predict at a specific wind farm, in this case; instead, using a physically-based model to identify regions from which soil moisture information is particularly important for forecasts at a given location, and times of day and synoptic conditions when forecasts are particularly sensitive to soil moisture information.
 
+We investigate the importance of soil moisture for wind energy forecasts at two different locations: California's Altamont pass, and Kansas.  Reasoning: Kansas has minimal oceanic or topographic influence, so is a good place to study sensitivity of wind to geometry of soil moisture patterns in isolation.  California has both oceanic and topographic influences; raises interesting questions of interactions between topography (slope circulations) and soil moisture, and amplification or damping of background sea-breeze circulation by soil moisture.  Wind farms are located in both types of places (flat, continental regions like the central US, and mountainous or coastal regions. Examples?) so it is important to understand how soil moisture and the land surface energy balance influence near-surface wind in both types of settings.
+
+Explicit list of questions:
+\begin{itemize}
+\item 
+\end{itemize}
+
+
 \subsection{Literature background}
 
+What to put in intro vs. discussion?
+
+Thermal mesoscale circulations:
+\begin{itemize}
+\item Idealized simulations: length scales, time to develop, order of magnitude effect on wind, strength of heat flux difference necessary, height of winds affected
+\item Observational?  From the Amazon?
+\end{itemize}
+
+Land-sea breeze:
+
+California wind climatology - sea breeze interacting with topography:
+
+Land surface in wind energy prediction:
+\begin{itemize}
+\item Nikola's paper: soil moisture has strong affect on accuracy of wind forecast, both in magnitude and in timing of wind shifts (``ramps")
+\item Stability matters: Wharton and Lundquist found that turbines extracted more power for the same nacelle wind speed in stably stratified conditions than in convective conditions.  This may depend on the site: others (XXX) have found that turbines extract less power in stable conditions than in convective conditions, for the same wind speed.  In either case, stability near the surface depends strongly on the surface energy balance, which in turn depends strongly on soil moisture.
+\end{itemize}
+
 \subsection{WRF regional atmospheric model}
+
+Physics of the model: (read how other people describe it)
+\begin{itemize}
+\item Three dimensional nonhydrostatic (compressible?) atmospheric model
+\item Solves equations of conservation of momentum, mass, and energy; uses finite difference \textit{(*check this)} method to discretize in space and time
+\item State variables that are calculated as they evolve through time: pressure, temperature, three-dimensional wind, moisture, plus a lot of other stuff...
+\item Widely used community regional atmospheric model (regional means it has lateral boundaries and thus requires lateral boundary conditions, as opposed to a global model which does not)
+\item Operational version is used for weather forecasting, and research version is used for (XXX)
+\item List use in wind energy research and operational forecasting ...
+\item In this study, the bottom boundary condition is calculated using the Noah land surface model (but we prescribe initial soil moisture...) - \textit{this is more methods}
+\item What WRF captures well, and what it does not do as well.
+\item Previous studies - how well has WRF done in simulating turbine-height winds (Marjanovic, BAMS article, ...), and major factors on which performance depends (resolution, PBL scheme, lateral forcing, soil moisture **)
+\end{itemize}
+
+How we are using the model \textit{(Inez's language - not sure if I want to say it this way, because if I am framing this in terms of prediction accuracy, then I do care about specific predictions)}:
+\begin{itemize}
+\item Using this model in an experimental framework; not doing simulations
+\item Goals: 1) explore hypotheses, 2) predict (but not in a detailed way)
+\item \textit{My language}:
+\item Exploring mechanisms that have large impact on forecast accuracy
+\item Identifying especially important regions and times
+\item Not comparing to wind farm data - why? Honestly because we don't have any, but also because this is a prototype for how to investigate important mechanisms at other sites?
+\item Using the model allows us to test physical mechanisms in controlled experiments, even if the model imperfectly represents the real world.  Observations of the atmosphere do not allow for controlled trials.
+\end{itemize}
+
 
 \end{document}
