@@ -9,7 +9,7 @@ import os
 
 class ModifierGeo:
 
-	def __init__(self, file_in=None, varsmod=[], land_use_cat=7, soil_cat=8):
+	def __init__(self, file_in=None, varsmod=[], mod_vals={}, mod_conditions={}):
 		
 		if file_in is None:
 			raise Exception('You must specify an input file')
@@ -21,10 +21,21 @@ class ModifierGeo:
 		
 		self.varsmod = varsmod
 		print('variables to modify: '+str(self.varsmod))
-		self.land_use_cat = land_use_cat
-		print('land use category: '+str(land_use_cat))
-		self.soil_cat = soil_cat
-		print('soil category: '+str(soil_cat))
+		self.mod_vals = mod_vals
+		self.mod_conditions = mod_conditions
+
+		if 'LU_INDEX' not in self.mod_vals:
+			self.land_use_cat = 7  # default land use category if none specified
+			print('land use category: 7 (default)')
+		else:
+			print('land use category: '+str(self.mod_vals['LU_INDEX']))
+			self.land_use_cat = self.mod_vals['LU_INDEX']
+		if 'SCT_DOM' not in self.mod_vals:
+			self.soil_cat = 8  # default soil category if none specified
+			print('soil category: 8 (default)')
+		else:
+			print('soil category: '+str(self.mod_vals['SCT_DOM']))
+			self.soil_cat = self.mod_vals['SCT_DOM']
 		
 		with open(self.filename_in, 'r') as f:
 			self.alltxt = f.read()
@@ -90,7 +101,27 @@ class ModifierGeo:
 
 	def modify_variables(self, variable, currvar):
 
+		if variable in ['HGT_M', 'LANDMASK', 'SOILTEMP', 'ALBEDO12M', 'GREENFRAC', \
+						'LAI12M', 'SLOPECAT', 'CON', 'VAR', 'OA1', 'OA2', 'OA3', \
+						'OA4', 'VAR_SSO']:
+
+			if variable in self.mod_vals:
+				mod_val = self.mod_vals[variable]
+			else:
+				mod_val = self.default_mod_vals[variable]
+
+			if variable in self.mod_conditions:
+				mask = exec(self.mod_conditions[variable])
+				currvar[mask] = mod_val
+			else:
+				currvar = currvar * 0. + mod_val
+				
+			if variable in ['LANDMASK', 'SLOPECAT']:
+				currvar = currvar.astype(int)
+
 		if variable == 'HGT_M':
+			if 'HGT_M' in self.mod_vals:
+
 			currvar = currvar * 0.
 		elif variable == 'LANDMASK':
 			currvar = currvar * 1.
