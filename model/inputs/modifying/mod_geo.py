@@ -11,6 +11,7 @@ class ModifierGeo:
 
 	def __init__(self, file_in=None, varsmod=[], mod_vals={}, mod_conditions={}):
 		
+		# open input file
 		if file_in is None:
 			raise Exception('You must specify an input file')
 		self.filename_in = file_in
@@ -19,6 +20,7 @@ class ModifierGeo:
 		self.filename_out = '.'.join(dum[:-1])+'_MOD.'+dum[-1]
 		self.file_out = open(self.filename_out, 'w')
 		
+		# save variables to modify, and values to change to, and conditions for changing
 		self.varsmod = varsmod
 		print('variables to modify: '+str(self.varsmod))
 		self.mod_vals = mod_vals
@@ -36,13 +38,23 @@ class ModifierGeo:
 		else:
 			print('soil category: '+str(self.mod_vals['SCT_DOM']))
 			self.soil_cat = self.mod_vals['SCT_DOM']
+		self.make_default_mod_vals()
 		
+		# open output file
 		with open(self.filename_in, 'r') as f:
 			self.alltxt = f.read()
 		ixhead = self.alltxt.find("data:")
 		self.header = self.alltxt[:ixhead]
 		self.body = self.alltxt[ixhead:]
 		self.get_dimensions()
+
+	def make_default_mod_vals(self):
+		self.default_mod_vals = {'HGT_M': 0, 'LANDMASK': 1, 'SOILTEMP': 289., \
+								 'ALBEDO12M': 15., 'GREENFRAC': 0.8, 'LAI12M': 2., \
+								 'SLOPECAT': 2, 'CON': 0.1, 'VAR': 10., 'OA1': 0., \
+								 'OA2': 0., 'OA3':0., 'OA4': 0., 'VAR_SSO': 0., \
+								 'LU_INDEX': self.land_use_cat, \
+								 'SCT_DOM': self.soil_cat, 'SCB_DOM': self.soil_cat}
 
 	def get_dimensions(self):
 
@@ -103,7 +115,7 @@ class ModifierGeo:
 
 		if variable in ['HGT_M', 'LANDMASK', 'SOILTEMP', 'ALBEDO12M', 'GREENFRAC', \
 						'LAI12M', 'SLOPECAT', 'CON', 'VAR', 'OA1', 'OA2', 'OA3', \
-						'OA4', 'VAR_SSO']:
+						'OA4', 'VAR_SSO', 'LU_INDEX', 'SCT_DOM', 'SCB_DOM']:
 
 			if variable in self.mod_vals:
 				mod_val = self.mod_vals[variable]
@@ -113,23 +125,16 @@ class ModifierGeo:
 			if variable in self.mod_conditions:
 				mask = exec(self.mod_conditions[variable])
 				currvar[mask] = mod_val
+				print("modifying "+variable+" to "+str(mod_val)+" where "+self.mod_conditions[variable])
 			else:
 				currvar = currvar * 0. + mod_val
-				
-			if variable in ['LANDMASK', 'SLOPECAT']:
+				print("modifying "+variable+" to "+str(mod_val))
+
+			if variable in ['LANDMASK', 'SLOPECAT', 'LU_INDEX', 'SCT_DOM', 'SCB_DOM']:
 				currvar = currvar.astype(int)
 
-		if variable == 'HGT_M':
-			if 'HGT_M' in self.mod_vals:
-
-			currvar = currvar * 0.
-		elif variable == 'LANDMASK':
-			currvar = currvar * 1.
-			currvar = currvar.astype(int)
-		elif variable == 'LU_INDEX':
-			currvar = currvar*0 + self.land_use_cat
-			currvar = currvar.astype(int)
 		elif variable == 'LANDUSEF':
+			print("modifying LANDUSEF to be 1 in category "+str(self.land_use_cat)+" and 0 for other categories")
 			for i in xrange(24):
 				ixstart = self.west_east*self.south_north*i
 				ixend = self.west_east*self.south_north*(i+1)
@@ -137,9 +142,9 @@ class ModifierGeo:
 					currvar[ixstart:ixend] = currvar[ixstart:ixend]*0. + 1.
 				else:
 					currvar[ixstart:ixend] = currvar[ixstart:ixend]*0.
-		elif variable == 'SOILTEMP':
-			currvar = currvar*0. + 289.
+
 		elif (variable == 'SOILCTOP') or (variable == 'SOILCBOT'):
+			print("modifying "+variable+" to be 1 in category "+str(self.soil_cat)+" and 0 for other categories")
 			for i in xrange(16):
 				ixstart = self.west_east*self.south_north*i
 				ixend = self.west_east*self.south_north*(i+1)
@@ -147,68 +152,64 @@ class ModifierGeo:
 					currvar[ixstart:ixend] = currvar[ixstart:ixend]*0. + 1.
 				else:
 					currvar[ixstart:ixend] = currvar[ixstart:ixend]*0.
-		elif (variable == 'SCT_DOM') or (variable == 'SCB_DOM'):
-			currvar = currvar*0 + self.soil_cat
-			currvar = currvar.astype(int)
-		elif variable == 'ALBEDO12M':
-			currvar = currvar*0. + 15.
-		elif variable == 'GREENFRAC':
-			currvar = currvar*0. + 0.8
-		elif variable == 'LAI12M':
-			currvar = currvar*0. + 2.
-		elif variable == 'SLOPECAT':
-			currvar = currvar*0. + 2
-			currvar = currvar.astype(int)
-		elif variable == 'CON':
-			currvar = currvar*0. + 0.1
-		elif variable == 'VAR':
-			currvar = currvar*0. + 10.
-		elif (variable == 'OA1') or (variable == 'OA2') or (variable == 'OA3') or (variable == 'OA4'):
-			currvar = currvar*0.
-		elif variable == 'VAR_SSO':
-			currvar = currvar*0.
+
 		else:
 			raise Exception('Variable '+variable+' has no code for modifying')
-			
-		self.file_out.write(' '+variable+' =\n')
+
+		return self.make_vartxt(variable, currvar)
+		
+	def make_vartxt(self, variable, var_array):
 		# using user-modified array, print lines with 6 numbers, separated by commas,
 		# until the end of the array, then print the remainder, and end with semicolon.
-		kk = 6
-		while len(currvar) > kk:
-			linetmp = currvar[:kk]
-			# convert to comma-separated string and write to file
+		vartxt = ' '+variable+' =\n'
+		k = 6
+		while len(var_array) > kk:
+			linetmp = var_array[:kk]
+			# convert to comma-separated string and write to vartxt
 			strtmp = ''
-			for ss in linetmp: strtmp = strtmp+' '+str(ss)+','
-			self.file_out.write(strtmp+'\n')
-			currvar = currvar[kk:]
+			for ss in linetmp: 
+				strtmp = strtmp+' '+str(ss)+','
+			vartxt += strtmp+'\n'
+			var_array = var_array[kk:]
 		# output last line
 		strtmp = ''
-		for ix,ss in enumerate(currvar):
-			if ix<len(currvar)-1:
+		for ix,ss in enumerate(var_array):
+			if ix<len(var_array)-1:
 				strtmp = strtmp+' '+str(ss)+','
 			else:
 				strtmp = strtmp+' '+str(ss)+';'
-		self.file_out.write(strtmp+'\n\n')
+		vartxt += strtmp+'\n\n'
+		return vartxt
 
-	def get_data(self):
-		# for each variable, either write original lines
-		# or write new values, defined by user
+	def get_variables(self):
 		body = self.body
 		body = body[body.find(';')+1:]
+		self.orig_var_text = {}
+		self.var_arrays = {}
 		for ii,vv in enumerate(self.vars):
-
-			print vv,
-			
 			# find variable
 			body, vartxt, currvar = self.get_var_vals(vv, body)
+			self.orig_var_text[variable] = vartxt
+			self.var_arrays[variable] = currvar
 
+	def save_key_variables(self):
+		self.landmask = self.var_arrays['LANDMASK']
+		self.xlat = self.var_arrays['XLAT_M']
+		self.xlong = self.var_arrays['XLONG_M']
+
+	def write_variables(self):
+		# for each variable, either write original lines
+		# or write new values, defined by user
+		for ii,vv in enumerate(self.vars):
 			# print variable to new file
+			print vv,
 			if vv in self.varsmod:
 				print(' - modifying')
-				self.modify_variables(vv, currvar)
+				vartxt = self.modify_variables(vv, self.var_arrays[vv])
 			else:
 				print(' - leaving as is')
-				self.file_out.write(' '+vartxt+'\n\n')
+				vartxt = self.orig_var_text[variable]
+			self.file_out.write(' '+vartxt+'\n\n')
 	
 	def finish_file(self):
 		self.file_out.write("}")
@@ -218,7 +219,9 @@ class ModifierGeo:
 
 		self.write_header()
 		self.get_varnames()
-		self.get_data()
+		self.get_variables()
+		self.save_key_variables()
+		self.write_variables()
 		self.finish_file()
 
 
