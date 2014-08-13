@@ -1,0 +1,34 @@
+
+\documentclass[12pt]{amsart}
+\usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
+\usepackage{datetime}
+\geometry{a4paper} % or letter or a5paper or ... etc
+% \geometry{landscape} % rotated page geometry
+
+% See the ``Article customise'' template for come common customisations
+
+\title{Wind chapter}
+\author{Percy Link}
+\date{\currenttime \ \today} % delete this line to display the current date
+
+%%% BEGIN DOCUMENT
+\begin{document}
+
+\maketitle
+
+\section{Methods}
+In order to test the sensitivity of wind forecasts to soil moisture, we conduct controlled experiments with the Weather Research and Forecasting model (WRF, described in section \textbf{XXXX}).
+
+Location: Rodsand wind farm, offshore (how far?), refer to a map figure, region contains multiple islands of widths XX-XX separated by waterways of widths XX-XX.  Climatology: in the storm tracks, so alternates between frontal storms with strong synoptic forcing (background wind speeds of XX m/s) and relatively calm periods (background wind speeds of XX m/s), with a period of 3-10 days.  Land surface: XXXX.
+
+Time periods we chose: one weak synoptic forcing (XXXX dates) and one strong synoptic forcing (XXXX dates).  We select both time series from the summer season because the land surface receives the largest amount of incoming radiation in the summer, and thus soil moisture control on land surface energy partitioning is likely to have the greatest absolute effect in the summer.
+
+Soil moisture treatments: We test the response of the wind to modification of the initial soil moisture.  Table XX shows the soil moisture treatments tested; the control case is the moderate-all case, with a moderate soil moisture value of 0.2 (UNITS??) in region A (shown in red in Figure XX).  Two treatments modify soil moisture in the whole of region A: in the wet-all case, soil moisture is increased to 0.35, and in the dry-all case, soil moisture is decreased to 0.05.  Two additional treatments change the soil moisture of the smaller region B (shown in blue in Figure XX): in the wet-B case, soil moisture is set to 0.35 in region B and to 0.2 in the rest of region A, and in the dry-B case, soil moisture is set to 0.05 in region B and to 0.2 in the rest of region A.  Each soil moisture treatment is run for each of the synoptic forcings.
+
+We use NCEP GFS final analysis, at 1 degree spatial resolution and 6 hr temporal resolution, for the initial and boundary conditions of the WRF model.  WRF is run with three two-way nested grids, with grid spacings of 21.6 km, 7.2 km, and 2.4 km (Figure XX).  Some justification for this grid resolution: we also test a subset of the cases with a fourth, finer grid (0.8 km) and compare the difference in forecasted wind; Marjanovic et al. [XXXX] found that, for a flat terrain case, increases in horizontal resolution beyond XX km had little effect on forecast accuracy.  However, they found that additional horizontal resolution did improve wind forecasts in complex terrain; because our experiments involve flat terrain but complex patterns of surface fluxes, we test whether the higher horizontal resolution improves accuracy.  The numbers of grid points in each horizontal dimension are shown in Table XX.  All runs have 40 vertical levels; Marjanovic et al. [2014] and XXXX have shown that wind forecasts are not very sensitive to vertical resolution beyond about 40 levels.
+
+Model physics: The XXX PBL scheme and the corresponding XXX surface layer scheme are used, following the recommendation of Marjanovic et al. [2014], who found that these schemes performed well under a range of stability conditions.  WRF is coupled to the Noah land surface model, which solves for the evolution of the temperature and moisture state of the land surface and provides fluxes of moisture and energy at the bottom boundary of the atmospheric model.  The XXX cumulus scheme is used.  Information on topography, land use and vegetation, and soil type is drawn from XXX source (USGS?).
+
+
+
+\end{document}
