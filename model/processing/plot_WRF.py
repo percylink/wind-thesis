@@ -18,10 +18,11 @@ import sys
 
 class Plotter:
 
-    def __init__(self, file_in=None, file2=None, plot_interval=1, run_name=None, reg_diff='reg'):
+    def __init__(self, file_in=None, file2=None, plot_interval=1, run_name=None, reg_diff='reg', domain='d01'):
 
         # instance parameters
         self.plot_interval = plot_interval
+        self.domain = domain
         if run_name is None:
             raise Exception('run_name is a required parameter')
         self.run_name = run_name
@@ -33,6 +34,8 @@ class Plotter:
             self.hr_diff = 8
         elif run_name[:2] == 'KS':
             self.hr_diff = 7
+
+        print "file:", self.file_in, ", plot_interval:", self.plot_interval, ", run_name:", self.run_name, ", reg_diff:", reg_diff, ", domain:", self.domain
 
         # physical parameters
         self.latent_heat_evap = 2.27e6  # J/kg
@@ -381,9 +384,9 @@ class Plotter:
             plot_list = [plot_list]
 
         # make output directories and call plotting functions
-        plot_dir = os.path.join(self.root_dir, 'plots')
+        plot_dir = os.path.join(self.root_dir, 'plots', self.domain)
         if not os.path.exists(plot_dir):
-            os.mkdir(plot_dir)
+            os.makedirs(plot_dir)
         self.plot_dir = plot_dir
 
         if self.reg_diff == 'reg':
