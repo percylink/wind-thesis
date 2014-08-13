@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  4 AUG 2014 16:01
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  12 AUG 2014 18:00
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -276,7 +276,7 @@ Here is how much of TeX's memory you used:
  5916 multiletter control sequences out of 15000+200000
  11584 words of font info for 45 fonts, out of 3000000 for 9000
  875 hyphenation exceptions out of 8191
- 34i,5n,31p,899b,242s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 34i,6n,31p,899b,240s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/publ
 ic/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/publi
@@ -287,7 +287,7 @@ nts/cm/cmr9.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmsy10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmti10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmti12.pfb>
-Output written on intro.pdf (4 pages, 111905 bytes).
+Output written on intro.pdf (4 pages, 112059 bytes).
 PDF statistics:
  53 PDF objects out of 1000 (max. 8388607)
  37 compressed objects within 1 object stream
