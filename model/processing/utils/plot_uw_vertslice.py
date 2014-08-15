@@ -195,7 +195,10 @@ class VerticalPlotter:
         elif self.plot_type == 'quiver':
             self.plot_quiver(fig=fig, ax=ax, ii=ii, pslice=pslice, psurf=psurf)
 
-        fig.set_size_inches(8, 11)
+        if self.plot_type == 'scatter':
+            fig.set_size_inches(8, 11)
+        else:
+            fig.set_size_inches(11, 8)
         if self.slice_direction == 'xz':
             fig.suptitle(self.run_name+' '+str(self.lat)+'N '+self.times[ii])
             filename = 'UW_vertslice_'+str(self.lat)+'N_'+self.times[ii]+'.png'
@@ -206,7 +209,7 @@ class VerticalPlotter:
             filename = 'zoom_'+filename
         if self.reg_diff == 'diff':
             filename = 'diffCTRL_'+filename
-        fig.savefig(os.path.join(self.plot_dir, filename), transparent=True)
+        fig.savefig(os.path.join(self.plot_dir, filename))#, transparent=True)
         plt.close(fig)
         #1/0
 
