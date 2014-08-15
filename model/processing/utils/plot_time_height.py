@@ -19,18 +19,15 @@ import sys
 
 class TimeHeightPlotter:
 
-    def __init__(self, file_in=None, lat=37.75, lon=-121.65, run_name=None, reg_diff='reg', \
-                 file2=None, domain='d01', nlevs=5):
+    def __init__(self, file_in=None, lat=37.75, lon=-121.65, run_name=None, 
+                 reg_diff='reg', file2=None, domain='d01', nlevs=5):
 
         # instance parameters
         self.run_name = run_name
         if (reg_diff != 'reg') and (reg_diff != 'diff'):
             raise Exception('reg_diff must be "reg" or "diff"')
         self.reg_diff = reg_diff  # whether netcdf file is regular model output, or diff of 2 runs
-        if root_dir is None:
-            self.root_dir = os.path.join(os.environ['SCRATCH'], 'WRF', 'output', self.run_name)
-        else:
-            self.root_dir = os.path.join(root_dir, self.run_name)
+        self.root_dir = os.path.join(os.environ['SCRATCH'], 'WRF', 'output', self.run_name)
         self.plot_dir = os.path.join(self.root_dir, 'plots', domain)
         self.domain = domain
         if not os.path.exists(self.plot_dir):
@@ -86,7 +83,8 @@ class TimeHeightPlotter:
             f = self.f_abs
 
         PHB = f.variables['PHB'][0, :self.nlevs+1, self.ix_lat, self.ix_lon]
-        self.heights = PHB/9.81  # convert from geopotential to height by dividing by grav. accel.
+        heights = PHB/9.81  # convert from geopotential to height by dividing by grav. accel.
+        self.heights = heights - f.variables['HGT'][0, self.ix_lat, self.ix_lon]  # subtract terrain hgt
 
     def invert_wind_dir(self, wind_dir=None):
         # change wind dir from "direction to which vector points" to "direction from which vector points"
@@ -128,11 +126,11 @@ class TimeHeightPlotter:
 
         # plot with imshow
         fig, ax = plt.subplots(nrows=2, ncols=1)
-        h_0 = ax[0].imshow(wind_speed, interpolation='none', aspect='auto', 
-            extent=[self.times[0], self.times[-1], self.heights[0], self.heights[-1]],
+        h_0 = ax[0].imshow(wind_speed.T, interpolation='none', aspect='auto', 
+            extent=[date2num(self.times[0]), date2num(self.times[-1]), 0, self.nlevs],
             origin='lower')
-        h_1 = ax[1].imshow(wind_dir, interpolation='none', aspect='auto', 
-            extent=[self.times[0], self.times[-1], self.heights[0], self.heights[-1]],
+        h_1 = ax[1].imshow(wind_dir.T, interpolation='none', aspect='auto', 
+            extent=[date2num(self.times[0]), date2num(self.times[-1]), 0, self.nlevs],
             origin='lower')
         plt.colorbar(h_0, ax=ax[0])
         plt.colorbar(h_1, ax=ax[1])
@@ -152,7 +150,47 @@ class TimeHeightPlotter:
         ax[1].set_title('direction, deg')
         ax[1].set_ylabel('height, m')
         fig.suptitle('wind speed, domain '+self.domain+' lat '+str(self.lat)+' lon '+str(self.lon))
-        fig.savefig(os.path.join(self.plot_dir, 'timeheight', 'wind_speed.png'))
+        filename = 'wind_speed.png'
+        if self.reg_diff == 'diff':
+            filename = 'diffCTRL_'+filename
+        fig.savefig(os.path.join(self.plot_dir, 'timeheight', filename))
+
+        #plt.show()
+        #1/0
+        plt.close()
+
+    def plot_pot_temp(self):
+
+        # get time x potential temperature 
+        if self.reg_diff == 'reg':
+            # (add 300K per ARW Users Guide V3 p. 5-97)
+            pot_temp = self.f.variables['T'][:, :self.nlevs, self.ix_lat, self.ix_lon] + 300.
+        elif self.reg_diff == 'diff':
+            pot_temp = self.f.variables['T'][:, :self.nlevs, self.ix_lat, self.ix_lon]
+
+        # plot with imshow
+        fig, ax = plt.subplots(nrows=1, ncols=1)
+        h_0 = ax.imshow(pot_temp.T, interpolation='none', aspect='auto', 
+            extent=[date2num(self.times[0]), date2num(self.times[-1]), 0, self.nlevs],
+            origin='lower')
+        plt.colorbar(h_0, ax=ax)
+
+        # format tick labels
+        ax.set_yticks(range(0, self.nlevs+1))
+        ax.set_yticklabels(self.heights)
+        ax.xaxis_date()
+        fig.autofmt_xdate()
+
+        # save plot
+        ax.set_title('pot. temp., domain '+self.domain+' lat '+str(self.lat)+' lon '+str(self.lon))
+        ax.set_ylabel('height, m')
+        filename = 'pot_temp.png'
+        if self.reg_diff == 'diff':
+            filename = 'diffCTRL_'+filename
+        fig.savefig(os.path.join(self.plot_dir, 'timeheight', filename))
+        
+        #plt.show()
+        #1/0
         plt.close()
 
     def run(self, plot_list=[]):
@@ -166,8 +204,10 @@ class TimeHeightPlotter:
         for vname in plot_list:
 
             if vname == 'wind':
+                print "plotting wind"
                 self.plot_wind()
             elif vname == 'pot_temp':
+                print "plotting potential temperature"
                 self.plot_pot_temp()
             else:
                 raise Exception('unrecognized plot variable: '+vname)
@@ -175,9 +215,21 @@ class TimeHeightPlotter:
 
 if __name__ == "__main__":
 
-    files = ['CA-CTRL/wrfout_d01_2009-07-01_00:00:00', 
-             'CA-0.08/wrfout_d01_2009-07-01_00:00:00', 
-             'CA-0.3/wrfout_d01_2009-07-01_00:00:00']
+    run_name = 'DK-Jun07-mod'
+    reg_diff = 'reg'
+    pt_lat = 54.5
+    pt_lon = 11.7
+    vars_plot = ['wind', 'pot_temp']
+    files = ['wrfout_d01_2013-06-07_00:00:00',
+             'wrfout_d02_2013-06-07_00:00:00',
+             'wrfout_d03_2013-06-07_00:00:00']
+    domains = ['d01', 'd02', 'd03']    
 
-    p = TimePlotter(files_in=files, lat=37.75, lon=-121.65, nlevs=3)
-    p.run(['wind'])  #, 'PH', 'T_q'])
+    print run_name, reg_diff, pt_lat, pt_lon
+
+    for i in xrange(len(files)):
+
+        print files[i], domains[i]            
+        p = TimeHeightPlotter(file_in=files[i], lat=pt_lat, lon=pt_lon, run_name=run_name, reg_diff=reg_diff, domain=domains[i])
+        p.run(vars_plot)
+
