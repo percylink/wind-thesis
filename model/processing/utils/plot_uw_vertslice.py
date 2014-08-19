@@ -157,6 +157,7 @@ class VerticalPlotter:
                         labelpos='E',
                         coordinates='figure',
                         fontproperties={'weight': 'bold'})
+        plt.colorbar(Q)
 
         ax.set_ylabel('pressure, hPa')
         ax.set_ylim(self.ptop, self.pbottom)
