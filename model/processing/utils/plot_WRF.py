@@ -1,6 +1,6 @@
 '''
-PAL 5/8/2013
-make WRF plots for CS267 final project
+PAL 5/8/2013 mod Aug 2014
+make WRF plots in map perspective
 '''
 
 import cPickle
@@ -64,6 +64,12 @@ class Plotter:
         self.suby = np.arange(0,getattr(self.f,'SOUTH-NORTH_GRID_DIMENSION')-1,3)
 
         self.get_pressure_levels()
+
+        # get landmask
+        if self.reg_diff == 'reg':
+            self.landmask = self.f.variables['LANDMASK'][0, :, :]
+        elif self.reg_diff == 'diff':
+            self.landmask = self.f_abs.variables['LANDMASK'][0, :, :]
 
     def get_pressure_levels(self):
 
@@ -298,6 +304,47 @@ class Plotter:
         fig.savefig(file_out)
         plt.close(fig)      
 
+    def plot_wind_surface(self, ii=None):
+
+        fig= plt.figure()
+        ax = []
+
+        for i_lev in xrange(3):
+
+            a, m = self.setup_map(subplot_index=131+i_lev, fig=fig)
+            ax.append(a)
+            f = self.f
+
+            x,y = m(f.variables['XLONG'][0,:,:], f.variables['XLAT'][0,:,:])
+            xu,yu = m(f.variables['XLONG_U'][0,:,:], f.variables['XLAT_U'][0,:,:])
+            xv,yv = m(f.variables['XLONG_V'][0,:,:], f.variables['XLAT_V'][0,:,:])
+            ui = np.mean([f.variables['U'][ii, i_lev, :, :-1],
+                f.variables['U'][ii, i_lev, :, 1:]], axis=0)
+            vi = np.mean([f.variables['V'][ii, i_lev, :-1, :],
+                f.variables['V'][ii, i_lev, 1:, :]], axis=0)
+            ur,vr = m.rotate_vector(ui, vi, f.variables['XLONG'][0,:,:], f.variables['XLAT'][0,:,:])
+            speed = (ur**2 + vr**2)**0.5
+            Q = m.quiver(x[self.suby, :][:, self.subx],y[self.suby, :][:, self.subx], 
+                ur[self.suby, :][:, self.subx], vr[self.suby, :][:, self.subx],
+                speed[self.suby, :][:, self.subx])
+            
+            a.set_title('level '+str(i_lev))
+            self.decorate_map(m=m, a=a, h=Q, fig=fig)
+            a.contour(x, y, self.landmask, [.5], colors='k')
+
+        local_hour = int(self.times[ii][11:13])-self.hr_diff
+        if local_hour < 0:
+            local_hour += 24
+
+        fig.set_size_inches(20,5)
+        fig.suptitle('wind (m/s), local hour '+str(local_hour))
+        file_out = self.make_filename(ii=ii, variable='winds_surface')
+        print file_out
+        fig.savefig(file_out)
+        #plt.show()
+        #1/0
+        plt.close(fig)      
+
     def plot_PH_only(self, ii=None):
 
         fig = plt.figure()
@@ -327,6 +374,44 @@ class Plotter:
         print file_out
         fig.savefig(file_out)
         plt.close(fig)
+
+    def plot_T_surface(self, ii=None):
+
+        fig= plt.figure()
+        ax = []
+
+        for i_lev in xrange(2):
+
+            a, m = self.setup_map(subplot_index=121+i_lev, fig=fig)
+            ax.append(a)
+            f = self.f
+
+            x,y = m(f.variables['XLONG'][0,:,:], f.variables['XLAT'][0,:,:])
+            if i_lev == 0:
+                T = f.variables['TSK'][ii, :, :]
+                level = 'skin'
+            elif i_lev == 1:
+                T = f.variables['T2'][ii, :, :]
+                level = '2 m'
+
+            h = m.pcolormesh(x, y, T)
+
+            a.set_title(level+' temperature')
+            self.decorate_map(m=m, a=a, h=h, fig=fig)
+            #a.contour(x, y, self.landmask, [0.99], colors='k')
+
+        local_hour = int(self.times[ii][11:13])-self.hr_diff
+        if local_hour < 0:
+            local_hour += 24
+
+        fig.set_size_inches(10,5)
+        fig.suptitle('surface temperature, local hour '+str(local_hour))
+        file_out = self.make_filename(ii=ii, variable='T_surface')
+        print file_out
+        fig.savefig(file_out)
+        #plt.show()
+        #1/0
+        plt.close(fig)      
 
     def plot_sfc_flx(self, ii=None):
 
@@ -410,8 +495,12 @@ class Plotter:
                     self.plot_PH_winds(ii=ii)
                 elif plot == 'T_q':
                     self.plot_T_q(ii=ii)
+                elif plot == 'T_surface':
+                    self.plot_T_surface(ii=ii)
                 elif plot == 'winds':
                     self.plot_wind_only(ii=ii)
+                elif plot == 'winds_surface':
+                    self.plot_wind_surface(ii=ii)
                 elif plot == 'PH':
                     self.plot_PH_only(ii=ii)
                 elif plot == 'sfc_flx':
@@ -432,180 +521,4 @@ if __name__ == "__main__":
 
     p = Plotter(file_in=file_in, plot_interval=plot_interval)
     p.run(['winds', 'PH', 'T_q'])
-
-
-
-        
-    #   """
-    #   ######
-    #   ## cloud and precip plots
-    #   ######
-    #   fig = plt.figure()
-        
-    #   # plot total precipitable water (integrate QCLOUD, QRAIN, QVAPOR) - all kg/kg
-    #   a1 = fig.add_subplot(221)
-    #   m = Basemap(width=f.DX*1.2*getattr(f,'WEST-EAST_GRID_DIMENSION'),\
-    #       height=f.DY*1.2*getattr(f,'SOUTH-NORTH_GRID_DIMENSION'),resolution='l',\
-    #       projection='lcc',lat_1=f.TRUELAT1,lat_2=f.TRUELAT2,lat_0=f.CEN_LAT,lon_0=f.CEN_LON)
-    #   x,y = m(f.variables['XLONG'][0,:,:],f.variables['XLAT'][0,:,:])
-    #   tmp = f.variables['QCLOUD'][ii,:,:,:]+f.variables['QRAIN'][ii,:,:,:]+f.variables['QVAPOR'][ii,:,:,:] # sum all forms of water
-    #   tmpa = np.mean([tmp[1:,:,:],tmp[:-1,:,:]],axis=0) # average for layers between grid points
-    #   ps = f.variables['PSFC'][ii,:,:]
-    #   ptop = f.variables['P_TOP'][ii]
-    #   eta = f.variables['ZNU'][ii,:]
-    #   tpw = np.zeros_like(ps)
-    #   for jj in xrange(np.shape(tmpa)[0]): # calculate sum(dp*qavg/g)
-    #       dp = (ps-ptop)*(eta[jj]-eta[jj+1])
-    #       dq = tmpa[jj,:,:]*dp/9.8
-    #       tpw += dq
-    #   h = m.contourf(x,y,tpw,20)
-    #   m.drawparallels(np.arange(minlat,maxlat,5))
-    #   m.drawmeridians(np.arange(minlon,maxlon,5))
-    #   m.drawcoastlines()
-    #   m.drawstates()
-    #   fig.colorbar(h,ax=a1)
-    #   a1.set_title('total precipitable water, kg/m2')
-        
-    #   # plot OLR
-    #   a2 = fig.add_subplot(222)
-    #   m = Basemap(width=f.DX*1.2*getattr(f,'WEST-EAST_GRID_DIMENSION'),\
-    #       height=f.DY*1.2*getattr(f,'SOUTH-NORTH_GRID_DIMENSION'),resolution='l',\
-    #       projection='lcc',lat_1=f.TRUELAT1,lat_2=f.TRUELAT2,lat_0=f.CEN_LAT,lon_0=f.CEN_LON)
-    #   x,y = m(f.variables['XLONG'][0,:,:],f.variables['XLAT'][0,:,:])
-    #   tmp = f.variables['OLR'][ii,:,:]
-    #   h = m.contourf(x,y,tmp,20)
-    #   m.drawparallels(np.arange(minlat,maxlat,5))
-    #   m.drawmeridians(np.arange(minlon,maxlon,5))
-    #   m.drawcoastlines()
-    #   m.drawstates()
-    #   fig.colorbar(h,ax=a2)
-    #   a2.set_title('OLR, W/m2')
-        
-    #   # plot integrated QCLOUD below 500 hPa
-    #   a3 = fig.add_subplot(223)
-    #   m = Basemap(width=f.DX*1.2*getattr(f,'WEST-EAST_GRID_DIMENSION'),\
-    #       height=f.DY*1.2*getattr(f,'SOUTH-NORTH_GRID_DIMENSION'),resolution='l',\
-    #       projection='lcc',lat_1=f.TRUELAT1,lat_2=f.TRUELAT2,lat_0=f.CEN_LAT,lon_0=f.CEN_LON)
-    #   x,y = m(f.variables['XLONG'][0,:,:],f.variables['XLAT'][0,:,:])
-    #   tmp = f.variables['QCLOUD'][ii,:,:,:]
-    #   tmpa = np.mean([tmp[1:,:,:],tmp[:-1,:,:]],axis=0) # average for layers between grid points
-    #   ps = f.variables['PSFC'][ii,:,:]
-    #   ptop = f.variables['P_TOP'][ii]
-    #   eta = f.variables['ZNU'][ii,:]
-    #   icld = np.zeros_like(ps)
-    #   for jj in xrange(np.shape(tmpa)[0]): # calculate sum(dp*qavg/g)
-    #       if 1000.*eta[jj+1]>=500.:
-    #           dp = (ps-ptop)*(eta[jj]-eta[jj+1])
-    #           dq = tmpa[jj,:,:]*dp/9.8
-    #           icld += dq
-    #   h = m.contourf(x,y,icld,20)
-    #   m.drawparallels(np.arange(minlat,maxlat,5))
-    #   m.drawmeridians(np.arange(minlon,maxlon,5))
-    #   m.drawcoastlines()
-    #   m.drawstates()
-    #   fig.colorbar(h,ax=a3)
-    #   a3.set_title('cloud water below 500 hPa, kg/m2')
-        
-    #   # plot integrated QCLOUD above 500 hPa
-    #   a4 = fig.add_subplot(224)
-    #   m = Basemap(width=f.DX*1.2*getattr(f,'WEST-EAST_GRID_DIMENSION'),\
-    #       height=f.DY*1.2*getattr(f,'SOUTH-NORTH_GRID_DIMENSION'),resolution='l',\
-    #       projection='lcc',lat_1=f.TRUELAT1,lat_2=f.TRUELAT2,lat_0=f.CEN_LAT,lon_0=f.CEN_LON)
-    #   x,y = m(f.variables['XLONG'][0,:,:],f.variables['XLAT'][0,:,:])
-    #   tmp = f.variables['QCLOUD'][ii,:,:,:]
-    #   tmpa = np.mean([tmp[1:,:,:],tmp[:-1,:,:]],axis=0) # average for layers between grid points
-    #   ps = f.variables['PSFC'][ii,:,:]
-    #   ptop = f.variables['P_TOP'][ii]
-    #   eta = f.variables['ZNU'][ii,:]
-    #   icld = np.zeros_like(ps)
-    #   for jj in xrange(np.shape(tmpa)[0]): # calculate sum(dp*qavg/g)
-    #       if 1000.*eta[jj+1]<500.:
-    #           dp = (ps-ptop)*(eta[jj]-eta[jj+1])
-    #           dq = tmpa[jj,:,:]*dp/9.8
-    #           icld += dq
-    #   h = m.contourf(x,y,icld,20)
-    #   m.drawparallels(np.arange(minlat,maxlat,5))
-    #   m.drawmeridians(np.arange(minlon,maxlon,5))
-    #   m.drawcoastlines()
-    #   m.drawstates()
-    #   fig.colorbar(h,ax=a4)
-    #   a4.set_title('cloud water above 500 hPa, kg/m2')
-        
-    #   fig.suptitle(tt)
-    #   pcloud.savefig(fig)
-    #   plt.close(fig)
-        
-    #   ######
-    #   ## rain, OLR, PBL, w plots
-    #   ######
-    #   fig = plt.figure()
-        
-    #   # plot rain since last timestep (RAINC+RAINNC) --> mm
-    #   a1 = fig.add_subplot(221)
-    #   m = Basemap(width=f.DX*1.2*getattr(f,'WEST-EAST_GRID_DIMENSION'),\
-    #       height=f.DY*1.2*getattr(f,'SOUTH-NORTH_GRID_DIMENSION'),resolution='l',\
-    #       projection='lcc',lat_1=f.TRUELAT1,lat_2=f.TRUELAT2,lat_0=f.CEN_LAT,lon_0=f.CEN_LON)
-    #   x,y = m(f.variables['XLONG'][0,:,:],f.variables['XLAT'][0,:,:])
-    #   if ii==0:
-    #       tmp = f.variables['RAINNC'][ii,:,:]+f.variables['RAINC'][ii,:,:]
-    #   else:
-    #       tmp = (f.variables['RAINNC'][ii,:,:]-f.variables['RAINNC'][ii-1,:,:])+\
-    #           (f.variables['RAINC'][ii,:,:]-f.variables['RAINC'][ii-1,:,:])
-    #   h = m.contourf(x,y,tmp,20)
-    #   m.drawparallels(np.arange(minlat,maxlat,5))
-    #   m.drawmeridians(np.arange(minlon,maxlon,5))
-    #   m.drawcoastlines()
-    #   m.drawstates()
-    #   fig.colorbar(h,ax=a1)
-    #   a1.set_title('total precip, mm since last output')
-        
-    #   # PBL height
-    #   a2 = fig.add_subplot(222)
-    #   m = Basemap(width=f.DX*1.2*getattr(f,'WEST-EAST_GRID_DIMENSION'),\
-    #       height=f.DY*1.2*getattr(f,'SOUTH-NORTH_GRID_DIMENSION'),resolution='l',\
-    #       projection='lcc',lat_1=f.TRUELAT1,lat_2=f.TRUELAT2,lat_0=f.CEN_LAT,lon_0=f.CEN_LON)
-    #   x,y = m(f.variables['XLONG'][0,:,:],f.variables['XLAT'][0,:,:])
-    #   tmp = f.variables['PBLH'][ii,:,:]/1000.
-    #   h = m.contourf(x,y,tmp,20)
-    #   m.drawparallels(np.arange(minlat,maxlat,5))
-    #   m.drawmeridians(np.arange(minlon,maxlon,5))
-    #   m.drawcoastlines()
-    #   m.drawstates()
-    #   fig.colorbar(h,ax=a2)
-    #   a2.set_title('PBL height, km')
-        
-    #   # w velocity near 850 hPa
-    #   a3 = fig.add_subplot(223)
-    #   m = Basemap(width=f.DX*1.2*getattr(f,'WEST-EAST_GRID_DIMENSION'),\
-    #       height=f.DY*1.2*getattr(f,'SOUTH-NORTH_GRID_DIMENSION'),resolution='l',\
-    #       projection='lcc',lat_1=f.TRUELAT1,lat_2=f.TRUELAT2,lat_0=f.CEN_LAT,lon_0=f.CEN_LON)
-    #   x,y = m(f.variables['XLONG'][0,:,:],f.variables['XLAT'][0,:,:])
-    #   tmp = f.variables['W'][ii,mask850s,:,:]
-    #   h = m.contourf(x,y,tmp,20)
-    #   m.drawparallels(np.arange(minlat,maxlat,5))
-    #   m.drawmeridians(np.arange(minlon,maxlon,5))
-    #   m.drawcoastlines()
-    #   m.drawstates()
-    #   fig.colorbar(h,ax=a3)
-    #   a3.set_title('w velocity at '+str(round(p850s))+' hPa')
-        
-    #   # w velocity near 500 hPa
-    #   a4 = fig.add_subplot(224)
-    #   m = Basemap(width=f.DX*1.2*getattr(f,'WEST-EAST_GRID_DIMENSION'),\
-    #       height=f.DY*1.2*getattr(f,'SOUTH-NORTH_GRID_DIMENSION'),resolution='l',\
-    #       projection='lcc',lat_1=f.TRUELAT1,lat_2=f.TRUELAT2,lat_0=f.CEN_LAT,lon_0=f.CEN_LON)
-    #   x,y = m(f.variables['XLONG'][0,:,:],f.variables['XLAT'][0,:,:])
-    #   tmp = f.variables['W'][ii,mask500s,:,:]
-    #   h = m.contourf(x,y,tmp,20)
-    #   m.drawparallels(np.arange(minlat,maxlat,5))
-    #   m.drawmeridians(np.arange(minlon,maxlon,5))
-    #   m.drawcoastlines()
-    #   m.drawstates()
-    #   fig.colorbar(h,ax=a4)
-    #   a4.set_title('w velocity at '+str(round(p500s))+' hPa')
-        
-    #   fig.suptitle(tt)
-    #   pmisc.savefig(fig)
-    #   plt.close(fig)
-    #   """
 
