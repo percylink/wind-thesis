@@ -34,7 +34,7 @@ class VerticalPlotter:
         self.plot_dir = os.path.join(self.root_dir, 'plots', domain, 'vertical_uw')
         self.zoom = zoom
         self.plot_type = plot_type
-        self.w_multiplier = 20.
+        self.w_multiplier = 1.
         if run_name[:2] == 'DK':
             self.utc_minus_hr = -1
         elif run_name[:2] == 'CA':
@@ -101,7 +101,7 @@ class VerticalPlotter:
 
         hour = self.get_hour(self.times[ii])
         sliceav = self.get_data(wind=wind, ii=ii)
-
+        
         if self.slice_direction == 'xz':
             h = ax.scatter(self.longrid, pslice, s=20, c=sliceav,\
                 vmin=self.vmin[wind], vmax=self.vmax[wind], cmap=plt.cm.jet, edgecolors='none')
@@ -125,11 +125,24 @@ class VerticalPlotter:
 
         hour = self.get_hour(self.times[ii])
         wav = self.get_data(wind='w', ii=ii)
+        
+        if self.zoom:
+            toplevel = 12
+        else:
+            toplevel = 22
+
+        vmin = 0
+        if self.reg_diff == 'reg':
+            vmax = 15
+        elif self.reg_diff == 'diff':
+            vmax = 5
 
         if self.slice_direction == 'xz':
             uav = self.get_data(wind='u', ii=ii)
             speed = np.sqrt(uav**2 + wav**2)
-            Q = ax.quiver(self.longrid, pslice, uav, wav*self.w_multiplier, speed)
+            Q = ax.quiver(self.longrid[:toplevel, :], pslice[:toplevel, :], 
+                          uav[:toplevel, :], wav[:toplevel, :]*self.w_multiplier, 
+                          speed[:toplevel, :])
             ax.set_title('wind profile along '+str(self.lat)+'N, local time '+str(hour)+':00 hr\n'+ \
                          'w magnified by '+str(self.w_multiplier))
             ax.set_xlabel('longitude')
@@ -142,7 +155,9 @@ class VerticalPlotter:
         elif self.slice_direction == 'yz':
             vav = self.get_data(wind='v', ii=ii)
             speed = np.sqrt(vav**2 + wav**2)
-            Q = ax.quiver(self.latgrid, pslice, vav, wav*self.w_multiplier, speed)
+            Q = ax.quiver(self.latgrid[:toplevel, :], pslice[:toplevel, :], 
+                          vav[:toplevel, :], wav[:toplevel, :]*self.w_multiplier, 
+                          speed[:toplevel, :])
             ax.set_title('wind profile along '+str(self.lon)+'E, local time '+str(hour)+':00 hr\n'+ \
                          'w magnified by '+str(self.w_multiplier))
             ax.set_xlabel('latitude')
@@ -153,6 +168,8 @@ class VerticalPlotter:
             ax.plot(self.latprof[~self.landmask.astype(bool)], 
                     np.zeros(len(self.landmask)-sum(self.landmask))+self.pbottom, 'bo')
         
+        Q.set_clim(vmin=vmin, vmax=vmax)
+        #plt.colorbar()
         qk = plt.quiverkey(Q, 0.9, 0.95, 2, r'$2 \frac{m}{s}$',
                         labelpos='E',
                         coordinates='figure',
