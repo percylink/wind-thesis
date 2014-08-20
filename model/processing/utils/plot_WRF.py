@@ -147,10 +147,10 @@ class Plotter:
         
         x,y = m(f.variables['XLONG'][0, :, :],f.variables['XLAT'][0, :, :])
         tmp = f.variables['PH'][ii, self.maskP[pressure_level], :, :] + f.variables['PHB'][ii, self.maskP[pressure_level], :, :]
-        if contour_int is not None:
-            h = m.contourf(x, y, tmp, contour_int)
-        else:
-            h = m.contourf(x, y, tmp)
+        #if contour_int is not None:
+        #    h = m.pcolormesh(x, y, tmp)  #, contour_int)
+        #else:
+        h = m.pcolormesh(x, y, tmp)
         a.set_ylabel(str(round(self.P[pressure_level]))+' hPa')
         a.set_title('geopotential')
         
@@ -173,8 +173,8 @@ class Plotter:
             f.variables['V'][ii, self.maskP[pressure_level], 1:, :]], axis=0)
         #wspeed = (ui**2+vi**2)**0.5
         #h = m.contourf(x, y, wspeed, contour_int)
-        limits = [np.min(ui)]+range(-8, 9)+[np.max(ui)]
-        h = m.contourf(x, y, ui, limits)
+        #limits = [np.min(ui)]+range(-8, 9)+[np.max(ui)]
+        h = m.pcolormesh(x, y, ui)  #, limits)
         ur,vr = m.rotate_vector(ui, vi, f.variables['XLONG'][0,:,:], f.variables['XLAT'][0,:,:])
         m.quiver(x[self.suby, :][:, self.subx],y[self.suby, :][:, self.subx], 
             ur[self.suby, :][:, self.subx], vr[self.suby, :][:, self.subx])
@@ -192,7 +192,7 @@ class Plotter:
         
         x,y = m(f.variables['XLONG'][0,:,:],f.variables['XLAT'][0,:,:])
         tmp = f.variables['T'][ii, self.maskP[pressure_level], :, :] + f.variables['T00'][ii]
-        h = m.contourf(x,y,tmp)
+        h = m.pcolormesh(x,y,tmp)
         a.set_title('pot. temp. at '+str(round(self.P[pressure_level]))+' hPa')
 
         self.decorate_map(m=m, a=a, h=h, fig=fig)
@@ -207,7 +207,7 @@ class Plotter:
         
         x,y = m(f.variables['XLONG'][0,:,:],f.variables['XLAT'][0,:,:])
         tmp = f.variables['QVAPOR'][ii, self.maskP[pressure_level], :, :]
-        h = m.contourf(x,y,tmp)
+        h = m.pcolormesh(x,y,tmp)
         a.set_title('q at '+str(round(self.P[pressure_level]))+' hPa')
 
         self.decorate_map(m=m, a=a, h=h, fig=fig)
@@ -220,9 +220,9 @@ class Plotter:
         x,y = m(f.variables['XLONG'][0,:,:],f.variables['XLAT'][0,:,:])
         tmp = f.variables['QFX'][ii, :, :] * self.latent_heat_evap
         if contour_int is not None:
-            h = m.contourf(x,y,tmp,contour_int)
+            h = m.pcolormesh(x,y,tmp,contour_int)
         else:
-            h = m.contourf(x,y,tmp)
+            h = m.pcolormesh(x,y,tmp)
         a.set_title('LH, W/m2')
 
         self.decorate_map(m=m, a=a, h=h, fig=fig)
@@ -235,9 +235,9 @@ class Plotter:
         x,y = m(f.variables['XLONG'][0,:,:],f.variables['XLAT'][0,:,:])
         tmp = f.variables['HFX'][ii, :, :]
         if contour_int is not None:
-            h = m.contourf(x,y,tmp,contour_int)
+            h = m.pcolormesh(x,y,tmp,contour_int)
         else:
-            h = m.contourf(x,y,tmp)
+            h = m.pcolormesh(x,y,tmp)
         a.set_title('SH, W/m2')
 
         self.decorate_map(m=m, a=a, h=h, fig=fig)
@@ -256,9 +256,9 @@ class Plotter:
             tmp = smois_diff[0, :, :]
 
         if contour_int is not None:
-            h = m.contourf(x,y,tmp,contour_int)
+            h = m.pcolormesh(x,y,tmp,contour_int)
         else:
-            h = m.contourf(x,y,tmp)
+            h = m.pcolormesh(x,y,tmp)
 
         if integrated:
             a.set_title('d(SMOIS), column')
@@ -309,27 +309,45 @@ class Plotter:
         fig= plt.figure()
         ax = []
 
+        vmin = 0
+        if self.reg_diff == 'reg':
+            vmax = 15
+        elif self.reg_diff == 'diff':
+            vmax = 5
+
         for i_lev in xrange(3):
 
             a, m = self.setup_map(subplot_index=131+i_lev, fig=fig)
             ax.append(a)
             f = self.f
 
+            # get x and y coords
             x,y = m(f.variables['XLONG'][0,:,:], f.variables['XLAT'][0,:,:])
             xu,yu = m(f.variables['XLONG_U'][0,:,:], f.variables['XLAT_U'][0,:,:])
             xv,yv = m(f.variables['XLONG_V'][0,:,:], f.variables['XLAT_V'][0,:,:])
+
+            # make approximate x and y grids that are regular (ignore slight variations, which are usually < 10 m)
+            x_row = np.mean(x, axis=0)
+            x_approx = np.tile(x_row, (x.shape[0], 1))
+            y_col = np.mean(y, axis=1)
+            y_approx = np.tile(np.array([y_col]).T, (1, y.shape[1]))
+
+            # get u and v at center grid points
             ui = np.mean([f.variables['U'][ii, i_lev, :, :-1],
                 f.variables['U'][ii, i_lev, :, 1:]], axis=0)
             vi = np.mean([f.variables['V'][ii, i_lev, :-1, :],
                 f.variables['V'][ii, i_lev, 1:, :]], axis=0)
+
+            # rotate vectors to x-y projection
             ur,vr = m.rotate_vector(ui, vi, f.variables['XLONG'][0,:,:], f.variables['XLAT'][0,:,:])
             speed = (ur**2 + vr**2)**0.5
-            Q = m.quiver(x[self.suby, :][:, self.subx],y[self.suby, :][:, self.subx], 
-                ur[self.suby, :][:, self.subx], vr[self.suby, :][:, self.subx],
-                speed[self.suby, :][:, self.subx])
+
+            # plot
+            h = m.pcolormesh(x, y, speed, vmin=vmin, vmax=vmax, cmap=plt.get_cmap('GnBu'))
+            m.streamplot(x_approx, y_approx, ur, vr, color='purple')
             
             a.set_title('level '+str(i_lev))
-            self.decorate_map(m=m, a=a, h=Q, fig=fig)
+            self.decorate_map(m=m, a=a, h=h, fig=fig)
             a.contour(x, y, self.landmask, [.5], colors='k')
 
         local_hour = int(self.times[ii][11:13])-self.hr_diff
@@ -447,15 +465,16 @@ class Plotter:
         f = self.f
 
         x,y = m(f.variables['XLONG'][0,:,:],f.variables['XLAT'][0,:,:])
-        smois_init = f.variables['SMOIS'][0,0,:,:]  # surface
+        smois_init = f.variables['SMOIS'][0,0,:,:].copy()  # surface
+        smois_masked = np.ma.masked_where(self.landmask == 0, smois_init)
 
-        contours = list(np.arange(0.08, 0.4, 0.04))
-        if smois_init.min() < contours[0]:
-            contours = [smois_init.min()]+contours
-        if smois_init[smois_init < 1].max() > contours[-1]:  # don't use 1 as max
-            contours = contours+[smois_init.max()]
+        #contours = list(np.arange(0.08, 0.4, 0.04))
+        #if smois_init.min() < contours[0]:
+        #    contours = [smois_init.min()]+contours
+        #if smois_init[smois_init < 1].max() > contours[-1]:  # don't use 1 as max
+        #    contours = contours+[smois_init.max()]
         
-        h = m.contourf(x, y, smois_init, contours)
+        h = m.pcolormesh(x, y, smois_masked)  #, contours)
 
         a.set_title('initial SMOIS, surface')
         self.decorate_map(m=m, a=a, h=h, fig=fig)
