@@ -311,9 +311,11 @@ class Plotter:
 
         vmin = 0
         if self.reg_diff == 'reg':
-            vmax = 15
+            vmax = 10
+            cmap = plt.get_cmap('jet')
         elif self.reg_diff == 'diff':
-            vmax = 5
+            vmax = 4
+            cmap = plt.get_cmap('GnBu')
 
         for i_lev in xrange(3):
 
@@ -343,7 +345,7 @@ class Plotter:
             speed = (ur**2 + vr**2)**0.5
 
             # plot
-            h = m.pcolormesh(x, y, speed, vmin=vmin, vmax=vmax, cmap=plt.get_cmap('GnBu'))
+            h = m.pcolormesh(x, y, speed, vmin=vmin, vmax=vmax, cmap=cmap)
             m.streamplot(x_approx, y_approx, ur, vr, color='purple')
             
             a.set_title('level '+str(i_lev))
@@ -524,6 +526,8 @@ class Plotter:
                     self.plot_PH_only(ii=ii)
                 elif plot == 'sfc_flx':
                     self.plot_sfc_flx(ii=ii)
+                #if ii==3:
+                #    1/0
 
 
 if __name__ == "__main__":

@@ -18,93 +18,42 @@
 
 \section{Introduction}
 
-As demonstrated in the previous chapter, soil moisture influences the near-surface atmosphere by controlling fluxes of heat at the land surface.  In this chapter, I investigate the effect of soil moisture on winds at a specific wind farm, the Solano Wind Project in the Sacramento-San Joaquin River Delta region of California.  I use a regional atmospheric model to test which regions' soil moisture have the greatest effect on winds at the Solano wind farm and to quantify the magnitude of the effect in different times of day and in different synoptic conditions.
+As illustrated in the previous chapter, soil moisture influences the near-surface atmosphere by controlling fluxes of heat at the land surface.  In this chapter, I investigate the effect of soil moisture on winds at a specific wind farm, the Solano Wind Project in the Sacramento-San Joaquin River Delta region of California.  I use a regional atmospheric model to test which regions' soil moisture have the greatest effect on winds at the Solano wind farm and to quantify the magnitude of the effect at different times of day across a range of soil moisture changes.  This study serves as a prototype for characterizing the importance of soil moisture information for wind forecasts at other wind farms.  A goal of this study is to demonstrate that accurate soil moisture information can improve wind forecasts, and that constraining the regions to which the wind forecast is most sensitive may help target soil moisture measurement efforts.
 
-prototype study for characterizing importance of soil moisture information for wind forecasts at wind farms in general
-one goal is to illustrate that accurate soil moisture information can improve wind forecasts, and to constrain the regions to which the wind forecast is most sensitive so that instrumentation and measurement campaigns can be targeted for maximal benefit.
+Accurate wind forecasts can reduce the cost of integrating wind energy into the electric grid on a large scale.  In order to reduce CO$_2$ emissions to the degree necessary to avert dangerous climate change [CITE IPCC], electric utilities will need to transition to non-fossil-fuel energy sources including a large fraction of wind energy [CITE Jacobson].  However, although wind energy has large peak generation potential, it is intermittent, and the instantaneous mismatch between wind generation and electric demand must be met with other generation.  In most utilities, allocations of electric generation are made a day ahead, based on forecasted demand and wind and solar supply.  At shorter lead times (hour-ahead to real-time), imbalances between the day-ahead allocations of generation (based on the day-ahead forecasts of wind, solar, and demand) and the actual net demand (demand minus wind and solar) must be met with, in the case of a shortfall, more expensive quick-startup generation, or in the case of excess generation, wasted energy resources.  These imbalance costs add significantly to the cost of wind energy (up to XX\%) [CITATIONS - Porter, Fabbri, Ummels].  Thus, improved accuracy of wind forecasts could reduce imbalance costs, making integration of wind into the electric grid more economically feasible.
 
-Set up the problem of wind forecasting:
-\begin{itemize}
-\item wind is a variable source of energy
-\item utility needs to plan for this variability, so that they have enough energy when wind is low but don't have too much extra when wind is high
-\item having too much extra generation: paying for energy they don't need, and also emissions that aren't necessary
-\item having too little generation when wind is low: what happens?  have to pay for expensive ramp-up of plants, or have to pay penalties?  (confirm this)
-\item how better forecasting can help: more accurate bidding/committing to generation on the day ahead (or even on hour-ahead?), which can save XX amount of money; less need for generation plants spinning in reserve, which can save XX amount of emissions
-\end{itemize}
-
-How wind energy forecasting currently works
+Current state of the science in wind forecasting
 \begin{itemize}
 \item physical, statistical, and hybrid modeling methods
+\item different forecasting companies and organizations have different models - give some examples, cite review papers (Costa, Foley, Lei, Monteiro, Porter, Wang
+\item tests of model resolution and physical parameterizations, especially planetary boundary layer schemes [Draxl, Marjanovic], also large scale forcing (Carvalho)
+\item sensitivity to terrain complexity (Marjanovic, Carvalho)
+\item tests of model output statistics (MOS) algorithms to correct NWP forecast based on historical observations; in particular, tests of various machine learning algorithms [B\'edard, Ellis, Kusiak, Ortiz-Garc\'ia, Ranaboldo, Sweeney]
+\item prediction of ramps, but mostly in a statistical sense, without explicit connection to the physical mechanisms driving the rapid increases or decreases in wind power [Carcangiu, Ellis]
+\item ensembles of NWP runs, initialized with different random perturbations (?) (Deppe, Pinson
 \end{itemize}
 
-Need for more physical/mechanistic understanding of what drives the wind dynamics.  Mechanistic understanding enables smarter statistical model-building, because you have a better sense of the relevant variables to put in the model.  Mechanisms will play out in different way in different locations... But this study is a prototype for how to parse important mechanisms...
-
-This study focuses on the mechanism of land-atmosphere energy exchange as modulated by soil moisture.  Plenty of previous work has shown that soil moisture heterogeneity can drive mesoscale circulations (citations), but much of this literature focuses on the effect of heterogeneities on cloud formation and precipitation.  Here, we focus on the effect of such heterogeneities on surface winds and on wind predictability.  
-
-We approach the problem from the perspective of a wind farm operator who wants to improve wind energy forecasts by measuring soil moisture.  If we were to measure soil moisture, what locations would give the greatest forecast improvement?  At what spatial resolution should the measurements be made?
-
-State how this study is different from Avissar-esque work: focus on response of near-surface wind at a point (or fixed wind farm area) to soil moisture heterogeneities in different configurations around the point.  How do these soil moisture heterogeneities affect wind prediction accuracy, if soil moisture heterogeneities are not known and not included in model?  Particular times of day?  What types of errors?  (phase shift in onset of diurnal cycle, or change in speed, or new appearance of ``ramps")
-
-State how this study is different from wind energy forecasting literature: (careful here - don't want to be too hard on a body of work with which I am not very familiar) - focus on physical mechanism; not trying to predict at a specific wind farm, in this case; instead, using a physically-based model to identify regions from which soil moisture information is particularly important for forecasts at a given location, and times of day and synoptic conditions when forecasts are particularly sensitive to soil moisture information.  NOTE: there is very little other research in the wind energy literature on the importance of soil moisture and land surface energy fluxes for accurate wind forecasts (cite Marjanovic).
-
-We investigate the importance of soil moisture for wind energy forecasts at two different locations: California's Altamont pass, and Kansas.  Reasoning: Kansas has minimal oceanic or topographic influence, so is a good place to study sensitivity of wind to geometry of soil moisture patterns in isolation.  California has both oceanic and topographic influences; raises interesting questions of interactions between topography (slope circulations) and soil moisture, and amplification or damping of background sea-breeze circulation by soil moisture.  Wind farms are located in both types of places (flat, continental regions like the central US, and mountainous or coastal regions. Examples?) so it is important to understand how soil moisture and the land surface energy balance influence near-surface wind in both types of settings.
-
-Explicit list of questions:
+The influence of land surface energy fluxes on wind energy forecasts has not received much attention (with the exception of Marjanovic et al. XXXX who show that the forecast at a California wind farm is broadly sensitive to initial soil moisture, and WHARTON LITERATURE ON STABILITY, and WHARTON-MAXWELL ON PARFLOW.)  However, the effect of soil moisture on regional circulations has been recognized for several decades in the literature on atmospheric boundary layer processes and weather forecasting.  [OVERVIEW OF LITERATURE]
 \begin{itemize}
-\item In two different regions, how sensitive are wind forecasts to the accuracy of soil moisture information?
-\item What is the spatial extent of soil moisture sensitivity - areas closer to the wind farm, vs. areas farther from it?
-\item At what time of day is the wind forecast most sensitive to the accuracy of soil moisture information?
-\item For the offshore wind farm: how far off shore does the zone of soil moisture influence extend?
-\item How linear is the response of wind forecast accuracy to the soil moisture accuracy?  Are there particular ranges of soil moisture where wind forecasts are particularly sensitive?
-\item Maybe: at what spatial scale must soil moisture be known?  Can an area-averaged uniform soil moisture serve in place of high-spatial-resolution soil moisture when soil moisture varies at small scales?
-\end{itemize}
-
-
-\subsection{Literature background}
-
-What to put in intro vs. discussion?
-
-Thermal mesoscale circulations:
-\begin{itemize}
-\item Idealized simulations: length scales, time to develop, order of magnitude effect on wind, strength of heat flux difference necessary, height of winds affected
-\item Observational?  From the Amazon?
-\end{itemize}
-
-Land-sea breeze:
-
-California wind climatology - sea breeze interacting with topography:
-
-Land surface in wind energy prediction:
-\begin{itemize}
+\item Soil moisture heterogeneity can drive mesoscale circulations [Avissar lit, ] - preferred length scales, sensitivity to heat flux anomaly amplitude, dependence on synoptic conditions
+\item Thermal contrast between land and ocean drives mesoscale circulations [CA sea breeze lit], and the strength of the thermal contrast depends in part on soil moisture because of its influence on land surface temperature [Physick, Miller]
 \item Nikola's paper: soil moisture has strong affect on accuracy of wind forecast, both in magnitude and in timing of wind shifts (``ramps")
 \item Stability matters: Wharton and Lundquist found that turbines extracted more power for the same nacelle wind speed in stably stratified conditions than in convective conditions.  This may depend on the site: others (XXX) have found that turbines extract less power in stable conditions than in convective conditions, for the same wind speed.  In either case, stability near the surface depends strongly on the surface energy balance, which in turn depends strongly on soil moisture.
 \end{itemize}
 
-\subsection{WRF regional atmospheric model}
+Winds in the Solano area are strongly influenced by both the surrounding complex terrain and the contrast of land surface heating with the adjacent cool ocean.  Solano sits in a valley pass between the ocean and California's Central Valley, and onshore winds are channeled and accelerated through the pass; this topographic channeling also constrains the wind direction at low levels near Solano to remain near westerly.  The diurnal cycle of land surface heating drives a marked diurnal cycle in wind speed in the Solano area, with minimum wind speeds in the morning and maximum speeds in the late afternoon and evening.  Additionally, the strongest winds occur in the summer at Solano, in part due to generally calm synoptic conditions (created by the north Pacific summertime high pressure) that allow the strong surface temperature contrast between ocean and land to drive onshore flow. [CITE CA WIND CLIMATOLOGIES]  Because winds at Solano are generated partly by land surface heating contrasts, it is likely that changes/errors in soil moisture would create errors in wind forecasts by NWP models.
 
-Physics of the model: (read how other people describe it)
+Increased measurement of soil moisture and improved integration of land surface heat flux measurements into forecast models could significantly improve wind forecast accuracy.  We approach the problem from the perspective of a wind farm operator who wants to improve wind energy forecasts by measuring soil moisture.  If we were to measure soil moisture, what locations would give the greatest forecast improvement?  At what spatial resolution should the measurements be made?  The purpose of this study is not to make specific predictions or match observations; rather, we seek to characterize the dependence of wind at this location on soil moisture, as a model for future studies in support of measurement and data assimilation at wind farms more broadly.
+
+We seek to answer the following questions:
 \begin{itemize}
-\item Three dimensional nonhydrostatic (compressible?) atmospheric model
-\item Solves equations of conservation of momentum, mass, and energy; uses finite difference \textit{(*check this)} method to discretize in space and time
-\item State variables that are calculated as they evolve through time: pressure, temperature, three-dimensional wind, moisture, plus a lot of other stuff...
-\item Widely used community regional atmospheric model (regional means it has lateral boundaries and thus requires lateral boundary conditions, as opposed to a global model which does not)
-\item Operational version is used for weather forecasting, and research version is used for (XXX)
-\item List use in wind energy research and operational forecasting ...
-\item In this study, the bottom boundary condition is calculated using the Noah land surface model (but we prescribe initial soil moisture...) - \textit{this is more methods}
-\item What WRF captures well, and what it does not do as well.
-\item Previous studies - how well has WRF done in simulating turbine-height winds (Marjanovic, BAMS article, ...), and major factors on which performance depends (resolution, PBL scheme, lateral forcing, soil moisture **)
+\item On which regions' soil moisture do Solano winds depend?
+\item What changes in the amplitude and timing of the diurnal cycle result from changes/errors in soil moisture?
+\item At what time of day is the wind forecast most sensitive to the accuracy of soil moisture information?
+\item What is the physical mechanism for soil moisture's influence on Solano winds?
+\item How do wind forecast errors scale with soil moisture changes/errors?  Are there particular ranges of soil moisture where wind forecasts are particularly sensitive?
+\item MOVE TO DISCUSSION? Does soil moisture contribute to the timing and/or magnitude of "ramps" (rapid changes in wind speed)?
+\item How sensitive is the wind forecast to the areal coverage of soil moisture changes?
 \end{itemize}
-
-How we are using the model \textit{(Inez's language - not sure if I want to say it this way, because if I am framing this in terms of prediction accuracy, then I do care about specific predictions)}:
-\begin{itemize}
-\item Using this model in an experimental framework; not doing simulations
-\item Goals: 1) explore hypotheses, 2) predict (but not in a detailed way)
-\item \textit{My language}:
-\item Exploring mechanisms that have large impact on forecast accuracy
-\item Identifying especially important regions and times
-\item Not comparing to wind farm data - why? Honestly because we don't have any, but also because this is a prototype for how to investigate important mechanisms at other sites?
-\item Using the model allows us to test physical mechanisms in controlled experiments, even if the model imperfectly represents the real world.  Observations of the atmosphere do not allow for controlled trials.
-\end{itemize}
-
 
 \end{document}

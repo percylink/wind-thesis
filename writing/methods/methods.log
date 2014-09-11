@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  12 AUG 2014 17:33
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  5 SEP 2014 09:45
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -270,13 +270,16 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 [1{/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-[2] (./methods.aux) ) 
+Underfull \vbox (badness 3492) has occurred while \output is active []
+
+ [2]
+[3] (./methods.aux) ) 
 Here is how much of TeX's memory you used:
- 2772 strings out of 493747
- 38249 string characters out of 3143546
- 122638 words of memory out of 3000000
- 5898 multiletter control sequences out of 15000+200000
- 6890 words of font info for 27 fonts, out of 3000000 for 9000
+ 2799 strings out of 493747
+ 38532 string characters out of 3143546
+ 123641 words of memory out of 3000000
+ 5916 multiletter control sequences out of 15000+200000
+ 11584 words of font info for 45 fonts, out of 3000000 for 9000
  875 hyphenation exceptions out of 8191
  34i,5n,31p,1094b,242s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/ams
@@ -286,11 +289,13 @@ onts/cm/cmr10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfon
 ts/cm/cmr12.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmr7.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm
 /cmr9.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-ti10.pfb>
-Output written on methods.pdf (2 pages, 82371 bytes).
+sy10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
+i10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmti
+12.pfb>
+Output written on methods.pdf (3 pages, 106926 bytes).
 PDF statistics:
- 39 PDF objects out of 1000 (max. 8388607)
- 27 compressed objects within 1 object stream
+ 50 PDF objects out of 1000 (max. 8388607)
+ 35 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

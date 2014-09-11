@@ -28,7 +28,7 @@ class TimePlotter:
         self.lat = lat
         self.lon = lon
         self.nlevs = nlevs
-
+        
         # open netcdf file
         if files_in is None:
             raise Exception('files_in is a required parameter')
@@ -72,11 +72,11 @@ class TimePlotter:
             self.ix_lats[filename] = ixlat
             self.ix_lons[filename] = ixlon
 
-    def make_domain_map(self):
+    def make_domain_map(self, i):
 
-        f = self.f[self.files_in[0]]
-        ix_lat = self.ix_lats[self.files_in[0]]
-        ix_lon = self.ix_lons[self.files_in[0]]
+        f = self.f[self.files_in[i]]
+        ix_lat = self.ix_lats[self.files_in[i]]
+        ix_lon = self.ix_lons[self.files_in[i]]
 
         fig, ax = plt.subplots()
         m = Basemap(width=f.DX*1.2*getattr(f,'WEST-EAST_GRID_DIMENSION'),\
@@ -97,8 +97,10 @@ class TimePlotter:
         m.drawcoastlines()
         m.drawstates()
 
-        run_name = self.files_in[0].split('/')[0]
-        fig.savefig(os.path.join(self.plot_dir, 'domain_'+run_name+'.png'))
+        run_name, tmp = self.files_in[i].split('/')
+        domain = tmp.split('_')[1]
+        print run_name, domain
+        fig.savefig(os.path.join(self.root_dir, 'domain_'+run_name+'_'+domain+'.png'))
         plt.close()
 
     def invert_wind_dir(self, wind_dir=None):
@@ -191,7 +193,8 @@ class TimePlotter:
         if not isinstance(plot_list, list):
             plot_list = [plot_list]
 
-        self.make_domain_map()
+        for i in xrange(len(self.files_in)):
+            self.make_domain_map(i)
 
         for vname in plot_list:
 
