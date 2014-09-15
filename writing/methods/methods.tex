@@ -2,6 +2,8 @@
 \documentclass[12pt]{amsart}
 \usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
 \usepackage{datetime}
+\usepackage{setspace}
+\doublespacing
 \geometry{a4paper} % or letter or a5paper or ... etc
 % \geometry{landscape} % rotated page geometry
 
@@ -17,20 +19,97 @@
 \maketitle
 
 \section{Methods}
-In order to test the sensitivity of wind forecasts to soil moisture, we conduct controlled experiments with the Weather Research and Forecasting model (WRF, described in section \textbf{XXXX}).
 
-**Explain choices of synoptic conditions, PBL, resolution based on previous papers' results.
+The sensitivity of Solano wind forecasts to soil moisture is tested using experiments with a regional atmospheric model, the Weather Research and Forecasting (WRF) model.  The WRF model, described in detail in Skamarock et al. [2008], is a three-dimensional, non-hydrostatic regional atmospheric model with terrain following vertical coordinates near the surface that transition to \textit{flat} vertical coordinates at high altitude.  WRF solves the discretized equations for conservation of momentum, mass, energy, and scalars like water vapor, and it has a range of parameterization options for radiation, planetary boundary layer (PBL) turbulence, cloud microphysics, convection, bottom boundary fluxes of water vapor and heat, and lateral boundary forcing.
 
-Location: Rodsand wind farm, offshore (how far?), refer to a map figure, region contains multiple islands of widths XX-XX separated by waterways of widths XX-XX.  Climatology: in the storm tracks, so alternates between frontal storms with strong synoptic forcing (background wind speeds of XX m/s) and relatively calm periods (background wind speeds of XX m/s), with a period of 3-10 days.  Land surface: XXXX.
+\subsection{Model setup}
 
-Time periods we chose: one weak synoptic forcing (XXXX dates) and one strong synoptic forcing (XXXX dates).  We select both time series from the summer season because the land surface receives the largest amount of incoming radiation in the summer, and thus soil moisture control on land surface energy partitioning is likely to have the greatest absolute effect in the summer.
-Wind power generation is greater in this region in summer anyway, and this is the period where land surface energy balance can be expected to be more important, because more total energy coming into the surface, so same relative partitioning would have larger absolute effect
+We run WRF with two two-way-nested domains centered on the Solano wind farm (Figure 1); the domains are described in Table \ref{table:windSol_domains}.  The finest resolution presented here is 2.7 km; preliminary tests with a third finer grid (0.9 km) showed little change in the forecasted winds, similar to the results of Marjanovic et al. [2014].  The domain has 45 vertical levels, with a minimum spacing of \textbf{XX} near the surface and a maximum spacing of \textbf{XX} at the top of the model domain; wind forecasts are not very sensitive to vertical resolution beyond about 40 levels [Marjanovic et al., 2014, and references therein].
 
-Soil moisture treatments: We test the response of the wind to modification of the initial soil moisture.  Table XX shows the soil moisture treatments tested; the control case is the moderate-all case, with a moderate soil moisture value of 0.2 (UNITS??) in region A (shown in red in Figure XX).  Two treatments modify soil moisture in the whole of region A: in the wet-all case, soil moisture is increased to 0.35, and in the dry-all case, soil moisture is decreased to 0.05.  Two additional treatments change the soil moisture of the smaller region B (shown in blue in Figure XX): in the wet-B case, soil moisture is set to 0.35 in region B and to 0.2 in the rest of region A, and in the dry-B case, soil moisture is set to 0.05 in region B and to 0.2 in the rest of region A.  Each soil moisture treatment is run for each of the synoptic forcings.
+The atmospheric model is coupled to the Noah land surface model with USGS land use and soil classifications.  The observed distribution of land use and soil types are used, as are the default vegetation water-use parameters for each land use type, in order to simulate as closely as possible the real present day sensitivity of Solano winds to soil moisture.  Uncertainties associated with errors in the model representation of water movement in the subsurface and plant water use are addressed in the Discussion. 
 
-We use NCEP GFS final analysis, at 1 degree spatial resolution and 6 hr temporal resolution, for the initial and boundary conditions of the WRF model.  WRF is run with three two-way nested grids, with grid spacings of 21.6 km, 7.2 km, and 2.4 km (Figure XX).  Some justification for this grid resolution: we also test a subset of the cases with a fourth, finer grid (0.8 km) and compare the difference in forecasted wind; Marjanovic et al. [XXXX] found that, for a flat terrain case, increases in horizontal resolution beyond XX km had little effect on forecast accuracy.  However, they found that additional horizontal resolution did improve wind forecasts in complex terrain; because our experiments involve flat terrain but complex patterns of surface fluxes, we test whether the higher horizontal resolution improves accuracy.  The numbers of grid points in each horizontal dimension are shown in Table XX.  All runs have 40 vertical levels; Marjanovic et al. [2014] and XXXX have shown that wind forecasts are not very sensitive to vertical resolution beyond about 40 levels.
+The ACM2 PBL scheme is used, following the recommendations of Marjanovic et al. [2014] for a locally forced simple terrain case in California.  The model is forced at the lateral boundaries with AWIP \textbf{re}analysis at \textbf{XX km} resolution \textbf{[CITATION]}.  Other parameterization schemes and settings are listed in Table \ref{table:windSol_paramschemes}.  Model variables are output every 30 minutes.
 
-Model physics: The XXX PBL scheme and the corresponding XXX surface layer scheme are used, following the recommendation of Marjanovic et al. [2014], who found that these schemes performed well under a range of stability conditions.  WRF is coupled to the Noah land surface model, which solves for the evolution of the temperature and moisture state of the land surface and provides fluxes of moisture and energy at the bottom boundary of the atmospheric model.  The XXX cumulus scheme is used.  Information on topography, land use and vegetation, and soil type is drawn from XXX source (USGS?).
+All experiments are run for the period 2009-07-01 00:00 UTC to 2009-07-08 00:00 UTC, and the first \textbf{24} hours are discarded as model spin-up.  This period was chosen for several reasons: (1) it contains a range of synoptic conditions (weak background wind July 1-\textbf{5}, and strong background wind July \textbf{6-7}), (2) turbine-level wind speeds in this region are highest in the spring and summer [\textbf{WIND CLIMATOLOGY THESIS, WHARTON}], and (3) the sensitivity to soil moisture is expected to be strongest in the warm season, because radiation incident to the land surface is greatest in the warm season, so changes in the relative partitioning between evapotranspiration and sensible heat flux have the largest absolute magnitude then.
+
+\subsection{Soil moisture experiments}
+
+The model experiments are listed in Table \ref{table:windSol_runlist}.  In the first set of experiments, we test the sensitivity of Solano winds to soil moisture in different large-scale regions of California.  In cases dryCR, dryCV, and drySN, the background volumetric soil moisture (model variable SMOIS, m$^3$ water/m$^3$ total volume) is set to 0.25, and the soil moisture of the test region (respectively, the Coast Range, Central Valley, and Sierra Nevada, shown in Figure 1b) is set to 0.1.  In cases wetCR, wetCV, and wetSN, the background soil moisture is set to 0.1, and the soil moisture of the test region is set to 0.25.
+
+The next set of experiments tests how the Solano wind response scales with soil moisture in the Central Valley, in both a normal-to-wet background (mountain) scenario and a dry background scenario.  In cases CVXX (where XX is a numeric value), the Coast Range and Sierra Nevada regions' soil moisture is set to 0.2, and the Central Valley soil moisture is set to the value specified by XX.  In cases CVXXdry, the Coast Range and Sierra Nevada regions' soil moisture is set to 0.1, and the Central Valley soil moisture again is specified by XX.
+
+\begin{table}
+\begin{tabular}{ l c c c c c c c }
+\hline
+Domain & $\Delta x$ (km) & $\Delta y$ (km) & $nx$ & $ny$ & $nz$ & $\Delta t$ (s) & USGS data res \\ \hline
+d01 & 8.1 & 8.1 & 96 & 99 & 45 & 45 & 2 min\\
+d02 & 2.7 & 2.7 & 175 & 175 & 45 & 15 & 2 min\\
+\hline
+\end{tabular}
+\caption{Model domains}
+\label{table:windSol_domains}
+\end{table}
+
+\begin{table}
+\begin{tabular}{l l}
+\hline
+Scheme & Setting \\ \hline
+WRF version & 3.6 \\
+Grid nesting & two-way \\
+Lateral boundary conditions & AWIP \\
+Soil levels & 4 \\
+Land use and soil categories & USGS \\
+Land surface model & Noah \\
+Surface layer & MM5 Monin-Obukhov \\
+Planetary Boundary Layer (PBL) & ACM2 \\
+Microphysics & WSM 3-class simple ice \\
+Longwave radiation & RRTM \\
+Shortwave radiation & Dudhia \\
+Cumulus & Kain-Fritsch (new Eta) \\
+Turbulence closure & Horizontal Smagorinzky first order \\
+Momentum advection & 5th order horizontal, 3rd order vertical \\
+Scalar advection & Positive definite \\
+Lateral boundary & 5 grid points \\
+\hline
+\end{tabular}
+\caption{WRF parameterization options.  See \textbf{ARW USERS' GUIDE} for description of schemes.}
+\label{table:windSol_paramschemes}
+\end{table}
+
+\begin{table}
+\begin{tabular}{l l l l}
+\hline
+Run name & Background SMOIS & Perturbed SMOIS region & Perturbed SMOIS value \\
+\hline
+CA-0.1 & 0.1 & none & n/a \\
+CA-0.2 & 0.2 & none & n/a \\
+CA-0.25 & 0.25 & none & n/a \\
+dryCR & 0.25 & Coast Range & 0.1 \\
+dryCV & 0.25 & Central Valley & 0.1 \\
+drySN & 0.25 & Sierra Nevada & 0.1 \\
+wetCR & 0.1 & Coast Range & 0.25 \\
+wetCV & 0.1 & Central Valley & 0.25 \\
+wetSN & 0.1 & Sierra Nevada & 0.25 \\
+CV0.05 & 0.2 & Central Valley & 0.05 \\
+CV0.1 & 0.2 & Central Valley & 0.1 \\
+CV0.15 & 0.2 & Central Valley & 0.15 \\
+CV0.25 & 0.2 & Central Valley & 0.25 \\
+CV0.3 & 0.2 & Central Valley & 0.3 \\
+CV0.35 & 0.2 & Central Valley & 0.35 \\
+CV0.05dry & 0.1 & Central Valley & 0.05 \\
+CV0.15dry & 0.1 & Central Valley & 0.15 \\
+CV0.2dry & 0.1 & Central Valley & 0.2 \\
+CV0.25dry & 0.1 & Central Valley & 0.25 \\
+CV0.3dry & 0.1 & Central Valley & 0.3 \\
+CV0.35dry & 0.1 & Central Valley & 0.35 \\
+\hline
+\end{tabular}
+\caption{Model experiments}
+\label{table:windSol_runlist}
+\end{table}
+
+
+
 
 \subsection{WRF regional atmospheric model}
 
