@@ -1,0 +1,61 @@
+
+\documentclass[12pt]{amsart}
+\usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
+\usepackage{datetime}
+\usepackage{setspace}
+\doublespacing
+\geometry{a4paper} % or letter or a5paper or ... etc
+% \geometry{landscape} % rotated page geometry
+
+% See the ``Article customise'' template for come common customisations
+
+\title{Wind chapter}
+\author{Percy Link}
+\date{\currenttime \ \today} % delete this line to display the current date
+
+%%% BEGIN DOCUMENT
+\begin{document}
+
+\maketitle
+
+\section{Results}
+
+\subsection{Characterization of Solano wind sensitivity to soil moisture}
+
+The time series of Solano hub-height wind for the regional test cases (CA-0.25, dryCR, dryCV, drySN, CA-0.1, wetCR, wetCV, and wetSN), and the difference between each regional perturbation and the corresponding control case, are shown in Figure XX.  In all cases, there is a strong diurnal cycle in wind speed, with strongest winds between XX and XX local time and weakest winds between XX and XX local time.  Wind speeds differ between the test cases by up to XX m/s.  The changes in average wind speed during the maximum (panel a) and minimum (panel b) time periods are quantified in Figure XX.  The largest changes in both maximum and minimum wind speeds occur when the Central Valley soil moisture is perturbed from the background value.  When the Central Valley is dry (soil moisture = 0.1) on a wet background (soil moisture = 0.25), both maximum and minimum Solano winds are faster by approximately 0.5 m/s compared to the all-wet control.  Conversely, when the Central Valley is wet on a dry background, the maximum and minimum Solano winds are both slower than the all-dry control.  In both the wet and dry background cases, the changes in the minimum wind speeds are greater than the changes in the maximum wind speed.
+
+The changes in wind speed in the perturbed Coast Range soil moisture case and the perturbed Sierra Nevada soil moisture case are smaller than in the Central Valley case.  The perturbed Coast Range soil moisture affects the maximum Solano wind, again by increasing the maximum in the wet background/dry perturbation case and decreasing the maximum in the dry background/wet perturbation case; there is no change in the minimum Solano wind in the perturbed Coast Range case.  In contrast, the perturbed Sierra Nevada case shows changes in the minimum wind speed but not the maximum wind speed; again, the wet background/dry perturbation case increases the minimum wind speed, and the dry background/wet perturbation case decreases the minimum wind speed.
+
+Figure XX also shows shifts in the timing of the afternoon ramp-up (panel c) and the early morning ramp-down (panel d) of wind speed.  The hour of the ramp-up for each day is defined here as the first hour within the ramp-up period (XX to XX) when the wind speed is greater than or equal to the average of that day's minimum and maximum average wind speeds.  The hour of ramp-down is the first hour in the ramp-down period (XX to XX) when the wind speed is less than or equal to the average of that day's maximum and the following day's minimum average wind speeds.  All three regional cases show a larger shift in the hour of ramp-up than in the hour of ramp-down.  The ramp-up shifts later (by approximately 0.5 to 1.5 hours) in the dry background/wet perturbation cases, and shifts earlier (by 0.5 to 1 hours) in the wet background/dry perturbation cases.
+
+The surface temperature and heat flux changes associated with each of these regional test cases are shown in Figure XX.  The changes in sensible heat flux from surface to atmosphere are \textbf{(similar/different)} in all three regional cases.  The changes in surface temperature are \textbf{(similar/different).  If similar: even though the magnitude of the forcing is similar between the three regional cases, the change in wind was greatest in the Central Valley case, suggesting that turbine-level winds at  Solano are more sensitive to Central Valley soil moisture than to soil moisture in the Coast Range or Sierra Nevada.}
+
+Because the turbine-level winds at Solano show the greatest sensitivity to Central Valley soil moisture, we test how the changes in Solano turbine-level winds scale with variations in Central Valley soil moisture.  Tests were conducted for two background soil moisture values in the Coast Range and Sierra Nevada (0.1 and 0.2), for a range of Central Valley soil moisture values from 0.05 to 0.35.  The time series of winds at Solano are shown in Figure XX; Figure YY shows the average shift in maximum winds, minimum winds, and shift in time of ramp-up and ramp-down, as a function of Central Valley soil moisture.  The maximum winds at Solano are particularly sensitive in the Central Valley soil moisture range of 0.05-0.15, with the greatest increases in maximum wind speed when Central Valley soil is driest, and particular sensitivity when the background (Coast Range and Sierra Nevada) are wetter (soil moisture = 0.2).  The Solano minimum wind speeds also increase as the Central Valley soil dries, but the increases are greatest in the soil moisture range of 0.15-0.35.
+
+The shift in ramp-up and ramp-down hours also varies with Central Valley soil moisture.  The ramp-up occurs earlier when the Central Valley is drier and later when the Central Valley is wetter; the ramp-up delay with a wetter Central Valley is larger when the background soil moisture is drier (0.5-2 hrs) than when it is wetter (less than 0.5 hours).  While there is large variability in the shifts in ramp-down timing, it appears that a wetter Central Valley also causes a delay in the timing of the ramp-down.
+
+\subsection{Physical mechanism}
+Next we investigate the physical mechanism for the response of Solano turbine-level winds to soil moisture changes in the Central Valley.  A scaling analysis of the terms of the momentum equation illustrates the relative importance of the momentum advection and pressure gradient terms in determining accelerations in westerly wind velocity $u$.  
+
+\begin{equation}
+\frac{\partial u}{\partial t} + u\frac{\partial u}{\partial x} = -\frac{1}{\rho} \frac{\partial p}{\partial x} - \nu \frac{\partial^2 u}{\partial x^2}
+\end{equation}
+
+We neglect the Coriolis term and $y$-direction advection and pressure gradient because topographic channeling enforces nearly westerly flow.  We take 10 m/s as a typical value for $U$, 100 km as the length scale $L$ across the Solano pass from the San Francisco Bay to the Central Valley, 1 m/s as the typical $\Delta U$ between the San Francisco Bay and the Central Valley, 1 hPa as the typical pressure difference $\Delta p$ between the San Francisco Bay and the Central Valley, 1 kg/m$^3$ as the density $\rho$, and XX as the eddy viscosity $\nu$. Then the advection term $U^2/L$ is $\mathcal{O}$(10$^{-3}$ m/s$^2$), the pressure gradient term is $\mathcal{O}$(10$^{-3}$ m/s$^2$), and the friction term is XX.  During periods of greatest wind acceleration or deceleration, the magnitude of $\frac{\partial u}{\partial t}$ is approximately 5$\times$10$^{-4}$ to 10$^{-3}$ m/s$^2$.  The modeled pressure gradient force is XX, and the modeled momentum advection is XX; these two terms \textbf{(do or do not)} account for the modeled acceleration \textbf{(and work in the same direction OR counteract each other?)}.  This shows that the local pressure gradient can play an important role in driving accelerations in $u$ in the Solano pass.  As such, we seek to identify the vertical level and horizontal distance at which the pressure gradient drives the winds, and we investigate how changes in the land surface energy balance affect pressure at this level and horizontal locations.
+
+We linearly regress turbine-height $u$ (60 m AGL) against the pressure gradient between the box shown in Figure XX \textbf{(need to add this)} and each other grid point in the domain; the slopes and Pearson's r correlation coefficient for each grid point for the pressure gradient at 250 m ASL are shown in Figure XX.  Figure XX shows results for the XX run; results for other runs were similar and are not shown.  The white box in Figure XX outlines a region that has both large slopes vs Solano wind and large r-values, implying that Solano winds are highly sensitive to the pressure gradient between this box and the North Bay box shown in Figure XX.  The gradient in average pressure between these two boxes will be used in the following analyses.
+
+Winds at Solano lag the pressure gradient between box A and box B \textbf{(need to go back and define/label these)}: the correlation between them peaks when wind lags the pressure gradient by approximately XX hours (Figure XX).  The sensitivity (as measured by the linear regression slope) and the correlation are maximum between the pressure gradient at 250 m ASL and the winds at turbine height (60 m), although the correlation and sensitivity are strong for pressure gradients at all levels below 350 m ASL.  Figure XX shows results for the XX run only, and again the results for other runs were similar and are not shown.  \textbf{(is this true?  or are differences in lag times large enough to be worth talking about?)}
+
+Variations in the pressure gradient between box A and box B are driven largely by pressure variations in box B, which has a much larger diurnal pressure range than box A \textbf{(need to confirm this)} (Figure XX).  The pressure in box B, in turn, tracks air temperature in XX region at XX level.  \textbf{Still trying to figure this part out - it seems like pressure correlates more strongly with temperature at the ends of the Central Valley, but the mechanism seems less direct this way.  Further analysis needed...}
+
+\textbf{Discuss how temperature changes affect pressure (summarizing arguments from sea breeze review paper.  This may need to be moved to intro or discussion, and could reference it here.)}
+
+Air temperature at XX m depends on air temperature 2 m above the surface; the dependence is linear during the day, but at night, the air at 250 m stays warmer than the air at 2 m, as expected from radiative cooling of the land surface and resulting stabilization and suppressed mixing of the lower atmosphere.  Air temperature at XX m in box B is sensitive to near-surface air temperature in XX regions, as measured by linear regression slopes and r-values (Figure XX).  Temperature at 2 m, in turn, depends strongly on surface skin temperature, with large linear regression slopes and r-values (Figure XX).  Finally, surface skin temperature depends greatly on the soil-moisture-dependent partitioning of land surface energy fluxes between evapotranspiration and sensible heat; Figure XX shows that the drier XX case has much higher surface skin temperature at midday in the Central Valley than does the wetter XX case.
+
+Figure XX summarizes the changes in land surface heating, air temperature, and pressure that lead to the changes in Solano winds, for XX cases.  In the drier cases, surface temperature (increases earlier?) and reaches midday peaks that are XX to XX deg C higher than the control (or wetter) cases.  This leads to 2 m air temperatures that are approximately XX deg C higher (and any shift in timing?), and to XX m air temperatures that are XX deg C higher (and any shift in timing?).  Pressure at box A decreases by XX and at box B decreases by XX, so that the pressure gradient (is lower during the day?  shifts in timing?).  As a result, winds at Solano, which lag pressure gradient by approximately XX hrs, increase by XX m/s at XX times, and the ramp-up and ramp-down periods (both shift earlier, following the pressure gradient forcing.)
+
+\textbf{Still to flesh out: Investigation of controls on air temperature at the important level and the important horizontal area, using energy balance.  Times when advection vs surface heating vs entrainment matter more.  How sensitive each of these components are to the change in soil moisture.}
+
+
+\end{document}
