@@ -1,36 +1,36 @@
 
-\documentclass[12pt]{amsart}
-\usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
-\usepackage{datetime}
-\geometry{a4paper} % or letter or a5paper or ... etc
-% \geometry{landscape} % rotated page geometry
-
-% See the ``Article customise'' template for come common customisations
-
-\title{Wind chapter}
-\author{Percy Link}
-\date{\currenttime \ \today} % delete this line to display the current date
-
-%%% BEGIN DOCUMENT
-\begin{document}
-
-\maketitle
+%\documentclass[12pt]{amsart}
+%\usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
+%\usepackage{datetime}
+%\geometry{a4paper} % or letter or a5paper or ... etc
+%% \geometry{landscape} % rotated page geometry
+%
+%% See the ``Article customise'' template for come common customisations
+%
+%\title{Wind chapter}
+%\author{Percy Link}
+%\date{\currenttime \ \today} % delete this line to display the current date
+%
+%%%% BEGIN DOCUMENT
+%\begin{document}
+%
+%\maketitle
 
 \section{Introduction}
 
-As illustrated in the previous chapter, soil moisture influences the near-surface atmosphere by controlling fluxes of heat at the land surface.  In this chapter, I investigate the effect of soil moisture on winds at a specific wind farm, the Solano Wind Project in the Sacramento-San Joaquin River Delta region of California.  I use a regional atmospheric model to test which regions' soil moisture have the greatest effect on winds at the Solano wind farm and to quantify the magnitude of the effect at different times of day across a range of soil moisture changes.  This study serves as a prototype for characterizing the importance of soil moisture information for wind forecasts at other wind farms.  A goal of this study is to demonstrate that accurate soil moisture information can improve wind forecasts, and that constraining the regions to which the wind forecast is most sensitive may help target soil moisture measurement efforts.
+As illustrated in the previous chapter, soil moisture influences the near-surface atmosphere by controlling fluxes of heat at the land surface.  In this chapter, I (or we?) investigate the effect of soil moisture on winds at a specific wind farm, the Solano Wind Project in the Sacramento-San Joaquin River Delta region of California.  I (or we?) use a regional atmospheric model to test which regions' soil moisture have the greatest effect on winds at the Solano wind farm and to quantify the magnitude of the effect at different times of day across a range of soil moisture changes.  This study serves as a prototype for characterizing the importance of soil moisture information for wind forecasts at other wind farms.  A goal of this study is to demonstrate that accurate soil moisture information can improve wind forecasts, and that constraining the regions to which the wind forecast is most sensitive may help target soil moisture measurement efforts.
 
 Accurate wind forecasts can reduce the cost of integrating wind energy into the electric grid on a large scale.  In order to reduce CO$_2$ emissions to the degree necessary to avert dangerous climate change [CITE IPCC], electric utilities will need to transition to non-fossil-fuel energy sources including a large fraction of wind energy [CITE Jacobson].  However, although wind energy has large peak generation potential, it is intermittent, and the instantaneous mismatch between wind generation and electric demand must be met with other generation.  In most utilities, allocations of electric generation are made a day ahead, based on forecasted demand and wind and solar supply.  At shorter lead times (hour-ahead to real-time), imbalances between the day-ahead allocations of generation (based on the day-ahead forecasts of wind, solar, and demand) and the actual net demand (demand minus wind and solar) must be met with, in the case of a shortfall, more expensive quick-startup generation, or in the case of excess generation, wasted energy resources.  These imbalance costs add significantly to the cost of wind energy (up to XX\%) [CITATIONS - Porter, Fabbri, Ummels].  Thus, improved accuracy of wind forecasts could reduce imbalance costs, making integration of wind into the electric grid more economically feasible.
 
-Current state of the science in wind forecasting
+Current state of the science in wind forecasting:
 \begin{itemize}
 \item physical, statistical, and hybrid modeling methods
-\item different forecasting companies and organizations have different models - give some examples, cite review papers (Costa, Foley, Lei, Monteiro, Porter, Wang
+\item different forecasting companies and organizations have different models - give some examples, cite review papers (Costa, Foley, Lei, Monteiro, Porter, Wang) - emphasize that many, although not all, use NWP output in some way, and thus depend on accuracy of NWP boundary conditions like large-scale forcing and soil moisture
 \item tests of model resolution and physical parameterizations, especially planetary boundary layer schemes [Draxl, Marjanovic], also large scale forcing (Carvalho)
 \item sensitivity to terrain complexity (Marjanovic, Carvalho)
 \item tests of model output statistics (MOS) algorithms to correct NWP forecast based on historical observations; in particular, tests of various machine learning algorithms [B\'edard, Ellis, Kusiak, Ortiz-Garc\'ia, Ranaboldo, Sweeney]
 \item prediction of ramps, but mostly in a statistical sense, without explicit connection to the physical mechanisms driving the rapid increases or decreases in wind power [Carcangiu, Ellis]
-\item ensembles of NWP runs, initialized with different random perturbations (?) (Deppe, Pinson
+\item ensembles of NWP runs, initialized with different random perturbations (?) (Deppe, Pinson)
 \end{itemize}
 
 The influence of land surface energy fluxes on wind energy forecasts has not received much attention (with the exception of Marjanovic et al. XXXX who show that the forecast at a California wind farm is broadly sensitive to initial soil moisture, and WHARTON LITERATURE ON STABILITY, and WHARTON-MAXWELL ON PARFLOW.)  However, the effect of soil moisture on regional circulations has been recognized for several decades in the literature on atmospheric boundary layer processes and weather forecasting.  [OVERVIEW OF LITERATURE]
@@ -56,4 +56,6 @@ We seek to answer the following questions:
 \item How sensitive is the wind forecast to the areal coverage of soil moisture changes?
 \end{itemize}
 
-\end{document}
+\textbf{Brief description of experimental approach...}
+
+%\end{document}

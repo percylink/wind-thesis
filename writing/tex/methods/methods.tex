@@ -1,22 +1,22 @@
 
-\documentclass[12pt]{amsart}
-\usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
-\usepackage{datetime}
-\usepackage{setspace}
-\doublespacing
-\geometry{a4paper} % or letter or a5paper or ... etc
-% \geometry{landscape} % rotated page geometry
-
-% See the ``Article customise'' template for come common customisations
-
-\title{Wind chapter}
-\author{Percy Link}
-\date{\currenttime \ \today} % delete this line to display the current date
-
-%%% BEGIN DOCUMENT
-\begin{document}
-
-\maketitle
+%\documentclass[12pt]{amsart}
+%\usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
+%\usepackage{datetime}
+%\usepackage{setspace}
+%\doublespacing
+%\geometry{a4paper} % or letter or a5paper or ... etc
+%% \geometry{landscape} % rotated page geometry
+%
+%% See the ``Article customise'' template for come common customisations
+%
+%\title{Wind chapter}
+%\author{Percy Link}
+%\date{\currenttime \ \today} % delete this line to display the current date
+%
+%%%% BEGIN DOCUMENT
+%\begin{document}
+%
+%\maketitle
 
 \section{Methods}
 
@@ -24,19 +24,13 @@ The sensitivity of Solano wind forecasts to soil moisture is tested using experi
 
 \subsection{Model setup}
 
-We run WRF with two two-way-nested domains centered on the Solano wind farm (Figure 1); the domains are described in Table \ref{table:windSol_domains}.  The finest resolution presented here is 2.7 km; preliminary tests with a third finer grid (0.9 km) showed little change in the forecasted winds, similar to the results of Marjanovic et al. [2014].  The domain has 45 vertical levels, with a minimum spacing of \textbf{XX} near the surface and a maximum spacing of \textbf{XX} at the top of the model domain; wind forecasts are not very sensitive to vertical resolution beyond about 40 levels [Marjanovic et al., 2014, and references therein].
+We run WRF with two two-way-nested domains centered on the Solano wind farm (Figure \ref{fig:windSol_domainmap}); the domains are described in Table \ref{table:windSol_domains}.  The finest resolution presented here is 2.7 km; preliminary tests with a third finer grid (0.9 km) showed little change in the forecasted winds, similar to the results of Marjanovic et al. [2014].  The domain has 45 vertical levels, with a minimum spacing of \textbf{XX} near the surface and a maximum spacing of \textbf{XX} at the top of the model domain; wind forecasts are not very sensitive to vertical resolution beyond about 40 levels [Marjanovic et al., 2014, and references therein].
 
-The atmospheric model is coupled to the Noah land surface model with USGS land use and soil classifications.  The observed distribution of land use and soil types are used, as are the default vegetation water-use parameters for each land use type, in order to simulate as closely as possible the real present day sensitivity of Solano winds to soil moisture.  Uncertainties associated with errors in the model representation of water movement in the subsurface and plant water use are addressed in the Discussion. 
-
-The ACM2 PBL scheme is used, following the recommendations of Marjanovic et al. [2014] for a locally forced simple terrain case in California.  The model is forced at the lateral boundaries with AWIP \textbf{re}analysis at \textbf{XX km} resolution \textbf{[CITATION]}.  Other parameterization schemes and settings are listed in Table \ref{table:windSol_paramschemes}.  Model variables are output every 30 minutes.
-
-All experiments are run for the period 2009-07-01 00:00 UTC to 2009-07-08 00:00 UTC, and the first \textbf{24} hours are discarded as model spin-up.  This period was chosen for several reasons: (1) it contains a range of synoptic conditions (weak background wind July 1-\textbf{5}, and strong background wind July \textbf{6-7}), (2) turbine-level wind speeds in this region are highest in the spring and summer [\textbf{WIND CLIMATOLOGY THESIS, WHARTON}], and (3) the sensitivity to soil moisture is expected to be strongest in the warm season, because radiation incident to the land surface is greatest in the warm season, so changes in the relative partitioning between evapotranspiration and sensible heat flux have the largest absolute magnitude then.
-
-\subsection{Soil moisture experiments}
-
-The model experiments are listed in Table \ref{table:windSol_runlist}.  In the first set of experiments, we test the sensitivity of Solano winds to soil moisture in different large-scale regions of California.  In cases dryCR, dryCV, and drySN, the background volumetric soil moisture (model variable SMOIS, m$^3$ water/m$^3$ total volume) is set to 0.25, and the soil moisture of the test region (respectively, the Coast Range, Central Valley, and Sierra Nevada, shown in Figure 1b) is set to 0.1.  In cases wetCR, wetCV, and wetSN, the background soil moisture is set to 0.1, and the soil moisture of the test region is set to 0.25.
-
-The next set of experiments tests how the Solano wind response scales with soil moisture in the Central Valley, in both a normal-to-wet background (mountain) scenario and a dry background scenario.  In cases CVXX (where XX is a numeric value), the Coast Range and Sierra Nevada regions' soil moisture is set to 0.2, and the Central Valley soil moisture is set to the value specified by XX.  In cases CVXXdry, the Coast Range and Sierra Nevada regions' soil moisture is set to 0.1, and the Central Valley soil moisture again is specified by XX.
+\begin{figure}[here]
+\includegraphics[width=1\textwidth]{img/domain_map.pdf}
+\caption{WRF model domains, showing (a) topographic height in m, and (b) the Coast Range (CR), Central Valley (CV), and Sierra Nevada (SN) regions for soil moisture tests.}
+\label{fig:windSol_domainmap}
+\end{figure}
 
 \begin{table}
 \begin{tabular}{ l c c c c c c c }
@@ -49,6 +43,10 @@ d02 & 2.7 & 2.7 & 175 & 175 & 45 & 15 & 2 min\\
 \caption{Model domains}
 \label{table:windSol_domains}
 \end{table}
+
+The atmospheric model is coupled to the Noah land surface model with USGS land use and soil classifications.  The observed distribution of land use and soil types are used, as are the default vegetation water-use parameters for each land use type, in order to simulate as closely as possible the real present day sensitivity of Solano winds to soil moisture.  Uncertainties associated with errors in the model representation of water movement in the subsurface and plant water use are addressed in the Discussion. 
+
+The ACM2 PBL scheme is used, following the recommendations of Marjanovic et al. [2014] for a locally forced simple terrain case in California.  The model is forced at the lateral boundaries with AWIP \textbf{re}analysis at \textbf{XX km} resolution \textbf{[CITATION]}.  Other parameterization schemes and settings are listed in Table \ref{table:windSol_paramschemes}.  Model variables are output every 30 minutes.
 
 \begin{table}
 \begin{tabular}{l l}
@@ -75,6 +73,14 @@ Lateral boundary & 5 grid points \\
 \caption{WRF parameterization options.  See \textbf{ARW USERS' GUIDE} for description of schemes.}
 \label{table:windSol_paramschemes}
 \end{table}
+
+All experiments are run for the period 2009-07-01 00:00 UTC to 2009-07-08 00:00 UTC, and the first \textbf{24} hours are discarded as model spin-up.  This period was chosen for several reasons: (1) it contains a range of synoptic conditions (weak background wind July 1-\textbf{5}, and strong background wind July \textbf{6-7}), (2) turbine-level wind speeds in this region are highest in the spring and summer [\textbf{WIND CLIMATOLOGY THESIS, WHARTON}], and (3) the sensitivity to soil moisture is expected to be strongest in the warm season, because radiation incident to the land surface is greatest in the warm season, so changes in the relative partitioning between evapotranspiration and sensible heat flux have the largest absolute magnitude then.
+
+\subsection{Soil moisture experiments}
+
+The model experiments are listed in Table \ref{table:windSol_runlist}.  In the first set of experiments, we test the sensitivity of Solano winds to soil moisture in different large-scale regions of California.  In cases dryCR, dryCV, and drySN, the background volumetric soil moisture (model variable SMOIS, m$^3$ water/m$^3$ total volume) is set to 0.25, and the soil moisture of the test region (respectively, the Coast Range, Central Valley, and Sierra Nevada, shown in Figure \ref{fig:windSol_domainmap}b) is set to 0.1.  In cases wetCR, wetCV, and wetSN, the background soil moisture is set to 0.1, and the soil moisture of the test region is set to 0.25.
+
+The next set of experiments tests how the Solano wind response scales with soil moisture in the Central Valley, in both a normal-to-wet background (mountain) scenario and a dry background scenario.  In cases CVXX (where XX is a numeric value), the Coast Range and Sierra Nevada regions' soil moisture is set to 0.2, and the Central Valley soil moisture is set to the value specified by XX.  In cases CVXXdry, the Coast Range and Sierra Nevada regions' soil moisture is set to 0.1, and the Central Valley soil moisture again is specified by XX.
 
 \begin{table}
 \begin{tabular}{l l l l}
@@ -120,4 +126,4 @@ CV0.35dry & 0.1 & Central Valley & 0.35 \\
 
 
 
-\end{document}
+%\end{document}

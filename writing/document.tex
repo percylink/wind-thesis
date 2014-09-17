@@ -1,1 +1,28 @@
-some stuff
+\documentclass[12pt]{amsart}
+\usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
+\usepackage{datetime}
+\usepackage{setspace}
+\usepackage{graphicx}
+\doublespacing
+\geometry{a4paper} % or letter or a5paper or ... etc
+
+% See the ``Article customise'' template for come common customisations
+
+\title{Wind chapter}
+\author{Percy Link}
+\date{\currenttime \ \today}
+
+%%% BEGIN DOCUMENT
+\begin{document}
+
+\maketitle
+
+\input{tex/intro/intro.tex}
+
+\input{tex/methods/methods.tex}
+
+\input{tex/results/results.tex}
+
+\input{tex/discussion/discussion.tex}
+
+\end{document}
