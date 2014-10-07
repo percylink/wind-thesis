@@ -20,11 +20,11 @@
 
 \section{Methods}
 
-The sensitivity of Solano wind forecasts to soil moisture is tested using experiments with a regional atmospheric model, the Weather Research and Forecasting (WRF) model.  The WRF model, described in detail in Skamarock et al. [2008], is a three-dimensional, non-hydrostatic regional atmospheric model with terrain following vertical coordinates near the surface that transition to \textit{flat} vertical coordinates at high altitude.  WRF solves the discretized equations for conservation of momentum, mass, energy, and scalars like water vapor, and it has a range of parameterization options for radiation, planetary boundary layer (PBL) turbulence, cloud microphysics, convection, bottom boundary fluxes of water vapor and heat, and lateral boundary forcing.
+The sensitivity of Solano wind forecasts to soil moisture is tested using experiments with a regional atmospheric model, the Weather Research and Forecasting (WRF) model.  The WRF model, described in detail in Skamarock et al. [2008], is a three-dimensional, non-hydrostatic regional atmospheric model with $\sigma$ vertical coordinates that follow the terrain near the surface and transition to horizontal at high altitude.  WRF solves the discretized equations for conservation of momentum, mass, energy, and scalars like water vapor, and it has a range of parameterization options for radiation, planetary boundary layer (PBL) turbulence, cloud microphysics, convection, bottom boundary fluxes of water vapor and heat, and lateral boundary forcing.  WRF has been used extensively in wind energy forecasting [CITATIONS], with generally good performance [CITATIONS].  Accuracy of WRF-forecasted turbine-level winds depends on \textit{(resolution, PBL scheme, lateral forcing, soil moisture **)} [CITATIONS].
 
 \subsection{Model setup}
 
-We run WRF with two two-way-nested domains centered on the Solano wind farm (Figure \ref{fig:windSol_domainmap}); the domains are described in Table \ref{table:windSol_domains}.  The finest resolution presented here is 2.7 km; preliminary tests with a third finer grid (0.9 km) showed little change in the forecasted winds, similar to the results of Marjanovic et al. [2014].  The domain has 45 vertical levels, with a minimum spacing of \textbf{XX} near the surface and a maximum spacing of \textbf{XX} at the top of the model domain; wind forecasts are not very sensitive to vertical resolution beyond about 40 levels [Marjanovic et al., 2014, and references therein].
+We run WRF with two two-way-nested domains centered on the Solano wind farm (Figure \ref{fig:windSol_domainmap}); the domains are described in Table \ref{table:windSol_domains}.  The finest resolution presented here is 2.7 km; preliminary tests with a third finer grid (0.9 km) showed little change in the forecasted winds, similar to the results of Marjanovic et al. [2014], who found little accuracy improvement with horizontal resolution below 2.7 km in their simple terrain case.  The domain has 45 vertical levels, with a minimum spacing of \textbf{XX} near the surface and a maximum spacing of \textbf{XX} at the top of the model domain; turbine-level (60-100 m) wind forecasts are not very sensitive to vertical resolution beyond about 40 levels [Marjanovic et al., 2014, and references therein].
 
 \begin{figure}[here]
 \includegraphics[width=1\textwidth]{img/domain_map.pdf}
@@ -46,7 +46,7 @@ d02 & 2.7 & 2.7 & 175 & 175 & 45 & 15 & 2 min\\
 
 The atmospheric model is coupled to the Noah land surface model with USGS land use and soil classifications.  The observed distribution of land use and soil types are used, as are the default vegetation water-use parameters for each land use type, in order to simulate as closely as possible the real present day sensitivity of Solano winds to soil moisture.  Uncertainties associated with errors in the model representation of water movement in the subsurface and plant water use are addressed in the Discussion. 
 
-The ACM2 PBL scheme is used, following the recommendations of Marjanovic et al. [2014] for a locally forced simple terrain case in California.  The model is forced at the lateral boundaries with AWIP \textbf{re}analysis at \textbf{XX km} resolution \textbf{[CITATION]}.  Other parameterization schemes and settings are listed in Table \ref{table:windSol_paramschemes}.  Model variables are output every 30 minutes.
+The ACM2 PBL scheme is used, following the recommendations of Marjanovic et al. [2014] for a locally forced simple terrain case in California; this PBL scheme includes both local (small-scale turbulent) and nonlocal (large convective plume) vertical transport, and can thus simulate both stable and unstable conditions [\textit{Pleim, 2007}].  The model is forced at the lateral boundaries with AWIP \textbf{re}analysis at \textbf{XX km} resolution \textbf{[CITATION]}.  Other parameterization schemes and settings are listed in Table \ref{table:windSol_paramschemes}.  Model variables are output every 30 minutes.
 
 \begin{table}
 \begin{tabular}{l l}
@@ -74,13 +74,15 @@ Lateral boundary & 5 grid points \\
 \label{table:windSol_paramschemes}
 \end{table}
 
-All experiments are run for the period 2009-07-01 00:00 UTC to 2009-07-08 00:00 UTC, and the first \textbf{24} hours are discarded as model spin-up.  This period was chosen for several reasons: (1) it contains a range of synoptic conditions (weak background wind July 1-\textbf{5}, and strong background wind July \textbf{6-7}), (2) turbine-level wind speeds in this region are highest in the spring and summer [\textbf{WIND CLIMATOLOGY THESIS, WHARTON}], and (3) the sensitivity to soil moisture is expected to be strongest in the warm season, because radiation incident to the land surface is greatest in the warm season, so changes in the relative partitioning between evapotranspiration and sensible heat flux have the largest absolute magnitude then.
+All experiments are run for the period 2009-06-26 00:00 UTC to 2009-07-11 00:00 UTC, and the first \textbf{32} hours are discarded as model spin-up.  This period was chosen for several reasons: (1) it contains a range of synoptic conditions (weak background wind June 27-\textbf{July 5}, and strong background wind July \textbf{6-10}), (2) turbine-level wind speeds in this region are highest in the spring and summer [\textbf{WIND CLIMATOLOGY THESIS, WHARTON}], and (3) the sensitivity to soil moisture is expected to be strongest in the warm season, because radiation incident to the land surface is greatest in the warm season, so changes in the relative partitioning between evapotranspiration and sensible heat flux have the largest absolute magnitude then.
 
 \subsection{Soil moisture experiments}
 
 The model experiments are listed in Table \ref{table:windSol_runlist}.  In the first set of experiments, we test the sensitivity of Solano winds to soil moisture in different large-scale regions of California.  In cases dryCR, dryCV, and drySN, the background volumetric soil moisture (model variable SMOIS, m$^3$ water/m$^3$ total volume) is set to 0.25, and the soil moisture of the test region (respectively, the Coast Range, Central Valley, and Sierra Nevada, shown in Figure \ref{fig:windSol_domainmap}b) is set to 0.1.  In cases wetCR, wetCV, and wetSN, the background soil moisture is set to 0.1, and the soil moisture of the test region is set to 0.25.
 
 The next set of experiments tests how the Solano wind response scales with soil moisture in the Central Valley, in both a normal-to-wet background (mountain) scenario and a dry background scenario.  In cases CVXX (where XX is a numeric value), the Coast Range and Sierra Nevada regions' soil moisture is set to 0.2, and the Central Valley soil moisture is set to the value specified by XX.  In cases CVXXdry, the Coast Range and Sierra Nevada regions' soil moisture is set to 0.1, and the Central Valley soil moisture again is specified by XX.
+
+In all cases, the soil moisture is set to the prescribed values at the model start time (2009-06-26 00:00 UTC) and is reset to the prescribed value each day at 08:00 UTC (midnight Pacific Standard Time); the soil moisture evolves according to the land surface model each day between resets.  The change in soil moisture between resets is \textbf{small (Figure XX)}.
 
 \begin{table}
 \begin{tabular}{l l l l}
@@ -114,16 +116,47 @@ CV0.35dry & 0.1 & Central Valley & 0.35 \\
 \label{table:windSol_runlist}
 \end{table}
 
+\subsection{Model output analysis}
+
+\subsubsection{Wind time series statistics}
+\label{subsubsec:WindStats}
+
+Statistics are calculated to characterize the turbine-height (60 m AGL) Solano wind (from the model grid point closest to the wind farm).  The average maximum and minimum wind for each day $i$ ($u_{max, i}$ and $u_{min, i}$) and each case are calculated by averaging the wind over the maximum period (XX hr to XX hr) and the minimum period (XX hr to XX hr).  The overall average maximum and minimum wind for each case and their standard deviations are then calculated for all $N=14$ days in the test (excluding the spin-up period):
+
+%\begin{equation}
+\begin{align}
+	\overline{u_{max}} &= \frac{1}{N} \sum\limits_{i=1}^N u_{max, i} \\
+	\overline{u_{min}} &= \frac{1}{N} \sum\limits_{i=1}^N u_{min, i} \\
+	\sigma_{max} &= \sqrt{ \frac{1}{N} \sum\limits_{i=1}^N (u_{max, i}-\overline{u_{max}})^2 } \\ 
+	\sigma_{min} &= \sqrt{ \frac{1}{N} \sum\limits_{i=1}^N (u_{min, i}-\overline{u_{min}})^2 }.
+\end{align}
+%\end{equation}
+
+We define the hour of the ramp-up for each day ($t_{RU, i}$) as the first hour within the ramp-up period (XX to XX) when the wind speed is greater than or equal to the average of that day's minimum and maximum average wind speeds.  The hour of ramp-down ($t_{RD, i}$) is the first hour in the ramp-down period (XX to XX) when the wind speed is less than or equal to the average of that day's maximum and the following day's minimum average wind speeds.  \textbf{CLARIFY PREVIOUS DAY OR NEXT DAY MAX}
+
+\begin{align}
+	t_{RU, i} &= \argmin \limits_{t} \left(u(t) \ge \frac{u_{min, i}+u_{max, i}}{2} \right) \\
+	t_{RD, i} &= \argmin \limits_{t} \left(u(t) \le \frac{u_{max, i}+u_{min, i+1}}{2} \right).
+\end{align}
+
+The overall average ramp-up and ramp-down times and their standard deviations are then calculated or all $N$ days in the test (excluding the spin-up period):
+
+\begin{align}
+	\overline{t_{RU}} &= \frac{1}{N} \sum\limits_{i=1}^N t_{RU, i} \\
+	\overline{t_{RD}} &= \frac{1}{N} \sum\limits_{i=1}^N t_{RD, i} \\
+	\sigma_{RU} &= \sqrt{ \frac{1}{N} \sum\limits_{i=1}^N (t_{RU, i}-\overline{t_{RU}})^2 } \\ 
+	\sigma_{RD} &= \sqrt{ \frac{1}{N} \sum\limits_{i=1}^N (t_{RD, i}-\overline{t_{RD}})^2 }.
+\end{align}
 
 
+\subsubsection{Wind -- pressure-anomaly regression maps}
 
-\subsection{Other WRF background - include somewhere?}
+The relationship between pressure spatial patterns and Solano turbine-level wind is quantified using linear regression.  At each output time $t$, the pressure anomaly at grid point $(i,j)$ and vertical level $k$ is calculated as
 
-\begin{itemize}
-\item List use in wind energy research and operational forecasting ...
-\item Previous studies - how well has WRF done in simulating turbine-height winds (Marjanovic, BAMS article, ...), and major factors on which performance depends (resolution, PBL scheme, lateral forcing, soil moisture **)
-\end{itemize}
+\begin{equation}
+p'_{i,j,k,t} = p_{i,j,k,t} - \overline{p_{k,t}},
+\end{equation}
 
-
+where $\overline{p_{k,t}}$ is the horizontally averaged pressure at level $k$ and time $t$.  The time series of pressure anomalies at each grid point is linearly regressed against the time series of turbine-height Solano wind, and the regression slopes and correlated coefficients for all grid points at a given level are mapped (e.g., Figure XX).  The same procedure is conducted for the difference in pressure anomalies and wind speed between model test runs and control runs (e.g., Figure XX).
 
 %\end{document}
