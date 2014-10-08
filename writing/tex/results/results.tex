@@ -27,29 +27,60 @@ We first describe the differences in Solano turbine-level wind resulting from th
 
 \subsubsection{Regional sensitivity}
 
-The time series of Solano turbine-height wind for the regional test cases (CA-0.25, dryCR, dryCV, drySN, CA-0.1, wetCR, wetCV, and wetSN), and the difference between each regional perturbation and the corresponding control case, are shown in Figure \ref{fig:windSol_TseriesWindRg}.  In all cases, there is a strong diurnal cycle in wind speed, with strongest winds between XX and XX local time and weakest winds between XX and XX local time.  Wind speeds differ between the test cases by up to XX m/s.  
+\textit{Time series of the upper level (700 hPa) wind, which reflects the synoptic forcing, and metrics of the land surface heating (including soil moisture, surface temperature, and sensible heat flux) are shown in Figure XX.  The land surface heating is averaged over XX regions and is shown for each of the regional perturbation tests (Table XX.)   Soil moisture deviates X amount each day before being reset at midnight.  Land surface heating, as measured by surface temperature and sensible heat flux, is strongest on XX days and is \textbf{comparable?} between regional perturbation cases.  Background winds are weak on XX days and strong on XX days.}
 
-\textit{Figure XX(a) shows the average 100 m ASL wind at a peak time (hour XX) over all days in the control simulation (CA-0.25); panels b-d of Figure XX show the average difference between the test case wind and the control wind at XX hour.  Figure XX(e) shows average 100 m ASL wind at a low time (hour XX), and panels f-h of Figure XX show the average difference between the test case wind and control wind at hour XX.  At hour XX when control winds are strong, winds increase in XX regions in the XX cases but not in the XX cases.  At hour XX when control winds are weak, winds increase in XX regions in the XX cases but not in the XX cases.}
+\begin{figure}[here]
+\includegraphics[width=1\textwidth]{img/solano_wind_wetbkd_dryrg_d02_level0.png}
+\caption{Time series of wind speed magnitude at 60 m AGL for the d02 grid point nearest the Solano wind farm, for the wet background and dry perturbation tests.  The model spin-up period is excluded.}
+\label{fig:windSol_TseriesDryRg}
+\end{figure}
+
+\begin{figure}[here]
+\includegraphics[width=1\textwidth]{img/solano_wind_drybkd_wetrg_d02_level0.png}
+\caption{Time series of wind speed magnitude at 60 m AGL for the d02 grid point nearest the Solano wind farm, for the dry background and wet perturbation tests.  The model spin-up period is excluded.}
+\label{fig:windSol_TseriesWetRg}
+\end{figure}
+
+The time series of Solano turbine-height (60 m AGL) wind for the regional perturbation tests (Table XX), and the difference between each regional perturbation and the corresponding control case, are shown in Figures \ref{fig:windSol_TseriesDryRg} (wet background and dry regional perturbation) and \ref{fig:windSol_TseriesWetRg} (dry background and wet regional perturbation).  In all cases, there is a strong diurnal cycle in wind speed, and wind speeds differ between the control and test cases by up to 3 m/s.  The differences in wind speed are larger on days with weaker background wind speed (days XX, cf. Figure XX) than on days with stronger background wind speed (days XX, cf. Figure XX).
+
+\begin{figure}[here]
+\begin{subfigure}{0.6\textwidth}
+\includegraphics[width=1\textwidth]{img/solano_controlwind_minusmean_CA0pt25_d02_level0.png}
+\caption{(a)}
+\end{subfigure}
+\begin{subfigure}{0.6\textwidth}
+\includegraphics[width=1\textwidth]{img/solano_diurnalwind_dry_regions_d02_level0.png}
+\caption{(b)}
+\end{subfigure}
+\begin{subfigure}{0.6\textwidth}
+\includegraphics[width=1\textwidth]{img/solano_diurnalwind_wet_regions_d02_level0.png}
+\caption{(c)}
+\end{subfigure}
+\caption{(a) Overlaid diurnal cycles of wind speed magnitude minus daily mean wind speed, at 60 m AGL for the d02 grid point nearest the Solano wind farm, for the CA-0.25 control case.  (b) and (c) Diurnally averaged differences in wind speed, at 60 m AGL for the d02 grid point nearest the Solano wind farm, for (b) the wet background/dry perturbation cases and (c) the dry background/wet perturbation cases.  Shading represents one standard deviation.}
+\label{fig:windSol_DiffDiurnalWetRg}
+\end{figure}
+
+Figure \ref{fig:windSol_DiffDiurnalWetRg} illustrates the diurnal cycle of the wind and the diurnal timing of changes in each regional perturbation test case.  In Figure \ref{fig:windSol_DiffDiurnalWetRg}(a), the time series of wind for all days are overlaid, with the mean wind for each day removed.  Figures \ref{fig:windSol_DiffDiurnalWetRg}(b) and (c) show the average differences in wind speed as a function of hour of day for the dry perturbation (b) and wet perturbation (c) cases.
+
+Solano 60 m AGL winds are strongest between 20:00 and 04:00 local time and weakest between 08:00 and 13:00 local time (Figure \ref{fig:windSol_DiffDiurnalWetRg}(a)).  Dry regional perturbations on a wet background (\ref{fig:windSol_DiffDiurnalWetRg}(b)) tend to increase Solano wind speeds in the afternoon and evening; this increase is greatest for the dry Central Valley case, with an average increase of 1 m/s spanning the hours 11:00 to 21:00.  The increase is smaller in the dry Coast Range and Sierra Nevada cases (0.5-1 m/s).  The increase happens earlier (12:00-18:00) in the dry Sierra Nevada case than in the dry Coast Range case (16:00-20:00).  Importantly, this afternoon and evening increase occurs during a transitional time from weak to strong background winds (\ref{fig:windSol_DiffDiurnalWetRg}(a)); thus, the wind increases during the afternoon hours, especially in the dry Central Valley and dry Sierra Nevada cases, represent a shift to an earlier daily ramp up.  Wet regional perturbations on a dry background (\ref{fig:windSol_DiffDiurnalWetRg}(c)) have a weaker effect on Solano wind speeds.  The wet Central Valley perturbation has the strongest effect, with a decrease of Solano wind speeds of 0.5-1 m/s during the hours 10:00-18:00.
+
+\begin{figure}[here]
+\includegraphics[angle=90,origin=c,width=1\textwidth]{img/wind_map_regions2.eps}
+\caption{Wind speed (color shading) and direction (vectors) and pressure (color contours) at 110 m ASL on the d02 domain.  (a)-(d) CA-0.25 control case.  (e)-(h) dryCR case, changes in wind and pressure.  (i)-(l) dryCV case, changes in wind and pressure.  (m)-(p) drySN case, changes in wind and pressure.  Top row: average for hour 06:00 for the whole run; second row: average for hour 14:00; third row: average for hour 18:00; bottom row: average for hour 00:00.}
+\label{fig:windSol_WindMapsRg}
+\end{figure}
+
+Figures \ref{fig:windSol_WindMapsRg}(a)-(d) show the 110 m ASL (60 m AGL at Solano) wind and pressure averaged over hours 06:00 (a), 14:00 (b), 18:00 (c), and 00:00 (d) over all days in the CA-0.25 control simulation. Panels (e)-(p) of Figure \ref{fig:windSol_WindMapsRg} show the average difference between the test case wind and pressure and the control wind and pressure at those four times of day.  
+
+In the control case (panels (a)-(d)), winds through the Solano pass are strong at all hours relative to winds in the San Francisco Bay and the Central Valley.  Wind flowing through the Solano pass splits when it reaches the Sierra Nevada into a northward branch and a southward branch.  The southward branch is stronger than the northward branch at 06:00 and 14:00, and the northward branch strengthens at 18:00 and 00:00.  The pressure gradient from the San Francisco Bay to the Central Valley remains strong from 14:00 to 00:00 and is weaker by 06:00.
+
+Coast Range: large changes in northern Central Valley wind speed and pressure gradient in afternoon (14:00 and 18:00); changes at night much smaller; changes at Solano are much smaller than changes in northern Central Valley, but changes are in phase (biggest Solano changes 14:00 and 18:00).
+
+Central Valley: in afternoon, large changes in pressure and wind throughout Central Valley, including Solano.  Large increase in pressure gradient from San Francisco Bay to Central Valley at 14:00; increased pressure gradient persists at 18:00 and to a lesser degree at 00:00.  However, at 18:00, the zone of steepest pressure change has been pushed further eastward, and the strongest winds track this band of largest pressure gradient.  Weaker changes in wind remain at Solano at 00:00 and 06:00 (quantify this statement?).  Some weakening of the winds in the southern Central Valley at 06:00.
+
+Sierra: moderate strengthening of pressure gradient at 14:00 and 18:00.  Pressure changes are minimal by 00:00 and 06:00.  Strengthened winds through Solano pass and middle Central Valley in afternoon (14:00 and 18:00); by 18:00, bands of largest wind increases have moved northward and southward along Central Valley, again following zones of greatest pressure gradient.
 
 The vertical profile of wind at Solano also changes in each test case.  Figure XX shows the vertical profiles of Solano $u$, $v$, and $|u|$, averaged for each hour of the day over the 14 days of the simulation.  Panel a shows the control case (CA-0.25), and panels b-d show the averaged differences between test and control winds for the three regional test cases (dryCR, dryCV, and drySN).  \textbf{Describe the changes...}
-
-The changes in magnitude and timing of turbine-level Solano wind speed for the regional test cases are quantified in Figure \ref{fig:windSol_WindShiftsRg} following the procedure in Section \ref{subsubsec:WindStats}.  Perturbing the Central Valley soil moisture (cases dryCR and wetCR) produces the largest changes in both maximum and minimum Solano turbine-level wind speeds.  When the Central Valley is dry (soil moisture = 0.1) on a wet background (soil moisture = 0.25), both maximum and minimum Solano winds are faster by approximately 0.5 m/s compared to the all-wet control.  Conversely, when the Central Valley is wet on a dry background, the maximum and minimum Solano winds are both slower than the all-dry control.  In both the wet and dry background cases, the changes in the minimum wind speeds are greater than the changes in the maximum wind speed.
-
-\begin{figure}[here]
-\includegraphics[width=1\textwidth]{img/solano_wind_rg_d02_level0.png}
-\caption{Time series of wind speed magnitude at 60 m AGL for the d02 grid point nearest the Solano wind farm, for (a) the dry background and wet perturbation tests, and (b) wet background and dry perturbation tests.  The gray area denotes the model spin-up period.}
-\label{fig:windSol_TseriesWindRg}
-\end{figure}
-
-\begin{figure}[here]
-\includegraphics[width=1\textwidth]{img/shifts_regions_d02.png}
-\caption{Shifts in wind characteristics in soil moisture test cases, with perturbed region indicated on the x-axis.  (a) Change in average wind speed during the maximum period (XX - XX hrs): symbol is the mean of the changes in average maximum wind speed over all days, and error bars are one standard deviation of the changes in average maximum wind speed.  (b) Change in average wind speed during the minimum period (XX - XX hrs); symbol and error bars as in (a).  (c) Change in hour of ramp-up, defined in the text; symbol and error bars as in (a).  (d) Change in hour of ramp-down, defined in the text; symbol and error bars as in (a).  \textbf{Might need to put equations in the text to clarify how these metrics are calculated.}}
-\label{fig:windSol_WindShiftsRg}
-\end{figure}
-
-The changes in wind speed resulting from perturbed Coast Range or Sierra Nevada soil moisture are smaller than the changes in the perturbed Central Valley cases.  The perturbed Coast Range soil moisture affects the maximum Solano wind, again by increasing the maximum in the wet background/dry perturbation case and decreasing the maximum in the dry background/wet perturbation case; there is no change in the minimum Solano wind in the perturbed Coast Range case.  In contrast, the perturbed Sierra Nevada case shows changes in the minimum wind speed but not the maximum wind speed; again, the wet background/dry perturbation case increases the minimum wind speed, and the dry background/wet perturbation case decreases the minimum wind speed.
-
-Figure \ref{fig:windSol_WindShiftsRg} also shows shifts in the timing of the afternoon ramp-up (panel c) and the early morning ramp-down (panel d) of wind speed.  All three regional cases show a larger shift in the hour of ramp-up than in the hour of ramp-down.  In the dry background/wet perturbation cases, the ramp-up shifts later (by approximately 0.5 to 1.5 hours), while in the wet background/dry perturbation cases, the ramp-up shifts earlier (by 0.5 to 1 hours).
 
 In summary, the Central Valley soil moisture influences the Solano turbine-level winds more strongly than does the Coast Range or Sierra Nevada soil moisture.  \textit{CHECK THIS: Drier soils \textbf{(in all regions but especially in the central valley?)} increase both the maximum and minimum wind speeds and shift both the ramp-up and ramp-down earlier.  Conversely, wetter soils decrease both the maximum and minimum wind speeds and shift the ramp-up and ramp-down later.  MODIFY TO INCLUDE DIFFERENCES BETWEEN REGIONAL CASES}
 
@@ -57,11 +88,11 @@ In summary, the Central Valley soil moisture influences the Solano turbine-level
 
 Solano winds respond most markedly to changes in Central Valley soil moisture; the scaling of Solano winds with Central Valley soil moisture magnitude is shown in Figures XX (time series) and XX (summary statistics).  Drier Central Valley soil moisture causes increases in maximum and minimum Solano turbine-level winds and causes the hour of ramp-up to shift earlier.  The maximum winds at Solano are particularly sensitive in the Central Valley soil moisture range of 0.05-0.15, with the greatest increases in maximum wind speed per unit change in soil moisture when Central Valley soil is driest.  Additionally, the Solano winds show particular sensitivity to Central Valley soil moisture when the background (Coast Range and Sierra Nevada) are wetter (soil moisture = 0.2) \textbf{(CHECK THIS)}.  The Solano minimum wind speeds also increase as the Central Valley soil dries, but the wind increases per unit soil moisture change are greatest in the soil moisture range of 0.15-0.35.
 
-\begin{figure}[here]
-\includegraphics[width=1\textwidth]{img/solano_wind_CV_d02_level0.png}
-\caption{Time series of wind speed magnitude at 60 m AGL for the d02 grid point nearest the Solano wind farm, for a range of Central Valley soil moisture values with (a) a wet background (soil moisture = 0.2) in the Coast Range and Sierras, and (b) a dry background (soil moisture = 0.1).  The gray area denotes the model spin-up period.}
-\label{fig:windSol_TseriesWindCV}
-\end{figure}
+%\begin{figure}[here]
+%\includegraphics[width=1\textwidth]{img/solano_wind_CV_d02_level0.png}
+%\caption{Time series of wind speed magnitude at 60 m AGL for the d02 grid point nearest the Solano wind farm, for a range of Central Valley soil moisture values with (a) a wet background (soil moisture = 0.2) in the Coast Range and Sierras, and (b) a dry background (soil moisture = 0.1).  The gray area denotes the model spin-up period.}
+%\label{fig:windSol_TseriesWindCV}
+%\end{figure}
 
 \begin{figure}[here]
 \includegraphics[width=1\textwidth]{img/shifts_CVsmois_d02.png}

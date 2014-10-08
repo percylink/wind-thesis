@@ -118,37 +118,6 @@ CV0.35dry & 0.1 & Central Valley & 0.35 \\
 
 \subsection{Model output analysis}
 
-\subsubsection{Wind time series statistics}
-\label{subsubsec:WindStats}
-
-Statistics are calculated to characterize the turbine-height (60 m AGL) Solano wind (from the model grid point closest to the wind farm).  The average maximum and minimum wind for each day $i$ ($u_{max, i}$ and $u_{min, i}$) and each case are calculated by averaging the wind over the maximum period (XX hr to XX hr) and the minimum period (XX hr to XX hr).  The overall average maximum and minimum wind for each case and their standard deviations are then calculated for all $N=14$ days in the test (excluding the spin-up period):
-
-%\begin{equation}
-\begin{align}
-	\overline{u_{max}} &= \frac{1}{N} \sum\limits_{i=1}^N u_{max, i} \\
-	\overline{u_{min}} &= \frac{1}{N} \sum\limits_{i=1}^N u_{min, i} \\
-	\sigma_{max} &= \sqrt{ \frac{1}{N} \sum\limits_{i=1}^N (u_{max, i}-\overline{u_{max}})^2 } \\ 
-	\sigma_{min} &= \sqrt{ \frac{1}{N} \sum\limits_{i=1}^N (u_{min, i}-\overline{u_{min}})^2 }.
-\end{align}
-%\end{equation}
-
-We define the hour of the ramp-up for each day ($t_{RU, i}$) as the first hour within the ramp-up period (XX to XX) when the wind speed is greater than or equal to the average of that day's minimum and maximum average wind speeds.  The hour of ramp-down ($t_{RD, i}$) is the first hour in the ramp-down period (XX to XX) when the wind speed is less than or equal to the average of that day's maximum and the following day's minimum average wind speeds.  \textbf{CLARIFY PREVIOUS DAY OR NEXT DAY MAX}
-
-\begin{align}
-	t_{RU, i} &= \argmin \limits_{t} \left(u(t) \ge \frac{u_{min, i}+u_{max, i}}{2} \right) \\
-	t_{RD, i} &= \argmin \limits_{t} \left(u(t) \le \frac{u_{max, i}+u_{min, i+1}}{2} \right).
-\end{align}
-
-The overall average ramp-up and ramp-down times and their standard deviations are then calculated or all $N$ days in the test (excluding the spin-up period):
-
-\begin{align}
-	\overline{t_{RU}} &= \frac{1}{N} \sum\limits_{i=1}^N t_{RU, i} \\
-	\overline{t_{RD}} &= \frac{1}{N} \sum\limits_{i=1}^N t_{RD, i} \\
-	\sigma_{RU} &= \sqrt{ \frac{1}{N} \sum\limits_{i=1}^N (t_{RU, i}-\overline{t_{RU}})^2 } \\ 
-	\sigma_{RD} &= \sqrt{ \frac{1}{N} \sum\limits_{i=1}^N (t_{RD, i}-\overline{t_{RD}})^2 }.
-\end{align}
-
-
 \subsubsection{Wind -- pressure-anomaly regression maps}
 
 The relationship between pressure spatial patterns and Solano turbine-level wind is quantified using linear regression.  At each output time $t$, the pressure anomaly at grid point $(i,j)$ and vertical level $k$ is calculated as
