@@ -41,23 +41,32 @@ Before presenting the Solano winds, we quantify the synoptic and land-surface-he
 \label{fig:windSol_TseriesWetRg}
 \end{figure}
 
-In both the control and test cases, winds at Solano have a strong diurnal cycle (Figure \ref{fig:windSol_TseriesDryRg}(a)) and tend to be strongest on days with stronger synoptic forcing (July XX).  Solano wind speeds are greatest XX to XX hours and are weakest XX to XX hours (Figure \ref{fig:windSol_DiffDiurnalRg}(a)). Solano winds are strongest in lowest 300 m, particularly in hours XX-XX  (Figure \ref{fig:windSol_VertProfileDryRg}(a)).  The two-week average $u$-component of Solano winds ($u_{avg}$) is westerly at all heights and times, but at heights 300-1000 m the $v_{avg}$-component of the winds oscillates between northerly in night and morning to slightly southerly in afternoon and evening; below 300 m, $v_{avg}$ is southerly at all hours.
+In both the control and test cases, winds at Solano have a strong diurnal cycle (Figure \ref{fig:windSol_TseriesDryRg}(a)) and tend to be strongest on days with stronger synoptic forcing (July XX).  Solano wind speeds are greatest XX to XX hours and are weakest XX to XX hours (Figure \ref{fig:windSol_DiffDiurnalDryRg}(a) and Figure \ref{fig:windSol_DiffDiurnalWetRg}(a)). Solano winds are strongest in lowest 300 m, particularly in hours XX-XX  (Figure \ref{fig:windSol_VertProfileDryRg}(a)).  The two-week average $u$-component of Solano winds ($u_{avg}$) is westerly at all heights and times, but at heights 300-1000 m the $v_{avg}$-component of the winds oscillates between northerly in night and morning to slightly southerly in afternoon and evening; below 300 m, $v_{avg}$ is southerly at all hours.
 
 \begin{figure}[here]
-\begin{subfigure}{0.6\textwidth}
+\begin{subfigure}{0.5\textwidth}
 \includegraphics[width=1\textwidth]{img/solano_controlwind_minusmean_CA0pt25_d02_level0.png}
 \caption{}
 \end{subfigure}
-\begin{subfigure}{0.6\textwidth}
+\begin{subfigure}{0.5\textwidth}
 \includegraphics[width=1\textwidth]{img/solano_diurnalwind_dry_regions_d02_level0.png}
 \caption{}
 \end{subfigure}
-\begin{subfigure}{0.6\textwidth}
+\caption{(a) Overlaid diurnal cycles of wind speed magnitude minus daily mean wind speed, at 60 m AGL for the d02 grid point nearest the Solano wind farm, for the CA-0.25 control case.  (b) Diurnally averaged differences in wind speed, at 60 m AGL for the d02 grid point nearest the Solano wind farm, for the wet background/dry perturbation cases.  Shading represents one standard deviation.}
+\label{fig:windSol_DiffDiurnalDryRg}
+\end{figure}
+
+\begin{figure}[here]
+\begin{subfigure}{0.5\textwidth}
+\includegraphics[width=1\textwidth]{img/solano_controlwind_minusmean_CA0pt1_d02_level0.png}
+\caption{}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
 \includegraphics[width=1\textwidth]{img/solano_diurnalwind_wet_regions_d02_level0.png}
 \caption{}
 \end{subfigure}
-\caption{(a) Overlaid diurnal cycles of wind speed magnitude minus daily mean wind speed, at 60 m AGL for the d02 grid point nearest the Solano wind farm, for the CA-0.25 control case.  (b) and (c) Diurnally averaged differences in wind speed, at 60 m AGL for the d02 grid point nearest the Solano wind farm, for (b) the wet background/dry perturbation cases and (c) the dry background/wet perturbation cases.  Shading represents one standard deviation.}
-\label{fig:windSol_DiffDiurnalRg}
+\caption{(a) Overlaid diurnal cycles of wind speed magnitude minus daily mean wind speed, at 60 m AGL for the d02 grid point nearest the Solano wind farm, for the CA-0.1 control case.  (b) Diurnally averaged differences in wind speed, at 60 m AGL for the d02 grid point nearest the Solano wind farm, for the dry background/wet perturbation cases.  Shading represents one standard deviation.}
+\label{fig:windSol_DiffDiurnalWetRg}
 \end{figure}
 
 \begin{figure}[here]
@@ -89,10 +98,11 @@ Regional low-level winds in the control case are consistent with previous studie
 \label{fig:windSol_WindMapsRg}
 \end{figure}
 
-The Solano wind in the regional test cases differs from the control case by as much as 2.5-3 m/s, and the changes are larger on days when the synoptic wind forcing is weaker (Figures \ref{fig:windSol_TseriesDryRg} and \ref{fig:windSol_TseriesWetRg}, e.g. XX days). The largest changes occur when Central Valley soil moisture is perturbed (dryCR and wetCR).  
-Drier soils on a wet background increase Solano winds in the afternoon and evening in all regional test cases (Figure \ref{fig:windSol_DiffDiurnalRg}(b)); the magnitude of this increase is largest in the dryCV case.  The increases in both the dryCV and drySN cases are greatest between 11:00 and 18:00 (1-2 m/s for dryCV and 0.5-1 m/s for drySN), while the increase in the dryCR case happens later, between 16:00 and 21:00 (0.5-1 m/s).  Importantly, such increases in the afternoon cause the daily wind speed ramp-up to shift earlier, because the increases occur at the same time as the control ramp-up.  Because there are no corresponding decreases at the hour of ramp-down, this means that the duration of the high-wind period also increases.  Predicting the timing of ramps is important for utilities, and these results suggest that soil moisture influences ramp-up timing at Solano.  Also, drier soils (especially in the Central Valley) increase the minimum wind (XX hours) on many individual days, especially days with weaker synoptic wind forcing (Figure \ref{fig:windSol_TseriesDryRg}), but these changes do not appear in the two-week average diurnal cycle (Figure \ref{fig:windSol_DiffDiurnalRg}(b)).
+The Solano wind in the regional test cases differs from the control case by as much as 2.5-3 m/s, and the changes are larger on days when the synoptic wind forcing is weaker (Figures \ref{fig:windSol_TseriesDryRg} and \ref{fig:windSol_TseriesWetRg}, e.g. XX days). The largest changes occur when Central Valley soil moisture is perturbed (dryCR and wetCR).  
 
-Wetter soils on a dry background have a smaller impact on Solano winds than drier soils on a wet background (Figure \ref{fig:windSol_DiffDiurnalRg}(c)).  Again, the decrease is largest in when Central Valley soil moisture is perturbed.  Both the wetCV and wetSN cases have wind decreases during 10:00-18:00 that are more than one standard deviation from zero (0.25-1.5 m/s for wetCV and 0.2-0.7 m/s for wetSN); for the wetCR case, there are no times of day with wind changes more than one standard deviation from zero.
+Drier soils on a wet background increase Solano winds in the afternoon and evening in all regional test cases (Figure \ref{fig:windSol_DiffDiurnalDryRg}(b)); the magnitude of this increase is largest in the dryCV case.  The increases in both the dryCV and drySN cases are greatest between 11:00 and 18:00 (1-2 m/s for dryCV and 0.5-1 m/s for drySN), while the increase in the dryCR case happens later, between 16:00 and 21:00 (0.5-1 m/s).  Importantly, such increases in the afternoon cause the daily wind speed ramp-up to shift earlier, because the increases occur at the same time as the control ramp-up.  Because there are no corresponding decreases at the hour of ramp-down, this means that the duration of the high-wind period also increases.  Predicting the timing of ramps is important for utilities, and these results suggest that soil moisture influences ramp-up timing at Solano.  Also, drier soils (especially in the Central Valley) increase the minimum wind (XX hours) on many individual days, especially days with weaker synoptic wind forcing (Figure \ref{fig:windSol_TseriesDryRg}), but these changes do not appear in the two-week average diurnal cycle (Figure \ref{fig:windSol_DiffDiurnalDryRg}(b)).
+
+Wetter soils on a dry background have a smaller impact on Solano winds than drier soils on a wet background (Figure \ref{fig:windSol_DiffDiurnalWetRg}(b)).  Again, the decrease is largest in when Central Valley soil moisture is perturbed.  Both the wetCV and wetSN cases have wind decreases during 10:00-18:00 that are more than one standard deviation from zero (0.25-1.5 m/s for wetCV and 0.2-0.7 m/s for wetSN); for the wetCR case, there are no times of day with wind changes more than one standard deviation from zero.
 
 \textit{Vertical profiles: vertical center of increases in each case.  Increases in u at all times and at all heights below 1700 m, but differences in magnitude, especially in morning.  Changes in v tend to amplify existing diurnal pattern, with more northerly in night and morning and more southerly in afternoon.  Degree to which the elevated increases propagate to the ground?}
 
@@ -125,98 +135,123 @@ In summary, the Central Valley soil moisture influences the Solano turbine-level
 
 Drier Central Valley soils increase Solano winds, while wetter Central Valley soils decrease Solano winds (Figure \ref{fig:windSol_TseriesWindCV}.)  These changes can be up to 3 m/s, and they occur most consistently in the hours of 12:00 to 22:00 (Figure \ref{fig:windSol_DiffDiurnalCV0pt2}(b)), when they are 0.8-1.7 m/s on average in the driest Central Valley case (CV0.05).  The average changes during hours 12:00 to 22:00 scale nonlinearly with CV soil moisture (\textbf{shift stats figure}), with larger increases in wind per unit soil moisture decrease when the soil is dry.  The greater sensitivity to soil moisture when soils are drier is likely due to the greater sensitivity of surface heating to soil moisture when soils are drier (\textbf{forcing figure}), which is related to rapid declines in soil hydraulic conductivity and plant stomatal conductance in the moderate-to-dry soil moisture range (\textbf{cite something Ð Bonan? Sap flow paper? Transitional soil moisture regime paper of some kind?}).
 
-\begin{figure}[here]
-\includegraphics[width=1\textwidth]{img/shifts_CVsmois_d02.png}
-\caption{Shifts in wind characteristics as a function of Central Valley soil moisture.  (a) Change in average wind speed during the maximum period (XX - XX hrs): symbol is the mean of the changes in average maximum wind speed over all days, and error bars are one standard deviation of the changes in average maximum wind speed.  (b) Change in average wind speed during the minimum period (XX - XX hrs); symbol and error bars as in (a).  (c) Change in hour of ramp-up, defined in the text; symbol and error bars as in (a).  (d) Change in hour of ramp-down, defined in the text; symbol and error bars as in (a).  \textbf{Might need to put equations in the text to clarify how these metrics are calculated.}}
-\label{fig:windSol_WindShiftsCV}
-\end{figure}
-
-\subsubsection{Scaling of wind changes with area modified (??)}
+%\begin{figure}[here]
+%\includegraphics[width=1\textwidth]{img/shifts_CVsmois_d02.png}
+%\caption{Shifts in wind characteristics as a function of Central Valley soil moisture.  (a) Change in average wind speed during the maximum period (XX - XX hrs): symbol is the mean of the changes in average maximum wind speed over all days, and error bars are one standard deviation of the changes in average maximum wind speed.  (b) Change in average wind speed during the minimum period (XX - XX hrs); symbol and error bars as in (a).  (c) Change in hour of ramp-up, defined in the text; symbol and error bars as in (a).  (d) Change in hour of ramp-down, defined in the text; symbol and error bars as in (a).  \textbf{Might need to put equations in the text to clarify how these metrics are calculated.}}
+%\label{fig:windSol_WindShiftsCV}
+%\end{figure}
 
 \subsection{Physical mechanism}
 \label{subsec:PhysMech}
 
 Next we investigate the physical mechanism by which changes in soil moisture, especially in the Central Valley, influence near-surface winds at Solano.  
 
-\subsubsection{Scaling analysis}
-
-A scaling analysis of the terms of the momentum equation illustrates the relative importance of the momentum advection and pressure gradient terms in determining accelerations in westerly wind velocity $u$.  
+The strong diurnal component of the Solano wind (Figures \ref{fig:windSol_TseriesDryRg} and \ref{fig:windSol_TseriesWetRg}) and the wind speed peak at low levels (Figure \ref{fig:windSol_VertProfileDryRg}) suggest significant forcing by land surface heating (consistent with Zhong \textit{et al.} [2004] and Mansbach [2010]).  In order to explore the influence of land surface forcing on terms in the momentum budget, we model the topographically channeled wind at Solano as simple one-dimensional flow through the pass governed by a one-dimensional momentum equation,
 
 \begin{equation}
-\frac{\partial u}{\partial t} = -u\frac{\partial u}{\partial x} -\frac{1}{\rho} \frac{\partial p}{\partial x} - \kappa u
+\frac{\partial u}{\partial t} = -u\frac{\partial u}{\partial x} -\frac{1}{\rho} \frac{\partial p}{\partial x} - F(\frac{\partial u}{\partial z}, N),
 \end{equation}
+neglecting Coriolis because of the topographic constraint on wind direction.  The first term on the right hand side is the advection of momentum, the second term is the pressure gradient force, and the third term is frictional dissipation as an unspecified function of vertical wind shear and stability (quantified by $N$, the Brunt-V\"ais\"al\"a frequency).  We are interested in the importance of each of these terms through the diurnal cycle and in the influence of soil moisture changes on each of these terms.
 
-We neglect the Coriolis term and the $y$-direction advection and pressure gradient because topographic channeling enforces nearly westerly flow in the Solano pass, and we treat friction as a linear function of wind speed.  We take 10 m/s as a typical value for $U$, 100 km as the length scale $L$ across the Solano pass from the San Francisco Bay to the Central Valley, +1 m/s as the typical $\Delta U$ from the San Francisco Bay to the Central Valley, -1 hPa as the typical pressure difference $\Delta p$ from the San Francisco Bay to the Central Valley, 1 kg/m$^3$ as the density $\rho$, and 7$\times$10$^{-5}$ s$^{-1}$ as the linear friction coefficient $\kappa$ [Zhong et al. 2004]. Then the advection term $\frac{-U^2}{L}$ is $\mathcal{O}$(-10$^{-3}$ m/s$^2$), the pressure gradient term $-\frac{1}{\rho} \frac{\Delta p}{L}$ is $\mathcal{O}$(10$^{-3}$ m/s$^2$), and the friction term $-\kappa U$ is $\mathcal{O}$(-10$^{-4}$ m/s$^2$).  Thus, the pressure gradient and momentum advection terms dominate the accelerations in $u$, and they work in opposite directions, with the pressure gradient tending to accelerate $u$ and the momentum advection tending to decelerate $u$.  During periods of greatest modeled wind acceleration or deceleration, the modeled magnitude of $\frac{\partial u}{\partial t}$ is \textbf{approximately 5$\times$10$^{-4}$ to 10$^{-3}$ m/s$^2$ WHICH IS IT? ($\Delta U$ = 4 m/s, $\Delta t$ = 2 hr)}.  Thus, the balance of the pressure gradient and momentum advection terms can account for the modeled accelerations and decelerations.
-
-\subsubsection{Pressure patterns driving wind}
-
-\begin{figure}[here]
-\includegraphics[width=1\textwidth]{img/corr_wind_panom_lev200_lag3.png}
-\caption{Regression between 60 m AGL Solano wind speed (purple diamond) and the horizontal pressure anomaly, with wind speed lagging pressure gradient by 90 min, for the CA-0.25 run, domain d02.  Left column: linear regression slope; right column: Pearson's r correlation coefficient for the linear regression; top row: regression using $u$ component of the Solano wind; bottom row: regression using $v$ component of the Solano wind.}
-\label{fig:windSol_corrPanomUmap}
-\end{figure}
-
-The scaling analysis shows that the pressure gradient plays an important role in driving accelerations in $u$ in the Solano pass.  As such, we seek to identify the vertical level and horizontal distance at which the pressure gradient drives the winds, and we investigate how changes in the land surface energy balance affect pressure at this level and horizontal locations.  First, we linearly regress turbine-height $u$ (60 m AGL) against the horizontal pressure anomalies at each grid point and at each height, as described in Section XX.  The regression slopes and Pearson's r correlation coefficient for each grid point using pressure anomalies from 200 m AGL are shown in Figure \ref{fig:windSol_corrPanomUmap}; results for pressure anomalies from other heights are not shown because the patterns are very similar for all heights below 330 m, and the correlations are much weaker for heights above 330 m.  The correlations peak when the wind time series lags the pressure anomaly time series by 90 min, and this lag was used to create Figure \ref{fig:windSol_corrPanomUmap}.  Figure \ref{fig:windSol_corrPanomUmap} shows results for the CA-0.25 run; results for other runs were very similar and are not shown.  
-
-Winds at Solano tend to be higher when the blue regions in the left column of Figure \ref{fig:windSol_corrPanomUmap} (northern and southern Central Valley) have lower pressure than the rest of the domain, and when the red regions (San Francisco Bay and central coast) have higher pressure than the rest of the domain.  Darker colors in those same regions indicate tight positive (red) or negative (blue) correlations between the Solano wind time series and the pressure anomaly time series in those regions.  
-
-We repeat the regression analysis to find regions with pressure changes in the test runs that correlate with changes in the Solano wind.  The slopes and correlation coefficients of the regression between test-minus-control changes in pressure anomalies and test-minus-control changes in Solano wind are shown in Figures \ref{fig:windSol_corrDiffPanomUmapDryRg} (dry perturbation regions with wet background) and \ref{fig:windSol_corrDiffPanomUmapWetRg} (wet perturbation regions with dry background).  Decreases in pressure in XX regions are strongly related to increases in Solano wind speed in XX test cases.  The relationship is weaker in these regions in XX test cases.  \textit{Say anything about difference in patterns for u and v?}  \textbf{Draw boxes on figures, and say that Solano wind is deemed to be most sensitive to pressure changes in these regions, and these boxes will be used in the following analysis.}
+\subsubsection{Driving pressure gradient}
 
 \begin{figure}[here]
-\begin{subfigure}{0.6\textwidth}
-\includegraphics[width=1\textwidth]{img/corr_dwind_dpanom_lev200_lag3_dryCR.png}
-\caption{}
-\end{subfigure}
-\begin{subfigure}{0.6\textwidth}
-\includegraphics[width=1\textwidth]{img/corr_dwind_dpanom_lev200_lag3_dryCV.png}
-\caption{}
-\end{subfigure}
-\begin{subfigure}{0.6\textwidth}
-\includegraphics[width=1\textwidth]{img/corr_dwind_dpanom_lev200_lag3_drySN.png}
-\caption{}
-\end{subfigure}
-\caption{As in Figure \ref{fig:windSol_corrPanomUmap}, but linear regression performed with changes in wind and pressure anomalies from control case to test case.  (a) dryCR case, (b) dryCV case, (c) drySN case.}
-\label{fig:windSol_corrDiffPanomUmapDryRg}
+\includegraphics[width=1\textwidth]{img/corr_wind_panom_lev110_lag12_CA0pt25.png}
+\caption{CA-0.25 case: Solano 60 m AGL (110 m ASL) wind linearly regressed against horizontal pressure anomaly at 110 m ASL, with wind lagging pressure by 6 hours.  Top row: $u$-component of wind; bottom row: $v$-component of wind.  Left column: linear regression slope; right column: correlation coefficient.  Gray boxes outline areas used to calculate pressure gradients; ocean box is ``OCN", northern box in the Central valley is ``NCV", and southern box in Central Valley is ``SCV".}
+\label{fig:windSol_CorrMap0pt25}
 \end{figure}
 
 \begin{figure}[here]
-\begin{subfigure}{0.6\textwidth}
-\includegraphics[width=1\textwidth]{img/corr_dwind_dpanom_lev200_lag3_wetCR.png}
-\caption{}
-\end{subfigure}
-\begin{subfigure}{0.6\textwidth}
-\includegraphics[width=1\textwidth]{img/corr_dwind_dpanom_lev200_lag3_wetCV.png}
-\caption{}
-\end{subfigure}
-\begin{subfigure}{0.6\textwidth}
-\includegraphics[width=1\textwidth]{img/corr_dwind_dpanom_lev200_lag3_wetSN.png}
-\caption{}
-\end{subfigure}
-\caption{As in Figure \ref{fig:windSol_corrPanomUmap}, but linear regression performed with changes in wind and pressure anomalies from control case to test case.  (a) wetCR case, (b) wetCV case, (c) wetSN case.}
-\label{fig:windSol_corrDiffPanomUmapWetRg}
+\includegraphics[width=1\textwidth]{img/corr_wind_panom_lev110_lag12_CA0pt1.png}
+\caption{CA-0.1 case: Solano 60 m AGL (110 m ASL) wind linearly regressed against horizontal pressure anomaly at 110 m ASL, with wind lagging pressure by 6 hours.  Top row: $u$-component of wind; bottom row: $v$-component of wind.  Left column: linear regression slope; right column: correlation coefficient.}
+\label{fig:windSol_CorrMap0pt1}
 \end{figure}
 
-The boxes in Figure \ref{fig:windSol_corrPanomUmap} \textbf{(need to add these boxes to the figure)} outline regions with both large slopes and large r-values, implying that Solano winds are highly sensitive to the pressure anomalies.  When pressure in box A is higher than the rest of the domain, 60 m AGL winds at Solano are faster (positive slopes and r-values); in contrast, when pressure in box B is lower than the rest of the domain, 60 m AGL winds at Solano are faster (negative slopes and r-values.)
-
-Winds at Solano lag the pressure gradient between box A and box B (using the average pressure for each box at a given level), with correlation peaking at a lag of XX hours (Figure \ref{fig:windSol_lagcorrPgradU}).  The sensitivity (as measured by the linear regression slope) and the correlation are maximum for the 250 m ASL pressure gradient, although the correlation and sensitivity are strong for pressure gradients at all levels below 350 m ASL.  Figure \ref{fig:windSol_lagcorrPgradU} shows results for the CA-0.2 run only; results for other runs are similar, although the peak lag varies from XX in the XX run to XX in the XX run.  \textbf{Discuss sensitivity to higher (550 m) p-grad, but at a longer lag and with poorer correlation.  What does this mean?}
+In order to identify the pressure gradient most relevant to Solano winds, we linearly regress the horizontal pressure anomaly against Solano turbine-level wind (Section \ref{subsubsec:WindPresRegression}).  The regression is repeated for pressure at a range of heights and for a range of lag times, with wind lagging pressure.  The regression slopes and correlation coefficients for the control cases (CA-0.25, Figure \ref{fig:windSol_CorrMap0pt25}, and CA-0.1, Figure \ref{fig:windSol_CorrMap0pt1}) show a consistent pattern of positive slopes and correlation coefficients over the ocean near the central coast (meaning higher pressure in those regions corresponds to faster wind), and negative slopes and correlation coefficients throughout the Central Valley, especially just north and south of the Solano pass (meaning lower pressure in those regions corresponds to faster wind).
 
 \begin{figure}[here]
-\includegraphics[width=1\textwidth]{img/lag_corr_p_u_CA0pt2.png}
-\caption{Lag correlation between the pressure gradient from box A to boxB (leading) and Solano wind speed (lagging), for the CA-0.2 run, domain d02.  (a) Linear regression slope between wind speed pressure gradient as a function of lag hours, for different vertical levels of the pressure gradient; (b) Pearson's r correlation coefficient as a function of lag hours, for different vertical levels of the pressure gradient.  \textbf{Need to remove the left two panels, only show d02.  Also need to remove the second level wind lines.}}
-\label{fig:windSol_lagcorrPgradU}
+\includegraphics[width=1\textwidth]{img/pgrad_wind_CA0pt1_level110.png}
+\caption{CA-0.1 control case: Solano 60 m AGL (110 m ASL) wind (black) and average pressure difference OCN box minus NCV box (blue) and OCN box minus SCV box (green) at 110 m ASL.  The sign of the pressure difference is chosen to correspond with the $\frac{-1}{\rho} \frac{\partial p}{\partial x}$ term in the momentum budget.}
+\label{fig:windSol_PgradWind}
 \end{figure}
 
-\subsubsection{Local heating and advective controls on pressure gradient}
+\begin{figure}[here]
+\includegraphics[width=1\textwidth]{img/lag_corr_pdiff_combo_ncv_scv_d02_CA0pt1.png}
+\caption{CA-0.1 control case: lagged linear regression of Solano 60 m AGL (110 m ASL) wind against average pressure difference NCV box minus OCN box (dashed) and SCV box minus OCN box (solid).  Correlations are only shown for speed, because u and v velocity component results are very similar.}
+\label{fig:windSol_LagCorrCtrl}
+\end{figure}
 
-\textbf{Discuss how temperature changes are known to affect pressure (summarizing arguments from sea breeze review paper.  This may need to be moved to intro or discussion, and could reference it here.)}
+Thus, we choose three boxes, shown in gray in Figures \ref{fig:windSol_CorrMap0pt25} to \ref{fig:windSol_CorrMap0pt1}, to represent the pressure gradient driving Solano winds.  The lag of wind speed behind pressure gradient is evident in the time series of Solano wind and pressure difference between the boxes (Figure \ref{fig:windSol_PgradWind}).  Not only does the pressure difference peak 5-6 hours before the Solano wind speed, but the peak pressure difference rapidly dissipates (after 1-2 hours \textbf{CHECK THIS}), while the peak wind speed persists for 6-8 hours.  Using the pressure difference between the three boxes, we confirm that the peak sensitivity (as measured by the regression slope) and correlation occur with pressure at 110 m ASL (although the metrics are high at all levels below $\sim$300 m) with a lag of $\sim$4-5 hr for NCV-OCN pressure and $\sim$5-6.5 hr for SCV-OCN pressure (Figure \ref{fig:windSol_LagCorrCtrl}).
 
-Air temperature at XX m depends on air temperature 2 m above the surface; the dependence is linear during the day, but at night, the air at 250 m stays warmer than the air at 2 m, as expected from radiative cooling of the land surface and resulting stabilization and suppressed mixing of the lower atmosphere.  Air temperature at XX m in box B is sensitive to near-surface air temperature in XX regions, as measured by linear regression slopes and r-values (Figure XX).  Temperature at 2 m, in turn, depends strongly on surface skin temperature, with large linear regression slopes and r-values (Figure XX).  Finally, surface skin temperature depends greatly on the soil-moisture-dependent partitioning of land surface energy fluxes between evapotranspiration and sensible heat; Figure XX shows that the drier XX case has much higher surface skin temperature at midday in the Central Valley than does the wetter XX case.
+\begin{figure}[here]
+\begin{subfigure}{0.6\textwidth}
+\includegraphics[width=\textwidth]{img/corr_dwind_dpanom_lev110_lag2_dryCR.png}
+\caption{}
+\end{subfigure}
+\begin{subfigure}{0.6\textwidth}
+\includegraphics[width=\textwidth]{img/corr_dwind_dpanom_lev110_lag2_dryCV.png}
+\caption{}
+\end{subfigure}
+\begin{subfigure}{0.6\textwidth}
+\includegraphics[width=\textwidth]{img/corr_dwind_dpanom_lev110_lag2_drySN.png}
+\caption{}
+\end{subfigure}
+\caption{Correlation between Solano wind changes at 60 m AGL and horizontal pressure anomaly of change in 110 m ASL pressure, with a lag of 60 min, for the dry regional test cases minus control: (a) dryCR, (b) dryCV, (c) drySN.  The order of panels is as in Figure \ref{fig:windSol_CorrMap0pt25}.}
+\label{fig:windSol_CorrMapDryRg}
+\end{figure}
+
+\begin{figure}[here]
+\begin{subfigure}{0.6\textwidth}
+\includegraphics[width=\textwidth]{img/corr_dwind_dpanom_lev110_lag2_wetCR.png}
+\caption{}
+\end{subfigure}
+\begin{subfigure}{0.6\textwidth}
+\includegraphics[width=\textwidth]{img/corr_dwind_dpanom_lev110_lag2_wetCV.png}
+\caption{}
+\end{subfigure}
+\begin{subfigure}{0.6\textwidth}
+\includegraphics[width=\textwidth]{img/corr_dwind_dpanom_lev110_lag2_wetSN.png}
+\caption{}
+\end{subfigure}
+\caption{Correlation between Solano wind changes at 60 m AGL and horizontal pressure anomaly of change in 110 m ASL pressure, with a lag of 60 min, for the wet regional test cases minus control: (a) wetCR, (b) wetCV, (c) wetSN.  The order of panels is as in Figure \ref{fig:windSol_CorrMap0pt25}.}
+\label{fig:windSol_CorrMapWetRg}
+\end{figure}
+
+\begin{figure}[here]
+\includegraphics[width=1\textwidth]{img/lag_corr_dpdiff_combo_ncv_scv_d02_testminusctrl.png}
+\caption{Dry regional perturbation cases: lagged linear regression of test-minus-control Solano 60 m AGL (110 m ASL) wind against test-minus-control average pressure difference NCV box minus OCN box (dashed) and SCV box minus OCN box (solid).  Top row: dryCR; middle row: dryCV; bottom row: drySN.}
+\label{fig:windSol_LagCorrTest}
+\end{figure}
+
+Repeating the regression analysis using test-minus-control changes in pressure and Solano wind, a similar spatial pattern of sensitivity emerges (positive correlation between Solano wind changes and pressure changes in the central coastal ocean, and negative correlation between Solano wind changes and pressure changes in the Central Valley), albeit with weaker correlation (Figures \ref{fig:windSol_CorrMapDryRg} and \ref{fig:windSol_CorrMapWetRg}).  Again, the changes in wind speed correlate maximally with the changes in pressure at the lowest altitudes ($\le$ 200 m, Figure \ref{fig:windSol_LagCorrTest}).  In contrast to the control cases which have a 5-6 hour lag, the test-minus-control changes correlate maximally at a lag of $\le$ 1 hour (Figure \ref{fig:windSol_LagCorrTest}).
+
+\subsubsection{Temperature controls on pressure}
+
+The diurnal variations in low-level pressure correspond to diurnal variations in boundary layer temperature, because pressure is the vertical integral of the weight of the air column above a point, and changes in temperature change the density and thus the weight of the air column.
+\begin{itemize}
+\item Diurnal temperature variations are larger in the Central Valley than over the ocean.  The temperature at low levels (XX altitudes) declines quickly after sunset, but the temperature aloft in the boundary layer (XX altitudes) remains warmer until XX hour.
+\item Only show one time-height plot?  As long as SCV and NCV versions are very similar.
+\item The difference in temperature peaks at XX time (same as peak of CV temperature, or different? later?).  The temperature difference at low levels drops after sunset (and even reverses sign, as the near-surface air in the Central Valley cools more quickly than that over the ocean?), but the temperature difference remains positive (XX degrees C) at XX altitudes.  The near-surface cooling in the Central Valley is due to a combination of radiative cooling of the land surface and advection of cooler marine air by the low-level wind maximum.
+\item What pressure difference does: when does it rise relative to the rise of the temperature difference?  What is its magnitude when temperature is elevated aloft but cool at the surface?
+\end{itemize}
+
+The changes in soil moisture affect the pressure gradient by changing surface heat fluxes and thus air temperature.
+\begin{itemize}
+\item Temperature changes in each box are XX magnitude at XX times.  Changes in the temperature difference between the boxes are largest at XX times and are of XX magnitude, which is XX fraction of the temperature difference in the control case.
+\item Temperature changes aloft persist for XX hours after sunset, but only for XX hours or not at all at the surface.  These changes are or are not reflected in the changes in temperature difference between boxes.
+\item Changes in the pressure difference between boxes are largest at XX hour, which corresponds to the largest changes in temperature difference at XX level.  The persistence of elevated temperatures aloft in the Central Valley does XX to the pressure gradient.
+\end{itemize}
+
+\subsubsection{Terms of the momentum budget - importance of momentum advection and friction - MAKE THIS BETTER}
+
+\textit{Estimating the momentum advection and pressure gradient terms in Equation XX from model output, shown in Figure XX, we would predict the du/dt shown in Figure XX, giving a Solano diurnal wind cycle with phase and amplitude like that in Figure XX.  This is different than the modeled wind diurnal cycle (diurnal cycle figures previously), and the discrepancy is due to the friction term.  The residual of du/dt minus momentum advection and pressure gradient force is shown in Figure XX; this is an estimate of the $F(u)$ term in Equation XX.  This residual has the expected diurnal shape of friction, with high values in the daytime when convective turbulence creates a uniform boundary layer and high momentum flux to the ground, and low values at night when the residual upper boundary layer decouples from the shallow stable nocturnal boundary layer and is buffered from friction with the surface.  Indeed, the diurnal course of modeled $u*$ at Solano has the same timing as the $F(\frac{\partial u}{\partial z}, N)$ term calculated from the residual (ustar figure).  The drop in friction at hours XX explains the sustained high winds at hours XX even after the pressure gradient force declines to values XX fraction of the peak daytime values.}
+
+\textit{Changing the soil moisture changes the pressure gradient term.  In XX case, it changes the pressure gradient at XX hour by XX fraction.  These changes are related to air temperature changes at XX levels at XX hours.  Note differences between cases.  Note any persistence of temperature increases aloft after nightfall.}
+
+\textit{The changes in the pressure gradient force (do or do not) occur at the same time as the changes in wind.  There are (or are not) changes in momentum advection and friction, (and they happen at XX hours.)}
 
 \subsubsection{Summary of mechanism}
 
-Figure XX summarizes the changes in land surface heating, air temperature, and pressure that lead to the changes in Solano winds, for XX cases.  In the drier cases, surface temperature (increases earlier?) and reaches midday peaks that are XX to XX deg C higher than the control (or wetter) cases.  This leads to 2 m air temperatures that are approximately XX deg C higher (and any shift in timing?), and to XX m air temperatures that are XX deg C higher (and any shift in timing?).  Pressure at box A decreases by XX and at box B decreases by XX, so that the pressure gradient (is lower during the day?  shifts in timing?).  As a result, winds at Solano, which lag pressure gradient by approximately XX hrs, increase by XX m/s at XX times, and the ramp-up and ramp-down periods (both shift earlier, following the pressure gradient forcing.)
-
-\textbf{Still to flesh out: Investigation of controls on air temperature at the important level and the important horizontal area, using energy balance.  Times when advection vs surface heating vs entrainment matter more.  How sensitive each of these components are to the change in soil moisture.}
 
 
 %\end{document}

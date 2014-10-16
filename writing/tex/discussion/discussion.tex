@@ -1,54 +1,39 @@
-
-%\documentclass[12pt]{amsart}
-%\usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
-%\usepackage{datetime}
-%\usepackage{setspace}
-%\doublespacing
-%\geometry{a4paper} % or letter or a5paper or ... etc
-%% \geometry{landscape} % rotated page geometry
-%
-%% See the ``Article customise'' template for come common customisations
-%
-%\title{Wind chapter}
-%\author{Percy Link}
-%\date{\currenttime \ \today} % delete this line to display the current date
-%
-%%%% BEGIN DOCUMENT
-%\begin{document}
-%
-%\maketitle
+%% WIND CHAPTER DISCUSSION
 
 \section{Discussion}
+
+Summarize modeled changes in wind.  Regional sensitivity.  Timing of change, and effect on ramp-up timing.  State approximate magnitude of effect, and covert this to power.
 
 Mechanism
 \begin{itemize}
 \item Why to understand the physical mechanism?  It lends credence to the reality of this influence in the real world, not just in the model; it helps us predict what regions and locations might have a similar influence of soil moisture
-\item How each change to smois changes circulation, and how this affects winds at a point
-\item Speculate on why Solano winds are more sensitive to CV than CR or SN soil moisture.  More direct impact on the pressure gradient that drives Solano winds?
-\item Discuss why the shifts in maximum vs minimum winds, why the shift earlier vs. later and changes in either ramp-up or ramp-down or both.
+\item Briefly restate mechanism
+\item Why Solano winds are more sensitive to CV than CR or SN soil moisture: more direct impact on the pressure gradient that drives Solano winds
+\item Discuss why the shifts in maximum winds and the shift earlier (changes in ramp-up)
+\item Role of pressure gradient, momentum advection, and friction
 \end{itemize}
 
 Importance of soil moisture, sensitivity of forecasts
 \begin{itemize}
 \item Frame the test cases in real-world context: regular precip year vs dry year (governs the soil moisture of the unmanaged mountainous regions), and different levels of irrigation in the central valley.  Obviously more irrigated area in these cases than in reality - would expect sensitivity to actual irrigation to be lower.  But, still important to get the soil moisture of the large region of the central valley correct, regardless of whether it's irrigated.
-\item What do I want wind forecasters to take away: wind in NWP models is sensitive to soil moisture, so it is important to get it as accurate as possible.  Calculate some estimates of forecast error in MW from soil moisture errors.  These are the types of errors you might expect from errors in soil moisture: generally, can cause shift in max and min winds, and in timing of diurnal ramp-ups and ramp-downs; specifically for the Solano case, ... .  For the Solano case, the important regions are XX.  The most sensitive soil moisture ranges are XX.  
-\item The effect of soil moisture is expected to be strongest when local and regional land surface heating drives winds, i.e. during the warm season with weak to moderate synoptic winds.  In California, these conditions overlap with the season of greatest wind energy production, making soil moisture an important variable in wind energy forecasts.
-\item Note other potential wind regions affected, e.g. how far into the ocean the effects extend (although maybe there's not a whole lot of offshore wind potential in CA anyway) or Altamont (with caveats about resolution and complex topography)
+\item What do I want wind forecasters to take away: wind in NWP models is sensitive to soil moisture, and NWP models are widely used in wind energy forecasting, so it is important to get it as accurate as possible.  
+\item Other places where soil moisture might be similarly important: The effect of soil moisture is expected to be strongest when local and regional land surface heating drives winds, i.e. during the warm season with weak to moderate synoptic winds.  In California, these conditions overlap with the season of greatest wind energy production, making soil moisture an important variable in wind energy forecasts.
+\item Note other potential wind regions affected, implications for wind farms in different places - there are locations, esp in central valley, that depend on soil moisture information from CR or SN
 \end{itemize}
 
 How to use soil moisture, or related observables, to improve forecasts
 \begin{itemize}
 \item Want an observable intermediate variable that could detect such soil moisture changes and integrate them into wind forecasts at Solano.  Measure pressure gradient between the North Bay and Sacramento?  Measure surface skin temperature?  (And potentially assimilate that to improve model soil moisture estimate?)
+\item constraining the regions to which the wind forecast is most sensitive may help target soil moisture measurement efforts
 \end{itemize}
 
 Caveats/uncertainties about this study
 \begin{itemize}
-\item Effect of letting SMOIS evolve, vs holding fixed
+\item Effect of letting SMOIS evolve over the day, vs holding fixed - changes are small, and comparable to initializing a day-ahead forecast with erroneous soil moisture - soil moisture would also evolve in these cases
 \item Importance of land cover, for albedo and plant transpiration dynamics and roughness; results would have been different if we made land cover uniform, and results are dependent on accuracy of land cover parameterizations
 \item This is a prototype; more complete analysis would use longer time period covering more synoptic conditions, 
-\item Probable sensitivity to PBL scheme, resolution - these questions are addressed in other studies, and an analysis for operational purposes at a given site would need to optimize over these parameters
-\item Would be good to run ensembles with perturbed forcing
+\item Probable sensitivity to PBL scheme, resolution - these questions are addressed in other studies, and an analysis for operational purposes at a given site would need to optimize over these parameters (cite Wharton et al. saying WRF needs to be set up for the specific site)
+\item Would be good to run ensembles with perturbed forcing, to characterize uncertainty due to lateral forcing and model advection (?)
 \item Specific results are particular to the Noah LSM's representation of soil water and evapotranspiration.  Issues with this representation, and difficulty mapping soil moisture values to values measured in the field (do I have any evidence to back this up?)
 \end{itemize}
 
-%\end{document}
