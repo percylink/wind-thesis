@@ -150,6 +150,7 @@ The strong diurnal component of the Solano wind (Figures \ref{fig:windSol_Tserie
 
 \begin{equation}
 \frac{\partial u}{\partial t} = -u\frac{\partial u}{\partial x} -\frac{1}{\rho} \frac{\partial p}{\partial x} - F(\frac{\partial u}{\partial z}, N),
+\label{eqn:windSol_momentum}
 \end{equation}
 neglecting Coriolis because of the topographic constraint on wind direction.  The first term on the right hand side is the advection of momentum, the second term is the pressure gradient force, and the third term is frictional dissipation as an unspecified function of vertical wind shear and stability (quantified by $N$, the Brunt-V\"ais\"al\"a frequency).  We are interested in the importance of each of these terms through the diurnal cycle and in the influence of soil moisture changes on each of these terms.
 
@@ -227,31 +228,64 @@ Repeating the regression analysis using test-minus-control changes in pressure a
 
 \subsubsection{Temperature controls on pressure}
 
-The diurnal variations in low-level pressure correspond to diurnal variations in boundary layer temperature, because pressure is the vertical integral of the weight of the air column above a point, and changes in temperature change the density and thus the weight of the air column.
-\begin{itemize}
-\item Diurnal temperature variations are larger in the Central Valley than over the ocean.  The temperature at low levels (XX altitudes) declines quickly after sunset, but the temperature aloft in the boundary layer (XX altitudes) remains warmer until XX hour.
-\item Only show one time-height plot?  As long as SCV and NCV versions are very similar.
-\item The difference in temperature peaks at XX time (same as peak of CV temperature, or different? later?).  The temperature difference at low levels drops after sunset (and even reverses sign, as the near-surface air in the Central Valley cools more quickly than that over the ocean?), but the temperature difference remains positive (XX degrees C) at XX altitudes.  The near-surface cooling in the Central Valley is due to a combination of radiative cooling of the land surface and advection of cooler marine air by the low-level wind maximum.
-\item What pressure difference does: when does it rise relative to the rise of the temperature difference?  What is its magnitude when temperature is elevated aloft but cool at the surface?
-\end{itemize}
+\begin{figure}[here]
+\includegraphics[width=0.9\textwidth]{img/timeheight_T_pdiff_ocnbox_ncvbox_0pt25.png}
+\caption{CA-0.25 control case: Temporal evolution of the vertical profile of temperature for the OCN box (top panel), the NCV box (second panel), NCV minus OCN (third panel); and time series of the NCV minus OCN pressure at 110 m ASL (bottom panel).  White areas indicate times when the lowest $\sigma$ model level was higher than 30 m ASL for the NCV box.}
+\label{fig:windSol_TimeHeightCtrl}
+\end{figure}
 
-The changes in soil moisture affect the pressure gradient by changing surface heat fluxes and thus air temperature.
-\begin{itemize}
-\item Temperature changes in each box are XX magnitude at XX times.  Changes in the temperature difference between the boxes are largest at XX times and are of XX magnitude, which is XX fraction of the temperature difference in the control case.
-\item Temperature changes aloft persist for XX hours after sunset, but only for XX hours or not at all at the surface.  These changes are or are not reflected in the changes in temperature difference between boxes.
-\item Changes in the pressure difference between boxes are largest at XX hour, which corresponds to the largest changes in temperature difference at XX level.  The persistence of elevated temperatures aloft in the Central Valley does XX to the pressure gradient.
-\end{itemize}
+The diurnal variations in low-level pressure correspond to diurnal variations in boundary layer temperature, because pressure is the vertical integral of the weight of the air column above a point, and changes in temperature change the density and thus the weight of the air column.  Diurnal temperature variations are larger in the Central Valley than over the ocean (Figure \ref{fig:windSol_TimeHeightCtrl}).  In the NCV box, the temperature near the surface (\textless 100 m ASL) declines quickly after sunset, but the temperature aloft in the boundary layer (particularly 300-700 m) remains elevated until at least midnight (Figure \ref{fig:windSol_TimeHeightCtrl}, panel 2).  Both the NCV temperature and the NCV-OCN temperature difference peak around 17:00.  The temperature difference at low levels (\textless 110 m) drops after sunset and approaches zero in the early morning some days, but the temperature difference remains positive at 110-490 m on most days, with NCV warmer than OCN by up to 12 deg C even in the early morning.  The near-surface cooling in the Central Valley is due to a combination of radiative cooling of the land surface and advection of cooler marine air by the low-level wind maximum.  The pressure difference is most negative (strongest gradient) at the same time as the temperature difference, around 17:00, and is smallest in magnitude (weakest gradient) just before sunrise, around 06:00, when the NCV boundary layer is coolest.  
 
-\subsubsection{Terms of the momentum budget - importance of momentum advection and friction - MAKE THIS BETTER}
+%The rate at which the pressure gradient weakens from late afternoon to early morning seems to depend in part on the rate of cooling of air at 150 to 330 m; on days when temperature in this layer remains higher until midnight (e.g. XX), the pressure difference remains stronger until midnight; in contrast, days with faster cooling of the 150-330 m layer (e.g. XX) also have a faster weakening of the pressure difference.
 
-\textit{Estimating the momentum advection and pressure gradient terms in Equation XX from model output, shown in Figure XX, we would predict the du/dt shown in Figure XX, giving a Solano diurnal wind cycle with phase and amplitude like that in Figure XX.  This is different than the modeled wind diurnal cycle (diurnal cycle figures previously), and the discrepancy is due to the friction term.  The residual of du/dt minus momentum advection and pressure gradient force is shown in Figure XX; this is an estimate of the $F(u)$ term in Equation XX.  This residual has the expected diurnal shape of friction, with high values in the daytime when convective turbulence creates a uniform boundary layer and high momentum flux to the ground, and low values at night when the residual upper boundary layer decouples from the shallow stable nocturnal boundary layer and is buffered from friction with the surface.  Indeed, the diurnal course of modeled $u*$ at Solano has the same timing as the $F(\frac{\partial u}{\partial z}, N)$ term calculated from the residual (ustar figure).  The drop in friction at hours XX explains the sustained high winds at hours XX even after the pressure gradient force declines to values XX fraction of the peak daytime values.}
+%\begin{figure}[here]
+%\includegraphics[width=0.9\textwidth]{img/timeheight_T_pdiff_ocnbox_ncvbox_diff_dryCR.png}
+%\caption{dryCR control case: Temporal evolution of the vertical profile of test-minus-control temperature changes for the OCN box (top panel), the NCV box (second panel), NCV minus OCN (third panel); and time series of test-minus-control changes in the NCV minus OCN pressure at 110 m ASL (bottom panel).  White areas indicate times when the lowest $\sigma$ model level was higher than 30 m ASL for the NCV box.}
+%\label{fig:windSol_TimeHeightDryCR}
+%\end{figure}
 
-\textit{Changing the soil moisture changes the pressure gradient term.  In XX case, it changes the pressure gradient at XX hour by XX fraction.  These changes are related to air temperature changes at XX levels at XX hours.  Note differences between cases.  Note any persistence of temperature increases aloft after nightfall.}
+\begin{figure}[here]
+\includegraphics[width=0.9\textwidth]{img/timeheight_T_pdiff_ocnbox_ncvbox_diff_dryCV.png}
+\caption{dryCV case: Temporal evolution of the vertical profile of test-minus-control temperature changes for the OCN box (top panel), the NCV box (second panel), NCV minus OCN (third panel); and time series of test-minus-control changes in the NCV minus OCN pressure at 110 m ASL (bottom panel).  White areas indicate times when the lowest $\sigma$ model level was higher than 30 m ASL for the NCV box.}
+\label{fig:windSol_TimeHeightDryCV}
+\end{figure}
 
-\textit{The changes in the pressure gradient force (do or do not) occur at the same time as the changes in wind.  There are (or are not) changes in momentum advection and friction, (and they happen at XX hours.)}
+%\begin{figure}[here]
+%\includegraphics[width=0.9\textwidth]{img/timeheight_T_pdiff_ocnbox_ncvbox_diff_drySN.png}
+%\caption{drySN control case: Temporal evolution of the vertical profile of test-minus-control temperature changes for the OCN box (top panel), the NCV box (second panel), NCV minus OCN (third panel); and time series of test-minus-control changes in the NCV minus OCN pressure at 110 m ASL (bottom panel).  White areas indicate times when the lowest $\sigma$ model level was higher than 30 m ASL for the NCV box.}
+%\label{fig:windSol_TimeHeightDrySN}
+%\end{figure}
+
+The changes in soil moisture affect the pressure gradient by changing surface heat fluxes and thus air temperature.  Temperature changes in the lower 1000 m of the NCV box are much larger in the dryCV case than in the dryCR or drySN cases; as such, only the dryCV case is shown (Figure \ref{fig:windSol_TimeHeightDryCV}).  We briefly note that in the dryCR and drySN cases, temperature and pressure changes are much smaller (+/- 1 degree C and -0.4 hPa), and the pressure gradient strengthens in the late afternoon, largely corresponding to warming at boundary layer levels above the surface (150 m to 1200 m).
+
+In the dryCV case, the NCV experiences strong low-level heating beginning in the morning, increasing in altitude as the boundary layer grows; temperature increases during day are well-mixed in the boundary layer.  There is mild cooling over the OCN box at 200-330 m in the first week of the simulation.  The strongest increase in temperature difference (warming of NCV relative to OCN) occurs late morning to late afternoon, at all levels below 690 m.  At night, there is a small decrease in the low-level (\textless 330 m) temperature difference.  The corresponding strengthening of the pressure difference is also greatest from late morning to late afternoon.  The mild strengthening of the pressure gradient on some nights (e.g. early morning of June 28, June 29, July 3, July 9) appears related to longer nocturnal persistence of warming at NCV relative to OCN in the residual boundary layer (150 m - 690 m, although the elevation of warming differs among individual days).
+
+%\item dryCR: changes over OCN - cooling at 200-490 m from midnight to 6 am, and slight warming above and below.  Might be cooling from drainage flow from CR?  NCV - warming 690-1200 m, and warming extends down to surface in late afternoon / evening.  Cooling below 490 m in evening to mid day.  Could this be a drainage flow?  And warming in late afternoon could be from boundary layer reaching warmer layer aloft, since heating is from mountains, and mixing this heat down? pgrad - strengthens in late afternoon/evening, coincident with warming extending to ground.  despite low-level cooling, pgrad changes are always less than zero (NCV pressure changes always equal to or more negative than OCN) - low-level cooling compensated by upper level warming?
+%\item dryCV: mild cooling over OCN 200-330 m.  NCV - strong heating beginning in morning, increasing in altitude as boundary layer grows; temperature increases during day are well-mixed in the boundary layer.  Strongest increase in temperature difference at mid day and through afternoon, at all levels below 690 m.  Small decrease in low-level (\textless 330 m) temperature difference at night.  Corresponding strengthening of pressure difference is greatest in middle of day and afternoon.  Mild strengthening of pressure gradient at night on some days (e.g. early morning of June 28, June 29, July 3, July 9) appears related to greater persistence of NCV-OCN temperature difference in middle of residual boundary layer (150 m - 690 m, although elevation of warming differs among individual days)
+%\item drySN: changes are small. cooling in NCV at night below 690 m.  This probably explains the weakening of the pressure gradient at night on many of the days.  Some warming aloft (above 330 m) in afternoons, which I guess explains the afternoon strengthening of pressure difference (small though it is).
+%\item Could leave out CR and SN - changes are small, and plots are not that interesting.  Could say that temperature and pressure changes are much smaller (plus minus 1 deg and 0.4 hPa), and pressure gradient strengthens in late afternoon, largely corresponding to warming at boundary layer levels above the surface (150 m to 1200 m)
+%\end{itemize}
+
+\subsubsection{Momentum budget timing and changes}
+
+\begin{figure}[here]
+\includegraphics[width=0.9\textwidth]{img/momentum_terms_diurnal_0pt25.png}
+\caption{CA-0.25 control case: Diurnal average of terms of the momentum balance.  Pressure gradient is calculated between the NCV and OCN boxes, and using density calculated at Solano 60 m AGL.  Advection is calculated as $u_{solano}\frac{\partial u}{\partial x}$ with $\frac{\partial u}{\partial x}$ estimated with the gradient in wind between Solano and San Pablo Bay (the northern part of the San Francisco Bay).  $\frac{\partial u}{\partial t}$ is calculated using Solano 60 m AGL wind speed.  Friction (cyan) is calculated as the residual of the other three terms, following Equation \ref{eqn:windSol_momentum}.  Shading represents one standard deviation.}
+\label{fig:windSol_MomTermsDiurn}
+\end{figure}
+
+The momentum advection, pressure gradient, and $u$ time tendency terms in Equation \ref{eqn:windSol_momentum} are estimated from model output (Figure \ref{fig:windSol_MomTermsDiurn}).  Using these three model-derived terms, we calculate the friction term as the residual (Figure \ref{fig:windSol_MomTermsDiurn}, cyan line).  The friction term has to vary diurnally in order to reproduce the observed wind diurnal cycle.  The time tendency ($\frac{\partial u}{\partial t}$) term is much smaller than pressure gradient term, even in afternoon when the pressure gradient is largest and advection is small.  If friction were not also large at this time, the wind would accelerate much faster.  Conversely, high wind speeds persist even after the pressure gradient declines between 22:00 and 04:00, even with strong advection of lower momentum air.  If friction during the night remained at its high afternoon values, the winds would decelerate at night.  The decline in the friction term at night is necessary in order to explain the observed high winds at night.  [\textbf{cite LLJ paper of some sort - not the first time this is being said.}]  Moreover, this residual has the expected diurnal shape of friction, with high values in the daytime when convective turbulence creates a uniform boundary layer and high momentum flux to the ground, and low values at night when the residual upper boundary layer decouples from the shallow stable nocturnal boundary layer and is buffered from friction with the surface.
+% Indeed, the diurnal course of modeled $u*$ at Solano has the same timing as the $F(\frac{\partial u}{\partial z}, N)$ term calculated from the residual (ustar figure).
+
+\begin{figure}[here]
+\includegraphics[width=0.9\textwidth]{img/momentum_terms_diurnal_diff_dryCV.png}
+\caption{dryCV case: Diurnal average of test-minus-control change in terms of the momentum balance, calculated as in Figure \ref{fig:windSol_MomTermsDiurn}.  Shading represents one standard deviation.}
+\label{fig:windSol_MomTermsDiurnDiff}
+\end{figure}
+
+In the dryCV case, the pressure gradient term increases at all hours but especially between 10:00 and 18:00 (Figure \ref{fig:windSol_MomTermsDiurnDiff}), when it increases by 20\% to 30\% (cf. Figure \ref{fig:windSol_MomTermsDiurn}).  The advection term becomes more negative at those same hours, as faster Solano wind transports lower momentum air more effectively.  The friction term also becomes more negative in the daytime, probably due to greater instability and convection from the hotter Central Valley land surface.  The changes in the dryCR and drySN cases were much smaller, with the pressure gradient term increasing by a maximum of 0.0001 to 0.0002 m/s$^2$ in the late afternoon.
 
 \subsubsection{Summary of mechanism}
-
-
+Solano wind responds to the near-surface pressure gradient between the Central Valley near the Solano pass and the central coast ocean.  Changes in boundary layer temperature at either of these locations influences this driving pressure gradient.  Soil moisture strongly influences land surface heating, and changes to soil moisture in the Central Valley strongly affect boundary layer temperature and thus near-surface pressure in the regions relevant to the Solano wind.  When Central Valley soils are dry, the atmospheric boundary layer warms from late morning to late afternoon, strengthening the pressure gradient at those hours.  At the same time, friction and advection of lower momentum air increase, due respectively to increased convection and faster lateral transport.  These negative terms limit the increase of Solano winds to $\sim$1.5 m/s on average in the late afternoon.
 
 %\end{document}
