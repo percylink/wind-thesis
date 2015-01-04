@@ -130,8 +130,11 @@ def plot_wind(ax, level, case):
     # ax[0].legend(handles, labels, prop={'size': 8}, loc='lower right', ncol=2)
     #ax1.legend(handles, labels, prop={'size': 8}, loc='lower center', ncol=2)
 
+    ax.set_xticks([6, 12, 18])
     ax.set_xlim(0, 24)
-    ax.plot(ax.get_xlim(), [0, 0], "g:")
+    ax.grid(b=True, axis='x')
+
+    ax.plot([0, 24], [0, 0], "g:")
     # ax[1].plot(ax[1].get_xlim(), [0, 0], "g:")
 
     ax.set_xlabel('PST hour')
@@ -186,6 +189,10 @@ def plot_control_wind(ax, lev, case, subtract_mean=False):
         hours = times[mask]-(datetime.datetime(2009, monthmin, daymin)+datetime.timedelta(days=i))
         hours = np.array([h.seconds/3600. for h in hours])
         ax.plot(hours, speed_plot[mask], 'k', alpha=0.5)
+        
+    ax.set_xticks([6, 12, 18])
+    ax.set_xlim(0, 24)
+    ax.grid(b=True, axis='x')
 
     if subtract_mean:
         ax.set_ylabel("Wind speed minus daily mean, m/s")
