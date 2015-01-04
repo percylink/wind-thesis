@@ -57,8 +57,10 @@ def convert_times(f):
 
 def get_winds(f, lev):
     u = f.variables['U'][:, lev, :, :]
+    uav = np.mean([u[:, :, :-1], u[:, :, 1:]], axis=0)
     v = f.variables['V'][:, lev, :, :]
-    speed = (u**2 + v**2)**0.5  # calculate speed
+    vav = np.mean([v[:, :-1, :], v[:, 1:, :]], axis=0)
+    speed = (uav**2 + vav**2)**0.5  # calculate speed
     return speed
 
 def calc_mask_avg(f, data, mask):
@@ -84,6 +86,8 @@ def calc_box_av(f, data, box_name, domain):
     return rtrn
 
 def plot_tseries(case):
+
+    print case["test_id"]
     
     if case["test_id"] in ["CV_0.2", "CV_0.1"]:
         colors = ['m', 'r', 'y', 'g', 'c', 'b']
@@ -93,6 +97,8 @@ def plot_tseries(case):
     variables = ['SMOIS', 'TSK', 'T2', 'speed_upper']
 
     for domain in ["d01", "d02"]:
+
+        print domain
 
         # open control file
         fc = nc.netcdf_file(os.path.join(root_dir, case["ctrl"], "wrfout_"+domain+"_2009-07-01_00:00:00"))
@@ -104,6 +110,8 @@ def plot_tseries(case):
             fts[test] = nc.netcdf_file(os.path.join(root_dir, test, "wrfout_"+domain+"_2009-07-01_00:00:00"))
 
         for v in variables:
+
+            print v
 
             # set up plot
             fig, ax = plt.subplots(nrows=5, ncols=2)
@@ -155,14 +163,14 @@ def plot_tseries(case):
                 else:
                     data_t = ft.variables[v][:]
 
-                # get averages for the regions for control
+                # get averages for the regions
                 avCR_t = calc_mask_avg(ft, data_t, maskCR[domain])
                 avCV_t = calc_mask_avg(ft, data_t, maskCV[domain])
                 avSN_t = calc_mask_avg(ft, data_t, maskSN[domain])
                 avbay_t = calc_box_av(ft, data_t, "bay", domain)
                 avsac_t = calc_box_av(ft, data_t, "cv", domain)
 
-                # plot control
+                # plot abs
                 h = ax[0, 0].plot(times, avCR_t, colors[i_test])
                 handles += h
                 labels.append(test)
@@ -171,6 +179,7 @@ def plot_tseries(case):
                 ax[3, 0].plot(times, avbay_t, colors[i_test])
                 ax[4, 0].plot(times, avsac_t, colors[i_test])
 
+                # plot diffs
                 ax[0, 1].plot(times, avCR_t-avCR_c, colors[i_test])
                 ax[1, 1].plot(times, avCV_t-avCV_c, colors[i_test])
                 ax[2, 1].plot(times, avSN_t-avSN_c, colors[i_test])
@@ -185,10 +194,127 @@ def plot_tseries(case):
                 a.set_xlabel('PST')
 
             fig.set_size_inches(10, 11)
-            plt.show()
-            1/0
+            #plt.show()
+            #1/0
             fig.savefig(os.path.join(plot_dir, savename))
             plt.close(fig)
+
+def plot_tseries_bytest(case):
+
+    print case["test_id"]
+    
+    if case["test_id"] in ["CV_0.2", "CV_0.1"]:
+        colors = ['m', 'r', 'y', 'g', 'c', 'b']
+    else:
+        colors = ['b', 'g', 'r', 'c', 'm', 'y']
+
+    variables = ['SMOIS', 'TSK', 'T2', 'speed_upper']
+
+    for domain in ["d01", "d02"]:
+
+        print domain
+
+        # open control file
+        fc = nc.netcdf_file(os.path.join(root_dir, case["ctrl"], "wrfout_"+domain+"_2009-07-01_00:00:00"))
+        times = convert_times(fc)
+
+        # open test files
+        fts = {}
+        for test in case["tests"]:
+            fts[test] = nc.netcdf_file(os.path.join(root_dir, test, "wrfout_"+domain+"_2009-07-01_00:00:00"))
+
+        for v in variables:
+
+            # set up plot
+            fig, ax = plt.subplots(nrows=len(case["tests"])+1, ncols=2)
+            fig.suptitle(case["test_id"]+" "+domain+" "+v)
+            savename = "forcings_"+case["test_id"]+"_bytest_"+v+"_"+domain+".png"
+
+            # get data for control
+            if v == 'SMOIS':
+                data_c = fc.variables[v][:, 0, :, :]
+            elif v == 'speed_upper':
+                data_c = get_winds(fc, 15)  # level 15 is a little more than 4 km in central valley; ~4-5 km over cr, 5-6 over sn
+            else:
+                data_c = fc.variables[v][:]
+
+            # get averages for the regions for control
+            avCR_c = calc_mask_avg(fc, data_c, maskCR[domain])
+            avCV_c = calc_mask_avg(fc, data_c, maskCV[domain])
+            avSN_c = calc_mask_avg(fc, data_c, maskSN[domain])
+            avbay_c = calc_box_av(fc, data_c, "bay", domain)
+            avsac_c = calc_box_av(fc, data_c, "cv", domain)
+
+            # plot control
+            handles = []
+            h = ax[0, 0].plot(times, avCR_c, 'b')
+            handles += h
+            h = ax[0, 0].plot(times, avCV_c, 'g')
+            handles += h
+            h = ax[0, 0].plot(times, avSN_c, 'r')
+            handles += h
+            h = ax[0, 0].plot(times, avbay_c, 'c')
+            handles += h
+            h = ax[0, 0].plot(times, avsac_c, 'y')
+            handles += h
+            ax[0, 0].set_ylabel("control")
+            labels = ["CR", "CV", "SN", "bay", "sac"]
+            
+            ax[0, 0].legend(handles, labels, loc='lower center', prop={"size": 6})
+
+            # plot each test
+            for i_test, test in enumerate(case["tests"]):
+
+                print test
+
+                # get test file
+                ft = fts[test]
+
+                # get data
+                if v == 'SMOIS':
+                    data_t = ft.variables[v][:, 0, :, :]
+                elif v == 'speed_upper':
+                    data_t = get_winds(ft, 15)  # level 15 is a little more than 4 km in central valley; ~4-5 km over cr, 5-6 over sn
+                else:
+                    data_t = ft.variables[v][:]
+
+                # get averages for the regions
+                avCR_t = calc_mask_avg(ft, data_t, maskCR[domain])
+                avCV_t = calc_mask_avg(ft, data_t, maskCV[domain])
+                avSN_t = calc_mask_avg(ft, data_t, maskSN[domain])
+                avbay_t = calc_box_av(ft, data_t, "bay", domain)
+                avsac_t = calc_box_av(ft, data_t, "cv", domain)
+
+                # plot abs
+                ax[i_test+1, 0].plot(times, avCR_t, "b")
+                ax[i_test+1, 0].plot(times, avCV_t, "g")
+                ax[i_test+1, 0].plot(times, avSN_t, "r")
+                ax[i_test+1, 0].plot(times, avbay_t, "c")
+                ax[i_test+1, 0].plot(times, avsac_t, "y")
+                ax[i_test+1, 0].set_ylabel(test)
+
+                # plot diffs
+                ax[i_test+1, 1].plot(times, avCR_t-avCR_c, "b")
+                ax[i_test+1, 1].plot(times, avCV_t-avCV_c, "g")
+                ax[i_test+1, 1].plot(times, avSN_t-avSN_c, "r")
+                ax[i_test+1, 1].plot(times, avbay_t-avbay_c, "c")
+                ax[i_test+1, 1].plot(times, avsac_t-avsac_c, "y")
+                
+            ax[0, 0].legend(handles, labels, prop={'size': 6}, loc='lower center', ncol=2)
+            ax[0, 0].set_title('test')
+            ax[0, 1].set_title('test - ctrl')
+            
+            for a in ax.flatten():
+                a.set_xlabel('PST')
+
+            fig.set_size_inches(10, 11)
+            #plt.show()
+            #1/0
+            fig.savefig(os.path.join(plot_dir, savename))
+            plt.close(fig)
+
+        del(fc)
+        del(fts)
 
 
 if __name__ == "__main__":
@@ -215,12 +341,18 @@ if __name__ == "__main__":
                   "test_id": "CV_rgs_wet"}
 
     # call plotting function
-    plot_tseries(case_wetrg)
-    plot_tseries(case_dryrg)
-    plot_tseries(case_CVwet)
-    plot_tseries(case_CVdry)
+    #plot_tseries(case_wetrg)
+    #plot_tseries(case_dryrg)
+    #plot_tseries(case_CVwet)
+    #plot_tseries(case_CVdry)
     plot_tseries(case_CVrgs_wet)
     plot_tseries(case_CVrgs_dry)
 
+    #plot_tseries_bytest(case_wetrg)
+    #plot_tseries_bytest(case_dryrg)
+    #plot_tseries_bytest(case_CVwet)
+    #plot_tseries_bytest(case_CVdry)
+    plot_tseries_bytest(case_CVrgs_wet)
+    plot_tseries_bytest(case_CVrgs_dry)
 
 

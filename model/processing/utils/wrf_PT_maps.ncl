@@ -5,10 +5,8 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/wrf/WRFUserARW.ncl"
 
 begin
 
-; runs and domains and directories:
-  ;run_name = "CA-0.24"
-  ;runs = ["CA-0.24", "CA-dryCR", "CA-dryCV", "CA-drySN"]
-  ;domains = "d03"
+; user inputs
+  tstep_per_hr = 2
 
 ; We generate plots, but what kind do we prefer?
 ; type = "png"
@@ -33,25 +31,35 @@ begin
   mpres@mpPerimLineColor       = "Black"
 
 
-do i_run = 1, 3  ; RUN LOOP
+do i_run = 0, 2  ; RUN LOOP
+  
+  ;if (i_run .eq. 0) then
+  ;  run_name = "CA-0.24"
+  ;end if
+  ;if (i_run .eq. 1) then
+  ;  run_name = "CA-dryCR"
+  ;end if
+  ;if (i_run .eq. 2) then
+  ;  run_name = "CA-dryCV"
+  ;end if
+  ;if (i_run .eq. 3) then
+  ;  run_name = "CA-drySN"
+  ;end if
   
   if (i_run .eq. 0) then
-    run_name = "CA-0.24"
+    run_name = "CA-0.2"
   end if
   if (i_run .eq. 1) then
-    run_name = "CA-dryCR"
+    run_name = "CA-CV0.05w"
   end if
   if (i_run .eq. 2) then
-    run_name = "CA-dryCV"
+    run_name = "CA-CV0.35w"
   end if
-  if (i_run .eq. 3) then
-    run_name = "CA-drySN"
-  end if
-  
+
   print("run "+run_name)
   run_dir = "$SCRATCH/WRF/output/"+run_name
 
-  do i_d = 0, 2  ; DOMAIN LOOP
+  do i_d = 0, 1  ; DOMAIN LOOP
   
     if (i_d .eq. 0) then
       domain = "d01"
@@ -65,10 +73,10 @@ do i_run = 1, 3  ; RUN LOOP
 	
 	print("domain "+domain)
 	plot_dir = "plots/"+domain+"/map_P_T"
-    system("cd "+run_dir+"; rm -r "+plot_dir+"; mkdir "+plot_dir+"; ln -sf wrfout_"+domain+"_2009-07-01_00:00:00 wrfout_"+domain+"_2009-07-01_00:00:00.nc")
+    system("cd "+run_dir+"; mkdir "+plot_dir+"; ln -sf wrfout_"+domain+"_2009-07-01_00:00:00 wrfout_"+domain+"_2009-07-01_00:00:00.nc")
     a = addfile(run_dir+"/wrfout_"+domain+"_2009-07-01_00:00:00.nc","r")
-    if (run_name .ne. "CA-0.24") then
-      a_c = addfile("$SCRATCH/WRF/output/CA-0.24/wrfout_"+domain+"_2009-07-01_00:00:00.nc","r")
+    if (run_name .ne. "CA-0.2") then
+      a_c = addfile("$SCRATCH/WRF/output/CA-0.2/wrfout_"+domain+"_2009-07-01_00:00:00.nc","r")
     end if
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -84,7 +92,7 @@ do i_run = 1, 3  ; RUN LOOP
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    do it = 42,64,2             ; TIME LOOP - only 7-2 18:00 to 7-3 16:00
+    do it = 42*tstep_per_hr, 64*tstep_per_hr, 2*tstep_per_hr  ; TIME LOOP - only 7-2 18:00 to 7-3 16:00
 
       print("Working on time: " + times(it) )
       ;wks = gsn_open_wks(type, run_dir+"/"+plot_dir+"/plt_HeightLevel_" + flt2string(round(height, 3)) + "_" + times(it))
@@ -132,7 +140,7 @@ do i_run = 1, 3  ; RUN LOOP
       delete(wks)
       delete(contour)
       
-      if (run_name .ne. "CA-0.24") then
+      if (run_name .ne. "CA-0.2") then
 		  ps_c = wrf_user_getvar(a_c, "PSFC", it) / 100.  ; surface pressure, converted to hPa
 		  p_c  = wrf_user_getvar(a_c, "pressure",it)      ; pressure
 		  Ts_c = wrf_user_getvar(a_c, "TSK", it)-273.     ; surface skin temperature, converted to C
@@ -145,7 +153,7 @@ do i_run = 1, 3  ; RUN LOOP
 		  opts = res
 		  opts@cnFillOn = True
 		  opts@FieldTitle = "Surface pressure diff (test-control)"
-		  opts@ContourParameters = (/ -1.2, 0.2, 0.1/)
+		  opts@ContourParameters = (/ -1.5, 1.5, 0.1/)
 	      contour = wrf_contour(a,wks,ps-ps_c,opts)
 		  plot = wrf_map_overlays(a,wks,(/contour/),pltres,mpres)
 		  delete(opts)
@@ -157,7 +165,7 @@ do i_run = 1, 3  ; RUN LOOP
 		  opts = res
 		  opts@cnFillOn = True
 		  opts@FieldTitle = "Surface temperature diff (test-control)"
-		  opts@ContourParameters = (/ -6., 14., 1./)
+		  opts@ContourParameters = (/ -14., 14., 1./)
 	      contour = wrf_contour(a,wks,Ts-Ts_c,opts)
 		  plot = wrf_map_overlays(a,wks,(/contour/),pltres,mpres)
 		  delete(opts)
@@ -169,7 +177,7 @@ do i_run = 1, 3  ; RUN LOOP
 		  opts = res
 		  opts@cnFillOn = True
 		  opts@FieldTitle = "2 m temperature diff (test-control)"
-		  opts@ContourParameters = (/ -2., 6., 0.5/)
+		  opts@ContourParameters = (/ -8., 8., 0.5/)
 	      contour = wrf_contour(a,wks,T2-T2_c,opts)
 		  plot = wrf_map_overlays(a,wks,(/contour/),pltres,mpres)
 		  delete(opts)
@@ -233,7 +241,7 @@ do i_run = 1, 3  ; RUN LOOP
 		delete(wks)
 		delete(contour)
 
-        if (run_name .ne. "CA-0.24") then
+        if (run_name .ne. "CA-0.2") then
 
           p_plane_c  = wrf_user_intrp3d( p_c,z_c,"h",height,0.,False)
           tc_plane_c = wrf_user_intrp3d(tc_c,z_c,"h",height,0.,False)
@@ -243,7 +251,7 @@ do i_run = 1, 3  ; RUN LOOP
 		  opts = res
 		  opts@cnFillOn = True
 		  opts@FieldTitle = "Air temperature diff (test-control)"
-		  ;opts@ContourParameters = (/ 10., 90., 10./)
+		  opts@ContourParameters = (/ -4.5, 4.5, 0.5/)
 	      contour = wrf_contour(a,wks,tc_plane-tc_plane_c,opts)
 		  plot = wrf_map_overlays(a,wks,(/contour/),pltres,mpres)
 		  delete(opts)
@@ -255,7 +263,7 @@ do i_run = 1, 3  ; RUN LOOP
 		  opts = res
 		  opts@cnFillOn = True
 		  opts@FieldTitle = "Air pressure diff (test-control)"
-		  ;opts@ContourParameters = (/ 10., 90., 10./)
+		  opts@ContourParameters = (/ -1.5, 1.5, 0.1/)
 	      contour = wrf_contour(a,wks,p_plane-p_plane_c,opts)
 		  plot = wrf_map_overlays(a,wks,(/contour/),pltres,mpres)
 		  delete(opts)
@@ -275,9 +283,11 @@ do i_run = 1, 3  ; RUN LOOP
 	  delete(p)
 	  delete(tc)
 	  delete(z)
-	  delete(p_c)
-	  delete(tc_c)
-	  delete(z_c)
+	  if (run_name .ne. "CA-0.2") then
+	    delete(p_c)
+	    delete(tc_c)
+	    delete(z_c)
+	  end if
 	  
     end do      ; END OF TIME LOOP
 

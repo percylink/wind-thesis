@@ -58,8 +58,9 @@ def get_winds(f):
     dif_lon = f.variables['XLONG'][:, :]-lon_solano
     distance = dif_lat**2 + dif_lon**2
     ixlat, ixlon = np.unravel_index(np.argmin(distance), distance.shape)
-    usolano = f.variables['U'][mintime:maxtime, :2, ixlat, ixlon]
-    vsolano = f.variables['V'][mintime:maxtime, :2, ixlat, ixlon]
+    mask_levels = (f.variables["levels"][:] == 110.) | (f.variables["levels"][:] == 150.)
+    usolano = f.variables['U'][mintime:maxtime, mask_levels, ixlat, ixlon]
+    vsolano = f.variables['V'][mintime:maxtime, mask_levels, ixlat, ixlon]
     speed = (usolano**2 + vsolano**2)**0.5  # calculate speed
     return usolano, vsolano, speed
 

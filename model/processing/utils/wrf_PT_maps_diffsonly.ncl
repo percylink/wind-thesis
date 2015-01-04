@@ -8,7 +8,17 @@ begin
 ; ctrl run
   ctrl_name = "CA-CV0.05w"
   tstep_per_hr = 2
-
+  Tmin = -4.5
+  Tmax = 4.5
+  Tsmin = -10.
+  Tsmax = 10.
+  T2min = -8.
+  T2max = 8.
+  Pmin = -1.5
+  Pmax = 1.5
+  Psmin = -1.5
+  Psmax = 1.5
+  
 ; We generate plots, but what kind do we prefer?
 ; type = "png"
 ; type = "x11"
@@ -107,7 +117,7 @@ do i_run = 1, 4  ; RUN LOOP
 	  opts = res
 	  opts@cnFillOn = True
 	  opts@FieldTitle = "Surface pressure diff (test-control)"
-	  opts@ContourParameters = (/ -1.2, 0.2, 0.1/)
+	  opts@ContourParameters = (/ Psmin, Psmax, 0.1/)
 	  contour = wrf_contour(a,wks,ps-ps_c,opts)
 	  plot = wrf_map_overlays(a,wks,(/contour/),pltres,mpres)
 	  delete(opts)
@@ -119,7 +129,7 @@ do i_run = 1, 4  ; RUN LOOP
 	  opts = res
 	  opts@cnFillOn = True
 	  opts@FieldTitle = "Surface temperature diff (test-control)"
-	  opts@ContourParameters = (/ -6., 14., 1./)
+	  opts@ContourParameters = (/ Tsmin, Tsmax, 1./)
 	  contour = wrf_contour(a,wks,Ts-Ts_c,opts)
 	  plot = wrf_map_overlays(a,wks,(/contour/),pltres,mpres)
 	  delete(opts)
@@ -131,7 +141,7 @@ do i_run = 1, 4  ; RUN LOOP
 	  opts = res
 	  opts@cnFillOn = True
 	  opts@FieldTitle = "2 m temperature diff (test-control)"
-	  opts@ContourParameters = (/ -2., 6., 0.5/)
+	  opts@ContourParameters = (/ T2min, T2max, 0.5/)
 	  contour = wrf_contour(a,wks,T2-T2_c,opts)
 	  plot = wrf_map_overlays(a,wks,(/contour/),pltres,mpres)
 	  delete(opts)
@@ -156,22 +166,25 @@ do i_run = 1, 4  ; RUN LOOP
         p_plane_c  = wrf_user_intrp3d( p_c,z_c,"h",height,0.,False)
         tc_plane_c = wrf_user_intrp3d(tc_c,z_c,"h",height,0.,False)
         
-        if (height .eq. 250.) then
-          Tcontours = (/ -3., 5.5, 0.5 /)
-          Pcontours = (/ -1.5, 0., 0.1 /)
-        end if
-        if (height .eq. 350.) then
-          Tcontours = (/ -2.5, 5.5, 0.5 /)
-          Pcontours = (/ -1.4, 0., 0.1 /)
-        end if
-        if (height .eq. 550.) then
-          Tcontours = (/ -2., 5., 0.5 /)
-          Pcontours = (/ -1.2, 0., 0.1 /)
-        end if
-        if (height .eq. 1050.) then
-          Tcontours = (/ -1., 5., 0.5 /)
-          Pcontours = (/ -1.2, 0., 0.1 /)
-        end if
+        Tcontours = (/ Tmin, Tmax, 0.5 /)
+        Pcontours = (/ Pmin, Pmax, 0.1 /)
+        
+        ;if (height .eq. 250.) then
+        ;  Tcontours = (/ -3., 5.5, 0.5 /)
+        ;  Pcontours = (/ -1.5, 0., 0.1 /)
+        ;end if
+        ;if (height .eq. 350.) then
+        ;  Tcontours = (/ -2.5, 5.5, 0.5 /)
+        ;  Pcontours = (/ -1.4, 0., 0.1 /)
+        ;end if
+        ;if (height .eq. 550.) then
+        ;  Tcontours = (/ -2., 5., 0.5 /)
+        ;  Pcontours = (/ -1.2, 0., 0.1 /)
+        ;end if
+        ;if (height .eq. 1050.) then
+        ;  Tcontours = (/ -1., 5., 0.5 /)
+        ;  Pcontours = (/ -1.2, 0., 0.1 /)
+        ;end if
 
 
 		; Plot T diff

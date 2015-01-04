@@ -23,15 +23,13 @@ def get_box_index(f, lat, lon):
     ixlat, ixlon = np.unravel_index(np.argmin(distance), distance.shape)
     return ixlat, ixlon
 
-def get_smois_regions(fCR, fCV, fSN):
-    smois_dry = 0.1
+def get_smois_regions(fCR):
+    smois_dry = 0.08
     smois_init_cr = fCR.variables['SMOIS'][0, 0, :, :]
-    smois_init_cv = fCV.variables['SMOIS'][0, 0, :, :]
-    smois_init_sn = fSN.variables['SMOIS'][0, 0, :, :]
     im = np.zeros_like(smois_init_cr) + np.nan
-    im[smois_init_cr == 0.1] = 1
-    im[smois_init_cv == 0.1] = 2
-    im[smois_init_sn == 0.1] = 3
+    #im[fCR.variables["LANDMASK"] == 0] = 0
+    im[fCR.variables["LANDMASK"] == 1] = 1
+    im[smois_init_cr == smois_dry] = 2
     return im
 
 def decorate_map(f, m):
@@ -77,58 +75,46 @@ if __name__=="__main__":
 
     root_dir = "/scratch2/scratchdirs/plink/WRF/output"
 
-    fCR1 = nc.netcdf_file(os.path.join(root_dir, "CA-dryCR", "wrfout_d01_2009-07-01_00:00:00"))
-    fCR2 = nc.netcdf_file(os.path.join(root_dir, "CA-dryCR", "wrfout_d02_2009-07-01_00:00:00"))
-    fCV1 = nc.netcdf_file(os.path.join(root_dir, "CA-dryCV", "wrfout_d01_2009-07-01_00:00:00"))
-    fSN1 = nc.netcdf_file(os.path.join(root_dir, "CA-drySN", "wrfout_d01_2009-07-01_00:00:00"))
-
-    lat_solano = 38.166
-    lon_solano = -121.817
-
-    # get index for wind farm
-    ixlat, ixlon = get_box_index(fCR1, lat_solano, lon_solano)
-
+    f1 = nc.netcdf_file(os.path.join(root_dir, "BL_vDF_sDF_0.08", "wrfout_d01_combined.nc"))
+    f2 = nc.netcdf_file(os.path.join(root_dir, "BL_vDF_sDF_0.08", "wrfout_d02_combined.nc"))
+    
     # get smois change regions
 
     fig, ax = plt.subplots(nrows=1, ncols=2)
-    m1 = Basemap(width=fCR1.DX*1.2*getattr(fCR1,'WEST-EAST_GRID_DIMENSION'),\
-        height=fCR1.DY*1.2*getattr(fCR1,'SOUTH-NORTH_GRID_DIMENSION'),resolution='l',\
-        projection='lcc',lat_1=fCR1.TRUELAT1,lat_2=fCR1.TRUELAT2,lat_0=fCR1.CEN_LAT,lon_0=fCR1.CEN_LON,\
+    m1 = Basemap(width=f1.DX*1.2*getattr(f1,'WEST-EAST_GRID_DIMENSION'),\
+        height=f1.DY*1.2*getattr(f1,'SOUTH-NORTH_GRID_DIMENSION'),resolution='l',\
+        projection='lcc',lat_1=f1.TRUELAT1,lat_2=f1.TRUELAT2,lat_0=f1.CEN_LAT,lon_0=f1.CEN_LON,\
         ax=ax[0])
-    m2 = Basemap(width=fCR1.DX*1.2*getattr(fCR1,'WEST-EAST_GRID_DIMENSION'),\
-        height=fCR1.DY*1.2*getattr(fCR1,'SOUTH-NORTH_GRID_DIMENSION'),resolution='l',\
-        projection='lcc',lat_1=fCR1.TRUELAT1,lat_2=fCR1.TRUELAT2,lat_0=fCR1.CEN_LAT,lon_0=fCR1.CEN_LON,\
+    m2 = Basemap(width=f1.DX*1.2*getattr(f1,'WEST-EAST_GRID_DIMENSION'),\
+        height=f1.DY*1.2*getattr(f1,'SOUTH-NORTH_GRID_DIMENSION'),resolution='l',\
+        projection='lcc',lat_1=f1.TRUELAT1,lat_2=f1.TRUELAT2,lat_0=f1.CEN_LAT,lon_0=f1.CEN_LON,\
         ax=ax[1])
 
-    x, y = m1(fCR1.variables['XLONG'][0,:,:], fCR1.variables['XLAT'][0,:,:])
+    x, y = m1(f1.variables['XLONG'][0,:,:], f1.variables['XLAT'][0,:,:])
 
     # plot topography on left panel
-    im = m1.pcolormesh(x, y, fCR1.variables['HGT'][0,:,:])
+    im = m1.pcolormesh(x, y, f1.variables['HGT'][0,:,:])
     fig.colorbar(im, ax=ax[0])
 
-    # plot smois change regions on right panel
-    im_smois = get_smois_regions(fCR1, fCV1, fSN1)
+    # plot test region on right panel
+    im_smois = get_smois_regions(f1)
     i2 = m2.pcolormesh(x, y, np.ma.masked_array(im_smois, np.isnan(im_smois)))
     cax = fig.colorbar(i2, ax=ax[1])
     #cax.set_visible(False)
-    m2.ax.annotate("CR", m2(-123.5, 39), color='gray')
-    m2.ax.annotate("CV", m2(-121.8, 37.8), color='gray')
-    m2.ax.annotate("SN", m2(-120.5, 38.5), color='gray')
+    #m2.ax.annotate("CR", m2(-123.5, 39), color='gray')
+    #m2.ax.annotate("CV", m2(-121.8, 37.8), color='gray')
+    #m2.ax.annotate("SN", m2(-120.5, 38.5), color='gray')
 
     # draw coastlines and grid
-    decorate_map(fCR1, m1)
-    decorate_map(fCR1, m2)
+    decorate_map(f1, m1)
+    decorate_map(f1, m2)
     # ANNOTATE
 
     # plot domain boxes on both panels and annotate
-    plot_domain_box(fCR1, m1, "d01")
-    plot_domain_box(fCR2, m1, "d02")
-    plot_domain_box(fCR1, m2, "d01")
-    plot_domain_box(fCR2, m2, "d02")
-
-    # plot bay box
-    plot_box(fCR1, m1, [42, 48], [44, 52], color='white')
-    plot_box(fCR2, m1, [70, 88], [76, 100], color='red')
+    plot_domain_box(f1, m1, "d01")
+    plot_domain_box(f2, m1, "d02")
+    plot_domain_box(f1, m2, "d01")
+    plot_domain_box(f2, m2, "d02")
 
     fig.set_size_inches(12, 6)
     #fig.savefig(os.path.join(root_dir, "domain_map.pdf"))
